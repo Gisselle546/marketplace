@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styled, {css} from 'styled-components'
 import { Inter } from '@next/font/google'
+import PageTemplate from '@/templates/PageTemplate'
 
 
 
@@ -16,7 +17,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main >
-      jo
+        <PageTemplate>
+          
+        </PageTemplate>
       </main>
     </>
   )
