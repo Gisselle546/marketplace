@@ -6,7 +6,6 @@ import PageTemplate from '@/templates/PageTemplate'
 
 
 
-
 export default function Home() {
   return (
     <>
@@ -18,7 +17,7 @@ export default function Home() {
       </Head>
       <main >
         <PageTemplate>
-          
+
         </PageTemplate>
       </main>
     </>
