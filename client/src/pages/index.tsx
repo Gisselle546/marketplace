@@ -2,11 +2,36 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styled, {css} from 'styled-components'
 import { Inter } from '@next/font/google'
-import PageTemplate from '@/templates/PageTemplate'
-
-
+import PageTemplate from '@/templates/PageTemplate';
+import img from '../assets/images/homepage.jpg';
 
 export default function Home() {
+
+
+  const Content = styled.div`
+  background-image: url(${img.src});
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+`;
+
+  const AddressInput = styled.input`
+  
+  background-color: #fff;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin: 0.25rem;
+  min-width: 305px;
+  height: 3rem;
+  padding: 0.5rem;
+  border-style: none;
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px #1d686e;
+}
+  `
+
   return (
     <>
       <Head>
@@ -17,7 +42,9 @@ export default function Home() {
       </Head>
       <main >
         <PageTemplate>
-
+         <Content>
+          <AddressInput type="text" placeholder="Enter address, or zipcode" required/>
+         </Content>
         </PageTemplate>
       </main>
     </>

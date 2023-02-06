@@ -1,9 +1,16 @@
 import React from 'react'
+import styled, {css} from 'styled-components'
 import logo from '../../assets/images/logo.png';
 import Link from 'next/link'
 import Image from 'next/image';
 
-import { HeaderContainer, LogoContainer, NavItems } from './Header.style'
+import { HeaderContainer, LogoContainer, NavItems} from './Header.style'
+
+
+export const LinkText = styled.a`
+ text-decoration: none;
+ margin-right: 2rem;
+`;
 
 function Header() {
   return (
@@ -18,8 +25,8 @@ function Header() {
         />
       </LogoContainer>
       <NavItems>
-        <Link href="/">Home</Link>
-        <Link href="/signin">Sign In</Link>
+        <LinkText href="/">Home</LinkText>
+        <LinkText href="/signin">Sign In</LinkText>
         
       </NavItems>
     </HeaderContainer>
