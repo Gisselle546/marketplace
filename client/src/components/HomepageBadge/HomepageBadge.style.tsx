@@ -16,6 +16,10 @@ export const HomepageBadgeWrapper = styled.div(
       width: 24rem;
       margin-right:2rem;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      transition: 0.3s;
+      &:hover { 
+        transform: translateY(30px) scale(1.05); 
+      }
       
   `
 )
