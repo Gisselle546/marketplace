@@ -7,6 +7,8 @@ import img from '../assets/images/homepage.jpg';
 import Button from '@/components/Button/Button';
 import HomepageBadge from '@/components/HomepageBadge/HomepageBadge';
 import HomepageSection from '@/components/HomepageSection/HomepageSection';
+import buylogo from '../assets/images/buy.png';
+import rental from '../assets/images/rental.png';
 
 
 const Content = styled.div`
@@ -36,6 +38,10 @@ const AddressInput = styled.input`
   const Spacing = styled.div`
   margin-bottom: 4.5rem;
 `
+const HomepageBadgecontainer = styled.div`
+ display:flex;
+ justify-content: center;
+`
 
 export default function Home() {
 
@@ -56,11 +62,11 @@ export default function Home() {
           <Spacing/>
           <HomepageSection/>
           <Spacing/>
-          <div style={{display: 'flex', justifyContent:'center'}}>
-          <HomepageBadge title="fjog" description='odfj'/>
-          <HomepageBadge title="fjog" description='odfj'/>
-          </div>
-         
+          <HomepageBadgecontainer>
+            <HomepageBadge logo={`${buylogo.src}`} title="Buy Home" description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ' buttondesc= "Find a Home"/>
+            <HomepageBadge logo={`${rental.src}`} title="Rent Home" description='Ac turpis egestas integer eget. Est lorem ipsum dolor sit. Convallis aenean et tortor at risus viverra. Ut tellus elementum sagittis vitae. Diam maecenas ultricies mi eget mauris.'buttondesc= "Find a Rental"/>
+          </HomepageBadgecontainer>
+          <Spacing/>
         </PageTemplate>
       </main>
     </>

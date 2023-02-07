@@ -3,6 +3,7 @@ import { ButtonWrapper } from './Button.style'
 
 type ButtonProps={
     children:any
+    style?:any
 }
 
 function Button({children}:ButtonProps) {

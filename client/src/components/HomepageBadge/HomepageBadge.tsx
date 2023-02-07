@@ -1,16 +1,27 @@
 import React from 'react'
+import Button from '../Button/Button';
+import styled, {css} from 'styled-components' 
 import { HomepageBadgeWrapper } from './HomepageBadge.style'
 
 type HomePageBadgeProps = {
     title: string;
     description: string;
+    buttondesc: string;
+    logo?: string;
 }
 
+const Spacing = styled.div`
+  margin-bottom: 1.5rem;
+`
 
-function HomepageBadge({title, description}: HomePageBadgeProps) {
+function HomepageBadge({title, description, buttondesc, logo}: HomePageBadgeProps) {
   return (
    <HomepageBadgeWrapper>
-    hi
+    <div style={{background:`url(${logo}) center/cover`, height:'400px', width:'100%'}}></div>
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <Spacing/>
+    <Button>{buttondesc}</Button>
    </HomepageBadgeWrapper>
   )
 }

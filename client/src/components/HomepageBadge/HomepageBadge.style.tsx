@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components'
 export const HomepageBadgeWrapper = styled.div(
     ({ theme: {color} }) => css`
       display: flex;
+      flex-direction: column;
       padding:1rem;
       background-color: ${color.badgeBackground};
       border: none;
