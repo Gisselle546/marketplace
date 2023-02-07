@@ -3,7 +3,9 @@ import styled, {css} from 'styled-components'
 import logo from '../../assets/images/logo.png';
 import Image from 'next/image';
 
+
 import { HeaderContainer, LogoContainer, NavItems} from './Header.style'
+import Link from 'next/link';
 
 
 export const LinkText = styled.a`
@@ -15,6 +17,8 @@ function Header() {
   return (
     <HeaderContainer>
       <LogoContainer>
+      <Link href="/">
+      
           <Image
           alt="logo"
           src={logo}
@@ -22,6 +26,7 @@ function Header() {
           height={80}
           style={{height:'99%'}}
         />
+        </Link>
       </LogoContainer>
       <NavItems>
         <LinkText href="/">Home</LinkText>
