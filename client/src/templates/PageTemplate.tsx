@@ -13,7 +13,7 @@ min-height: calc(100vh - 200px);
 
 `
 
-function PageTemplate({type = 'default', children}: PageTemplateProps) {
+export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>{
   switch(type){
     case 'authen':
         return(
@@ -32,4 +32,3 @@ function PageTemplate({type = 'default', children}: PageTemplateProps) {
   )
 }
 
-export default PageTemplate

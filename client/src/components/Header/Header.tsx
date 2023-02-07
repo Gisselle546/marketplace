@@ -1,7 +1,6 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 import logo from '../../assets/images/logo.png';
-import Link from 'next/link'
 import Image from 'next/image';
 
 import { HeaderContainer, LogoContainer, NavItems} from './Header.style'

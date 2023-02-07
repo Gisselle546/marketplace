@@ -2,21 +2,22 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styled, {css} from 'styled-components'
 import { Inter } from '@next/font/google'
-import PageTemplate from '@/templates/PageTemplate';
+import {PageTemplate} from '@/templates/PageTemplate';
 import img from '../assets/images/homepage.jpg';
+import Button from '@/components/Button/Button';
+import HomepageBadge from '@/components/HomepageBadge/HomepageBadge';
+import HomepageSection from '@/components/HomepageSection/HomepageSection';
 
-export default function Home() {
 
-
-  const Content = styled.div`
-  background-image: url(${img.src});
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40vh;
+const Content = styled.div`
+background: url(${img.src}) center/cover;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 40vh;
 `;
 
-  const AddressInput = styled.input`
+const AddressInput = styled.input`
   
   background-color: #fff;
   border-radius: 4px;
@@ -32,6 +33,13 @@ export default function Home() {
 }
   `
 
+  const Spacing = styled.div`
+  margin-bottom: 4.5rem;
+`
+
+export default function Home() {
+
+
   return (
     <>
       <Head>
@@ -42,9 +50,17 @@ export default function Home() {
       </Head>
       <main >
         <PageTemplate>
-         <Content>
-          <AddressInput type="text" placeholder="Enter address, or zipcode" required/>
-         </Content>
+          <Content>
+            <AddressInput type="text" placeholder="Enter address, or zipcode" required/>
+          </Content> 
+          <Spacing/>
+          <HomepageSection/>
+          <Spacing/>
+          <div style={{display: 'flex', justifyContent:'center'}}>
+          <HomepageBadge title="fjog" description='odfj'/>
+          <HomepageBadge title="fjog" description='odfj'/>
+          </div>
+         
         </PageTemplate>
       </main>
     </>
