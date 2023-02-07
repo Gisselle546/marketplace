@@ -5,7 +5,7 @@ import Head from 'next/head'
 import styled, {css} from 'styled-components'
 import { HeaderSign, SignInWrapper, FormWrapper } from './index.style'
 import React from 'react'
-import Input from '@/components/Input/Input';
+import Button from '@/components/Button/Button';
 
 
 const Content = styled.div`
@@ -17,6 +17,21 @@ const Content = styled.div`
     width:100%;
 `;
 
+const InputWrapper = styled.input(
+    ({ theme: {color} }) => css`
+  background-color: ${color.badgeBackground};
+  border-radius: 4px;
+  font-size: 1rem;
+  margin: 0.25rem;
+  min-width: 305px;
+  height: 3rem;
+  padding: 0.5rem;
+  border-style: none;
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px #1d686e;
+`
+)
 
 function Signin() {
 
@@ -50,8 +65,9 @@ function Signin() {
          <SignInWrapper>
             <HeaderSign>Sign In</HeaderSign>
             <FormWrapper onSubmit={formik.handleSubmit}>
-            <Input name="email" placeholder='Enter your email' value={formik.values.email} onChange={formik.handleChange}/>
-            <Input name="password" placeholder='Enter your password' value={formik.values.password} onChange={formik.handleChange}/>
+            <InputWrapper type="email" name="email"placeholder="Enter Email Address" value={formik.values.email} onChange={formik.handleChange}required/>
+            <InputWrapper type="password" name="password"placeholder="Enter Password" value={formik.values.password} onChange={formik.handleChange}required/>
+            <Button>Sign In</Button>
             </FormWrapper>
          </SignInWrapper>
           

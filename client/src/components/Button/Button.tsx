@@ -3,10 +3,10 @@ import { ButtonWrapper } from './Button.style'
 
 type ButtonProps={
     children:any
-    style?:any
+    large?:any
 }
 
-function Button({children}:ButtonProps) {
+function Button({children, large}:ButtonProps) {
   return (
     <ButtonWrapper>
         {children}
