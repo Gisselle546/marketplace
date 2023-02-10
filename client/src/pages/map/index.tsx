@@ -8,7 +8,8 @@ function Mappy() {
   });
 
   return (
-    <div id="map">
+    <div>
+        
         <MapWithNoSSR/>
     </div>
   );
