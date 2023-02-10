@@ -12,9 +12,9 @@ import bcrypt from 'bcryptjs';
  */
 const register = async (req: Request, res: Response): Promise<void>=>{
     try {
-        const { name, email, password, lastname } = req.body
+        const { email, password } = req.body
 
-        if (!name || !email || !password) {
+        if (!email || !password) {
           throw new Error('please provide all values')
         }
         const userAlreadyExists = await User.findOne({ email })
@@ -22,7 +22,7 @@ const register = async (req: Request, res: Response): Promise<void>=>{
           throw new Error('Email already in use')
         }
         
-        const user = await User.create({ name, email, password, lastname })
+        const user = await User.create({ email, password})
         // const token = user.createJWT()
 
         const token: any = jwt.sign({

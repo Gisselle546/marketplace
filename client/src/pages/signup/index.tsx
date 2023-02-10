@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import Head from 'next/head';
 import styled, {css} from 'styled-components';
+import { signupuser, selectValue } from '@/redux/reducer/register';
+import { useAppSelector, useAppDispatch } from  '../../redux/hooks';
 
 const Content = styled.div`
     display:flex;
@@ -37,7 +39,9 @@ export const LinkText = styled.a`
 `;
 
 function SignUp() {
-
+  const dispatch = useAppDispatch()
+  const count = useAppSelector(selectValue)
+  console.log(count);
      const formik = useFormik({
         initialValues: {
           email: '',
@@ -51,6 +55,7 @@ function SignUp() {
                          .required('Password is required')
         }),
         onSubmit: values => {
+        dispatch(signupuser(values));
          console.log(values)
         },
       });
