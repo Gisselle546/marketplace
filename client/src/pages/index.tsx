@@ -9,7 +9,7 @@ import HomepageBadge from '@/components/HomepageBadge/HomepageBadge';
 import HomepageSection from '@/components/HomepageSection/HomepageSection';
 import buylogo from '../assets/images/buy.png';
 import rental from '../assets/images/rental.png';
-import GooglePlacesAutocomplete, { geocodeByAddress, geocodeByLatLng } from 'react-google-places-autocomplete';
+import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 
 
 const Content = styled.div`
@@ -61,13 +61,14 @@ export default function Home() {
               {/* <AddressInput type="text" placeholder="Enter address, or zipcode" required/>   */}
              <GooglePlacesAutocomplete
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}
-               
                 selectProps={{
                   placeholder: "Enter address, or zipcode..",
-                  onChange: ({ value }:any) => {
-                 
-                  console.log(value.description);
-                 
+                  onChange: async ({ value }:any) => {
+                    
+                    const data = await geocodeByAddress(value.description);
+                    console.log(data);
+                    console.log(data[0].geometry.location.lat(), 'lat');
+                    console.log(data[0].geometry.location.lng(), 'lng')
                   },
                   styles: {
                     input: (provided: any) => ({
