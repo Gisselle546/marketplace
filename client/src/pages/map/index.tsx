@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
+import dynamic from "next/dynamic";
 
 
-
-function Map() {
-  
+function Mappy() {
+  const MapWithNoSSR = dynamic(() => import("../../components/Map/Map"), {
+    ssr: false
+  });
 
   return (
-    <>
-    </>
+    <div id="map">
+        <MapWithNoSSR/>
+    </div>
   );
 }
 
-export default Map;
+export default Mappy;
