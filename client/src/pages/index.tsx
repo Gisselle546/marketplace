@@ -12,6 +12,7 @@ import rental from '../assets/images/rental.png';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 
 
+
 const Content = styled.div`
 background: url(${img.src}) center/cover;
 display: flex;

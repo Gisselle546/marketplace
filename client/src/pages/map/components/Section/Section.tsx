@@ -1,13 +1,14 @@
 import styled, { css } from 'styled-components'
-import React, { Component } from 'react'
+import React from 'react'
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
+import tear from '../../../../assets/images/tear.png';
 
 const Container = styled.div(
     ({ theme: { color } }) => css`
-    height: 5vh;
+    height: 6vh;
     display: flex;
+    flex-direction: column;
     background-color: #fff;
-    border-bottom: 2px solid grey;
 
     `
 )
@@ -15,11 +16,21 @@ const Container = styled.div(
 
 const Content = styled.div`
 display: flex;
-justify-content: center;
+justify-content: flex-start;
 align-items: center;
-width:100%;
+width: 100%;
+padding: 1rem;
+
+
 
 `;
+
+const Content_Data = styled.div`
+    background: url(${tear.src}) no-repeat;
+    height:40px;
+`
+
+
 
 export const Section = () => (
     <Container>
@@ -46,6 +57,11 @@ export const Section = () => (
                   },
                 }}
               />
+       
         </Content>
+       <Content_Data/>
+           
+       
+        
     </Container>
   )
