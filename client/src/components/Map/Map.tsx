@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {use, useEffect, useState} from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; 
@@ -6,6 +6,18 @@ import 'leaflet-defaulticon-compatibility';
 
 
 function Map() {
+
+    useEffect(()=>{
+        navigator.geolocation.getCurrentPosition(
+            function( position ){ // success cb
+                console.log( position );
+                console.log(position.coords.latitude);
+                console.log(position.coords.longitude)
+            },
+            function(){ // fail cb
+            }
+        );
+    },[])
    
   return (
     <MapContainer

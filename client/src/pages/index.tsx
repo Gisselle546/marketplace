@@ -45,7 +45,7 @@ const HomepageBadgecontainer = styled.div`
 `
 
 export default function Home() {
-
+  
 
   return (
     <>
