@@ -9,6 +9,8 @@ export const MapWrapper = styled.div(
 export const Description = styled.div(
         ({ theme: {color} }) => css`
         width: 30vw;
+       
+      
     `)
 
 export const Map = styled.div(

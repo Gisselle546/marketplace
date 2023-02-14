@@ -1,11 +1,19 @@
 import React from 'react'
-import { CardWrapper } from './Card.style'
+import { CardWrapper, Heading, Bottom, Top } from './Card.style'
+
+
+
 
 function Card() {
   return (
     <>
     <CardWrapper>
-        <h1>hi</h1>
+        <Top>
+            top
+        </Top>
+        <Bottom>
+            <Heading>hi</Heading>
+        </Bottom>
     </CardWrapper>
     </>
   )

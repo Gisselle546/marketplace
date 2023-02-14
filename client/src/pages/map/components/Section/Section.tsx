@@ -51,8 +51,7 @@ export const Section = () => (
                       ...provided,
                       borderRadius: '4px',
                       minWidth:'350px',
-                      outline:'none',
-                      
+                      outline:'none'
                     }),
                   },
                 }}
