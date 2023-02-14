@@ -1,11 +1,16 @@
 import React from 'react';
+import styled, {css} from 'styled-components'
 import Card from '../Card/Card';
+
+const CardListWrapper = styled.div`
+    overflow: auto
+`;
 
 function CardList() {
   return (
-    <>
-    <Card/>
-    </>
+    <CardListWrapper>
+        <Card/>
+    </CardListWrapper>
   )
 }
 

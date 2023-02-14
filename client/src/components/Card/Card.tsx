@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardWrapper, Heading, Bottom, Top } from './Card.style'
+import { CardWrapper, Heading, Bottom, Top, SubHeading } from './Card.style'
 
 
 
@@ -12,7 +12,11 @@ function Card() {
             top
         </Top>
         <Bottom>
-            <Heading>hi</Heading>
+        
+            <Heading> $300,000</Heading>
+            <SubHeading> 2b | 2a | 3000 sqft</SubHeading>
+            <SubHeading> 9401 SW 4th St APT 408</SubHeading>
+       
         </Bottom>
     </CardWrapper>
     </>

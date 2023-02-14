@@ -3,8 +3,8 @@ import styled, {css} from 'styled-components'
 export const CardWrapper = styled.div(
     ({ theme: {color} }) => css`
     background: ${color.badgeBackground};
-    height:15rem;
-    width:18rem;
+    height:17rem;
+    width:21rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -17,14 +17,28 @@ export const CardWrapper = styled.div(
 
 export const Heading = styled.div(
     ({ theme: {color, typography} }) => css`
-     font-size: ${typography.fontSize.heading3}
+     font-size: ${typography.fontSize.heading3};
+     color: #fff;
+     margin-left:1rem;
     `)
 
-export const Bottom = styled.div`
+export const SubHeading = styled.div(
+        ({ theme: {color, typography} }) => css`
+         font-size: ${typography.fontSize.body};
+         color: #fff;
+         margin-left:1rem;
+        `)
+
+export const Bottom = styled.div(
+ ({ theme: {color} }) => css`
 height: 6rem;
-background-color: blue;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+background-color: rgba(0,0,54,0.7);
 box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-`;
+`
+);
 
 export const Top = styled.div`
 
