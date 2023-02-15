@@ -2,15 +2,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { AppState } from "../store";
 
 import { register } from "../actions/register";
-
+import { getStorageValue, setStorageValue} from "../hooks/useSessionStorage";
 
 export interface AuthState  {
-    token: string
+    token: string | {}
     status: 'idle' | 'loading' | 'failed'
 }
 
 const initialState: AuthState = {
-    token: '',
+    token: getStorageValue('token','') ||'',
     status: 'idle'
 }
 
@@ -18,6 +18,7 @@ export const signupuser = createAsyncThunk(
     '../actions/register',
     async (data:{email:string, password:string}) =>{
         const response = await register(data);
+        setStorageValue('token', response);
         return response
     } 
 )

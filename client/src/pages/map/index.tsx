@@ -11,6 +11,7 @@ function Mappy() {
     ssr: false
   });
 
+
   return (
     <PageTemplate type="map">
       <Section/>

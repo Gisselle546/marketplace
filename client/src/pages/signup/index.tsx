@@ -40,8 +40,7 @@ export const LinkText = styled.a`
 
 function SignUp() {
   const dispatch = useAppDispatch()
-  const count = useAppSelector(selectValue)
-  console.log(count);
+ 
      const formik = useFormik({
         initialValues: {
           email: '',
@@ -56,7 +55,6 @@ function SignUp() {
         }),
         onSubmit: values => {
         dispatch(signupuser(values));
-         console.log(values)
         },
       });
   return (
