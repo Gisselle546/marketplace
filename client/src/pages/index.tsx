@@ -10,8 +10,9 @@ import HomepageSection from '@/components/HomepageSection/HomepageSection';
 import buylogo from '../assets/images/buy.png';
 import rental from '../assets/images/rental.png';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
-
-
+import { useAppDispatch } from '@/redux/hooks';
+import { addlocation } from '@/redux/reducer/location';
+import { useRouter } from 'next/router';
 
 
 const Content = styled.div`
@@ -47,7 +48,8 @@ const HomepageBadgecontainer = styled.div`
 `
 
 export default function Home() {
-  
+  const dispatch = useAppDispatch();
+  const router = useRouter(); 
 
   return (
     <>
@@ -69,8 +71,9 @@ export default function Home() {
                     
                     const data = await geocodeByAddress(value.description);
                     console.log(data);
-                    console.log(data[0].geometry.location.lat(), 'lat');
-                    console.log(data[0].geometry.location.lng(), 'lng')
+                    let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
+                    dispatch(addlocation(dataDrive))
+                    router.push('/map')
                   },
                   styles: {
                     input: (provided: any) => ({

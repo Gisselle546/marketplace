@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; 
 import 'leaflet-defaulticon-compatibility';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { locationValue, addlocation } from '@/redux/reducer/location';
+import { locationValue } from '@/redux/reducer/location';
 
 
 function Map() {
@@ -16,13 +16,14 @@ function Map() {
         navigator.geolocation.getCurrentPosition(
             function( position ){ // success cb
                 let data={ lat:position.coords.latitude, lng: position.coords.longitude}
-                dispatch(addlocation(data))
+                
             },
             function(){ // fail cb
             }
         );
     
-    }, [lat,lng, dispatch])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     function SetViewOnClick({ coords }: any) {
       const map = useMap();

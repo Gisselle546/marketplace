@@ -34,3 +34,19 @@ export function deleteStorageValue(key: string, defaultValue?: any){
     sessionStorage.clear();
   }
 }
+
+export function getStorageLocal(key: string, defaultValue?: any) {
+  // getting stored value
+  if (typeof window !== 'undefined') {
+const saved = JSON.parse(localStorage.getItem(key)!)
+return saved || defaultValue;
+  }
+}
+
+export function setStorageLocal(key: string, defaultValue: any) {
+    // getting stored value
+    if (typeof window !== 'undefined') {
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+ 
+    }
+  }

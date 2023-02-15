@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { AppState } from "../store";
+import { getStorageLocal, setStorageLocal } from "../hooks/useSessionStorage";
 
 export interface LocationState{
     location: { lat: number, lng: number },
@@ -7,7 +8,7 @@ export interface LocationState{
 }
 
 const initialState: LocationState = {
-    location: { lat: 40.8054, lng:-74.0241},
+    location: getStorageLocal('location') ||{ lat: 40.8054, lng:-74.0241},
     status: 'idle'
 }
 
@@ -18,9 +19,9 @@ export const locationSlice = createSlice({
     initialState,
     reducers:{
      addlocation: (state, action)=>{
-       state.location = action.payload
-       console.log(state.location);
-     }
+       state.location = action.payload;
+       setStorageLocal('location',action.payload )
+     },
     },
 })
 
