@@ -5,7 +5,7 @@ import img from '../../assets/images/Homepagesection.jpg';
 import Button from '../Button/Button';
 import { useAppSelector } from '@/redux/hooks';
 import { selectValue } from '@/redux/reducer/register';
-
+import { useRouter } from 'next/router'
 
 const Backgroundimage = styled.div(
     ({ theme: {color, borderRadius} }) => css`
@@ -17,12 +17,14 @@ const Backgroundimage = styled.div(
 
 function HomepageSection() {
   const count = useAppSelector(selectValue);
+  const router = useRouter()
+  
   return (
     <HomepageSectionWrapper>
         <div>
             <h2> Find your perfect home</h2>
             {
-              count? <Button> Check Homes Near You</Button>: <Button>Sign Up Today</Button>
+              count? <Button onClick={()=>router.push('/map')}> Check Homes Near You</Button>: <Button onClick={()=>router.push('/signin')}>Sign Up Today</Button>
             }
         </div>
         <Backgroundimage/>

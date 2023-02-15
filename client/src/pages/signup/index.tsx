@@ -8,6 +8,7 @@ import Head from 'next/head';
 import styled, {css} from 'styled-components';
 import { signupuser } from '@/redux/reducer/register';
 import { useAppDispatch } from  '../../redux/hooks';
+import { useRouter } from 'next/router';
 
 const Content = styled.div`
     display:flex;
@@ -39,7 +40,8 @@ export const LinkText = styled.a`
 `;
 
 function SignUp() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const router = useRouter();  
  
      const formik = useFormik({
         initialValues: {
@@ -55,6 +57,7 @@ function SignUp() {
         }),
         onSubmit: values => {
         dispatch(signupuser(values));
+        router.push('/map');
         },
       });
   return (

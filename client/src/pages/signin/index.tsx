@@ -8,6 +8,7 @@ import React from 'react'
 import Button from '@/components/Button/Button';
 import { signinuser } from '@/redux/reducer/register';
 import { useAppDispatch } from '@/redux/hooks';
+import { useRouter } from 'next/router';
 
 
 const Content = styled.div`
@@ -41,7 +42,9 @@ export const LinkText = styled.a`
 
 function Signin() {
   const dispatch = useAppDispatch()
-    const formik = useFormik({
+  const router = useRouter();  
+  
+  const formik = useFormik({
         initialValues: {
           email: '',
           password:''
@@ -55,6 +58,7 @@ function Signin() {
         }),
         onSubmit: values => {
         dispatch(signinuser(values));
+        router.push('/map');
         },
       });
 

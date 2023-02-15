@@ -4,12 +4,13 @@ import { ButtonWrapper } from './Button.style'
 type ButtonProps={
     children:any
     large?:any
+    onClick?: () => void
   
 }
 
-function Button({children, large}:ButtonProps) {
+function Button({children, ...props}:ButtonProps) {
   return (
-    <ButtonWrapper type="submit">
+    <ButtonWrapper type="submit" {...props}>
         {children}
     </ButtonWrapper>
   )
