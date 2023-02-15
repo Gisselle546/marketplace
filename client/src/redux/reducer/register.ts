@@ -19,8 +19,17 @@ export const signupuser = createAsyncThunk(
     async (data:{email:string, password:string}) =>{
         const response = await register(data);
         setStorageValue('token', response);
-        return response
+        return response;
     } 
+)
+
+export const signinuser = createAsyncThunk(
+    '../actions/login',
+    async(data:{email: string, password: string})=>{
+        const response = await register(data);
+        setStorageValue('token', response);
+        return response;
+    }
 )
 
 export const authSlice = createSlice({
@@ -35,6 +44,14 @@ export const authSlice = createSlice({
             state.status = 'loading'
           })
           .addCase(signupuser.fulfilled, (state, action) => {
+            state.status = 'idle',
+            state.token = action.payload.accesstoken
+           
+          })
+          .addCase(signinuser.pending, (state) => {
+            state.status = 'loading'
+          })
+          .addCase(signinuser.fulfilled, (state, action) => {
             state.status = 'idle',
             state.token = action.payload.accesstoken
            

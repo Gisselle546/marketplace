@@ -6,6 +6,8 @@ import styled, {css} from 'styled-components'
 import { HeaderSign, SignInWrapper, FormWrapper } from './index.style'
 import React from 'react'
 import Button from '@/components/Button/Button';
+import { signinuser } from '@/redux/reducer/register';
+import { useAppDispatch } from '@/redux/hooks';
 
 
 const Content = styled.div`
@@ -38,7 +40,7 @@ export const LinkText = styled.a`
 `;
 
 function Signin() {
-
+  const dispatch = useAppDispatch()
     const formik = useFormik({
         initialValues: {
           email: '',
@@ -52,7 +54,7 @@ function Signin() {
                          .required('Password is required')
         }),
         onSubmit: values => {
-         console.log(values)
+        dispatch(signinuser(values));
         },
       });
 

@@ -6,8 +6,8 @@ import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import Head from 'next/head';
 import styled, {css} from 'styled-components';
-import { signupuser, selectValue } from '@/redux/reducer/register';
-import { useAppSelector, useAppDispatch } from  '../../redux/hooks';
+import { signupuser } from '@/redux/reducer/register';
+import { useAppDispatch } from  '../../redux/hooks';
 
 const Content = styled.div`
     display:flex;
