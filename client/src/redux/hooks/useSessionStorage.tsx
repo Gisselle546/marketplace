@@ -28,3 +28,9 @@ return getStorageValue(key, defaultValue);
 
   return [value, setValue];
 };
+
+export function deleteStorageValue(key: string, defaultValue?: any){
+  if (typeof window !== 'undefined') {
+    sessionStorage.clear();
+  }
+}

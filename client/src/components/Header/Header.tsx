@@ -5,10 +5,12 @@ import Image from 'next/image';
 
 
 import { HeaderContainer, LogoContainer, NavItems} from './Header.style';
-import { useAppSelector } from '@/redux/hooks';
-import { selectValue } from '@/redux/reducer/register';
+import { useAppSelector, useAppDispatch} from '@/redux/hooks';
+import { selectValue, signinuser, logout } from '@/redux/reducer/register';
 import Link from 'next/link';
 import Button from '../Button/Button';
+
+
 
 
 export const LinkText = styled.a`
@@ -18,6 +20,7 @@ export const LinkText = styled.a`
 
 function Header() {
   const count = useAppSelector(selectValue);
+  const dispatch = useAppDispatch();
   console.log(count);
   return (
     <HeaderContainer>
@@ -36,7 +39,7 @@ function Header() {
       <NavItems>
         <LinkText href="/">Home</LinkText>
         {
-          count? <>  <LinkText href="/">Log Out</LinkText> <Button> Create Ad</Button> </>:  <LinkText href="/signin">Sign In</LinkText>
+          count? <>  <LinkText href="/" onClick={()=>{dispatch(logout)}}>Log Out</LinkText> <Button> Create Ad</Button> </>:  <LinkText href="/signin">Sign In</LinkText>
         }
         
       </NavItems>

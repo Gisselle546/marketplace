@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { AppState } from "../store";
 
 import { register } from "../actions/register";
-import { getStorageValue, setStorageValue} from "../hooks/useSessionStorage";
+import { getStorageValue, setStorageValue, deleteStorageValue } from "../hooks/useSessionStorage";
 
 export interface AuthState  {
     token: string | {}
@@ -32,11 +32,15 @@ export const signinuser = createAsyncThunk(
     }
 )
 
+export const logout = () =>{
+   deleteStorageValue('token')
+}
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers:{
-       
+    
     },
     extraReducers: (builder) => {
         builder
