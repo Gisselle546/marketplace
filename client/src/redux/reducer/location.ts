@@ -11,11 +11,20 @@ const initialState: LocationState = {
     status: 'idle'
 }
 
+
+
 export const locationSlice = createSlice({
     name: 'location',
     initialState,
-    reducers:{},
+    reducers:{
+     addlocation: (state, action)=>{
+       state.location = action.payload
+       console.log(state.location);
+     }
+    },
 })
+
+export const { addlocation } = locationSlice.actions;
 
 export const locationValue = (state: AppState) => state.location.location
 

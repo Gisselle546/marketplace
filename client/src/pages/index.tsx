@@ -13,6 +13,7 @@ import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-
 
 
 
+
 const Content = styled.div`
 background: url(${img.src}) center/cover;
 display: flex;
