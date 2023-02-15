@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { MapWrapper, Map, Description } from './index.style';
 import {PageTemplate} from '@/templates/PageTemplate';
 import CardList from '@/components/CardList/CardList';
-import { Section } from './components/Section/Section';
+import Section  from './components/Section/Section';
 
 
 function Mappy() {

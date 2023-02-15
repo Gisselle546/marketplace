@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components'
 import React from 'react'
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 import tear from '../../../../assets/images/tear.png';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { locationValue, addlocation } from '@/redux/reducer/location';
 
 const Container = styled.div(
     ({ theme: { color } }) => css`
@@ -32,7 +34,9 @@ const Content_Data = styled.div`
 
 
 
-export const Section = () => (
+function Section() {
+   const dispatch = useAppDispatch()
+   return(
     <Container>
         <Content>
           <GooglePlacesAutocomplete
@@ -42,9 +46,8 @@ export const Section = () => (
                   onChange: async ({ value }:any) => {
                     
                     const data = await geocodeByAddress(value.description);
-                    console.log(data);
-                    console.log(data[0].geometry.location.lat(), 'lat');
-                    console.log(data[0].geometry.location.lng(), 'lng')
+                    let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
+                    dispatch(addlocation(dataDrive))
                   },
                   styles: {
                     input: (provided: any) => ({
@@ -58,9 +61,9 @@ export const Section = () => (
               />
        
         </Content>
-       <Content_Data/>
-           
-       
-        
+       <Content_Data/>    
     </Container>
-  )
+   )
+}
+
+export default Section;
