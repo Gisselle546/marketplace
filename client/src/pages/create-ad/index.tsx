@@ -2,6 +2,8 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { PageTemplate } from '@/templates/PageTemplate';
 import { CreateWrapper } from './index.style';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+
 
 function CreateAd() {
 
@@ -17,6 +19,7 @@ function CreateAd() {
 
 
   return (
+    <ProtectedRoute>
     <PageTemplate>
         <Content>
             <CreateWrapper>
@@ -24,6 +27,7 @@ function CreateAd() {
             </CreateWrapper>
         </Content>
     </PageTemplate>
+    </ProtectedRoute>
   )
 }
 
