@@ -3,12 +3,19 @@ import styled, {css} from 'styled-components'
 import Card from '../Card/Card';
 
 const CardListWrapper = styled.div`
-    overflow: auto
+    
 `;
 
 function CardList() {
   return (
     <CardListWrapper>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
         <Card/>
     </CardListWrapper>
   )

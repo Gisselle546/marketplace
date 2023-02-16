@@ -8,13 +8,17 @@ export const MapWrapper = styled.div(
 
 export const Description = styled.div(
         ({ theme: {color} }) => css`
-        width: 30vw;
-       
-      
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height:90vh;
+        overflow: scroll;
+
     `)
 
 export const Map = styled.div(
     ({ theme: {color} }) => css`
-        width: 70vw;
+        width: 75%;
     `
 )
