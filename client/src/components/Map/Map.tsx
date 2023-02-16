@@ -16,7 +16,6 @@ function Map() {
         navigator.geolocation.getCurrentPosition(
             function( position ){ // success cb
                 let data={ lat:position.coords.latitude, lng: position.coords.longitude}
-                
             },
             function(){ // fail cb
             }
