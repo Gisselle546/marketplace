@@ -12,9 +12,11 @@ const list = dummy_data.map((card:any, i:any)=>{
 
 function CardList() {
   return (
+    <>
     <CardListWrapper>
       {list}
     </CardListWrapper>
+</>
   )
 }
 

@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; 
 import 'leaflet-defaulticon-compatibility';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { locationValue } from '@/redux/reducer/location';
 import { dummy_data } from '@/dummydata/data';
+
+
 
 const Container = styled("div")<{img: any }>`
  background: url(${(props: any) => props.img}) center/cover;
@@ -52,8 +54,9 @@ function Map() {
           </Marker>
           </>
     })
-   
+    
   return (
+    <>
     <MapContainer
       center={[lat,lng]}
       zoom={12}
@@ -75,6 +78,8 @@ function Map() {
       />
        
     </MapContainer>
+   
+    </>
   )
 }
 

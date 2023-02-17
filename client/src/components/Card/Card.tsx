@@ -16,7 +16,7 @@ const Container = styled("div")<{img: any }>`
 `
 
 function Card({card}:Props) {
- console.log(card.location.address.coordinate);
+ console.log(card);
   return (
     <>
     <CardWrapper>
