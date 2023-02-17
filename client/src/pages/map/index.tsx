@@ -4,7 +4,8 @@ import { MapWrapper, Map, Description } from './index.style';
 import {PageTemplate} from '@/templates/PageTemplate';
 import CardList from '@/components/CardList/CardList';
 import Section  from './components/Section/Section';
-import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+//import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+
 
 
 function Mappy() {
@@ -14,7 +15,7 @@ function Mappy() {
 
 
   return (
-    <ProtectedRoute>
+   // <ProtectedRoute>
     <PageTemplate type="map">
       <Section/>
       <MapWrapper>
@@ -26,7 +27,7 @@ function Mappy() {
           </Map>
       </MapWrapper> 
     </PageTemplate>
-    </ProtectedRoute>
+   // </ProtectedRoute>
   );
 }
 

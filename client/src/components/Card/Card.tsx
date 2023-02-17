@@ -1,21 +1,32 @@
 import React from 'react'
-import { CardWrapper, Heading, Bottom, Top, SubHeading } from './Card.style'
+import styled, {css} from 'styled-components'
+import { CardWrapper, Heading, Bottom, SubHeading } from './Card.style'
+import img from '../../assets/images/buy.png';
+
+type Props ={
+  card:any
+}
 
 
 
+const Container = styled("div")<{img: any }>`
+ background: url(${(props: any) => props.img}) center/cover;
+ height: 100%;
+ width: 100%;
+`
 
-function Card() {
+function Card({card}:Props) {
+ console.log(card.location.address.coordinate);
   return (
     <>
     <CardWrapper>
-        <Top>
-            top
-        </Top>
+        <Container img={card.primary_photo.href}>
+        </Container>
         <Bottom>
         
-            <Heading> $300,000</Heading>
-            <SubHeading> 2b | 2a | 3000 sqft</SubHeading>
-            <SubHeading> 9401 SW 4th St APT 408</SubHeading>
+            <Heading> ${card.list_price.toLocaleString("en-US")}</Heading>
+            <SubHeading> {card.description.beds} bds | {card.description.baths} bts | {card.description.sqft} sqft</SubHeading>
+            <SubHeading> {card.location.address.line}</SubHeading>
        
         </Bottom>
     </CardWrapper>

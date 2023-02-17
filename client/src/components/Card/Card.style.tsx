@@ -44,7 +44,3 @@ background-color: rgba(0,0,54,0.7);
 box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `
 );
-
-export const Top = styled.div`
-
-`;
