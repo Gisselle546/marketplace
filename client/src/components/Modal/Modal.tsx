@@ -3,6 +3,7 @@ import styled,{css} from "styled-components";
 import { dummy_data } from "@/dummydata/data";
 import { GiTrafficLightsGreen, GiTrafficLightsRed } from 'react-icons/gi';
 import Button from "../Button/Button";
+import Tabs from "../Tabs/Tabs";
 
 const Model = styled("div")<{show: any}>`
     z-index: 9999;
@@ -95,7 +96,7 @@ function Modal(props: Props) {
 
     } = { ...props };
     const ref = useRef(null);
-    const data = dummy_data[1]
+    const data = dummy_data[4]
     console.log(data);
 
 
@@ -122,9 +123,7 @@ function Modal(props: Props) {
             }
             </div>
             <ButtonContainer><Button>Request a Tour</Button>  <Button>Contact Agent</Button></ButtonContainer>
-            <div style={{height: '40rem'}}>
-                hi
-            </div>
+           <Tabs/>
        </Right>
        
     </Container>
