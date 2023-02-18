@@ -1,5 +1,8 @@
 import React, {useRef} from "react";
 import styled,{css} from "styled-components";
+import { dummy_data } from "@/dummydata/data";
+import { GiTrafficLightsGreen, GiTrafficLightsRed } from 'react-icons/gi';
+import Button from "../Button/Button";
 
 const Model = styled("div")<{show: any}>`
     z-index: 9999;
@@ -19,6 +22,7 @@ const Container = styled.div(
     position:fixed;
     width: 89vw;
     height: 89vh;
+    display: flex;
     top:  5%;
     left: 8%;
     border-radius: 10px;
@@ -30,8 +34,42 @@ const Container = styled.div(
 )
 ;
 
+const Left = styled("div")`
+display: flex; 
+flex-direction: column; 
+height: 100%;
+width: 100%; 
+justify-content:space-around;
 
+`;
 
+const Right = styled("div")`
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+width: 100%;
+height: 100%;
+
+`;
+
+const ImageContainer = styled("div")<{img: any}>`
+background: url(${(props: any) => props.img}) center/cover;
+height: 100%;
+width: 90%;
+`;
+
+export const Heading = styled.div(
+    ({ theme: {color, typography} }) => css`
+     font-size: ${typography.fontSize.heading1};
+     margin-left:1rem;
+    `)
+
+export const SubHeading = styled.div(
+        ({ theme: {color, typography} }) => css`
+         font-size: ${typography.fontSize.heading3};
+         padding: 0.2rem;
+         margin-left:1rem;
+        `)
 
 
 const Slot = styled.div`
@@ -39,25 +77,55 @@ const Slot = styled.div`
     color: inherit;
 `;
 
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    margin-right: 1rem;
+    
+`
+
+
 type Props ={
     show?: boolean;
-    detailText?: any;
-    children?:any;
 }
 
 function Modal(props: Props) {
     const {
         show, // boolean - visible/invisible
-        detailText, // html / inner text
+
     } = { ...props };
     const ref = useRef(null);
-    
+    const data = dummy_data[1]
+    console.log(data);
 
 
   return (
     <Model show={show}>
     <Container ref={ref}>
-        <Slot>{detailText}</Slot>
+       <Left> 
+            {data.photos.map(df=>{
+                return <>
+                    <ImageContainer img={df.href}/>
+                    </>
+            })}
+       </Left>
+       <Right>
+          <div style={{height: '15rem', padding:'1rem', flexDirection:'column', justifyContent:'space-evenly'}}>
+          <div style={{display:'flex', alignItems:'center'}}>
+            <Heading> ${data.list_price.toLocaleString("en-US")}</Heading><SubHeading> {data.description.beds} bd | {data.description.baths} ba | {data.description.sqft} sqft</SubHeading>
+          </div>
+            <SubHeading> {data.location.address.line}, {data.location.address.city}, {data.location.address.state_code} {data.location.address.postal_code}</SubHeading>
+            {data.status ==='for_sale' ?
+                <SubHeading>
+                   <GiTrafficLightsGreen  style={{backgroundColor:'green', borderRadius:'50%', marginTop:'5px'}}/> For Sale
+                </SubHeading>:<SubHeading><GiTrafficLightsRed style={{backgroundColor:'red', borderRadius:'50%', marginTop:'5px'}}/>Off Market</SubHeading>
+            }
+            </div>
+            <ButtonContainer><Button>Request a Tour</Button>  <Button>Contact Agent</Button></ButtonContainer>
+            <div style={{height: '40rem'}}>
+                hi
+            </div>
+       </Right>
        
     </Container>
 </Model>

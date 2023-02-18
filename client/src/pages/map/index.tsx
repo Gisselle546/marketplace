@@ -29,10 +29,9 @@ function Mappy() {
           </Map>
       </MapWrapper> 
     </PageTemplate>
-    <Modal
-     show={true}
-     >
-     </Modal>
+    <Modal show={true}/>
+  
+  
 
    </>
   );

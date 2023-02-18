@@ -10,7 +10,7 @@ export const CardWrapper = styled.div(
     justify-content: space-between;
     border-radius:10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    margin: 1rem;
+    margin: 1.5rem;
     cursor: pointer;
     transition: 0.3s;
     &:hover { 
@@ -42,5 +42,6 @@ flex-direction: column;
 justify-content: space-evenly;
 background-color: rgba(0,0,54,0.7);
 box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+padding-bottom:0.5rem;
 `
 );

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 import { CardWrapper, Heading, Bottom, SubHeading } from './Card.style'
-import img from '../../assets/images/buy.png';
+
 
 type Props ={
   card:any
@@ -16,7 +16,7 @@ const Container = styled("div")<{img: any }>`
 `
 
 function Card({card}:Props) {
- console.log(card);
+
   return (
     <>
     <CardWrapper>
@@ -25,7 +25,7 @@ function Card({card}:Props) {
         <Bottom>
         
             <Heading> ${card.list_price.toLocaleString("en-US")}</Heading>
-            <SubHeading> {card.description.beds} bds | {card.description.baths} bts | {card.description.sqft} sqft</SubHeading>
+            <SubHeading> {card.description.beds} bd | {card.description.baths} ba | {card.description.sqft} sqft</SubHeading>
             <SubHeading> {card.location.address.line}</SubHeading>
        
         </Bottom>
