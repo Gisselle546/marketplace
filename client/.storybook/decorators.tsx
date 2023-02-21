@@ -1,7 +1,9 @@
 import React from 'react';
 import styled, {css, ThemeProvider } from 'styled-components';
 import { DecoratorFn } from '@storybook/react';
-
+import { configureStore } from '@reduxjs/toolkit'
+import { Provider as StoreProvider } from 'react-redux'
+import store from '../src/redux/store';
 import { breakpoints } from '../src/styles/breakpoints';
 import { GlobalStyle } from '../src/styles/GlobalStyle';
 import { lightTheme, darkTheme } from '../src/styles/theme';
@@ -76,4 +78,14 @@ const ThemeBlock = styled.div<{ left?: boolean; fullScreen?: boolean }>(
     }
   }
 
-  export const globalDecorators = [withTheme]
+  export const withStore: DecoratorFn = (StoryFn, { parameters }) => {
+    // Creates a store by merging optional custom initialState
+   
+    return (
+      <StoreProvider store={store}>
+        <StoryFn />
+      </StoreProvider>
+    )
+  }
+
+  export const globalDecorators = [withTheme, withStore ]
