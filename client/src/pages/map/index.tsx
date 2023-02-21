@@ -29,7 +29,7 @@ function Mappy() {
           </Map>
       </MapWrapper> 
     </PageTemplate>
-    <Modal show={true}/>
+    <Modal show={false}/>
   
   
 

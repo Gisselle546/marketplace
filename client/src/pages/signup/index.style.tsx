@@ -1,4 +1,5 @@
 import styled, {css} from 'styled-components';
+import { breakpoints } from '@/styles/breakpoints';
 
 export const SignUpWrapper = styled.div(
     ({ theme: {color} }) => css`
@@ -7,9 +8,16 @@ export const SignUpWrapper = styled.div(
     flex-direction: column;
     justify-content: space-around;
     height: 60vh;
+    width: 85%
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 7px;
-    width: 30vw;
+   
+
+    ${breakpoints.M}{
+        height: 60vh;
+        width: 30vw;
+
+    }
     `
 )
 
