@@ -6,13 +6,29 @@ import Button from '../Button/Button';
 import { useAppSelector } from '@/redux/hooks';
 import { selectValue } from '@/redux/reducer/register';
 import { useRouter } from 'next/router'
+import { breakpoints } from '@/styles/breakpoints';
 
 const Backgroundimage = styled.div(
     ({ theme: {color, borderRadius} }) => css`
-    background-image: url(${img.src});
-    height: 80%;
-    width: 50%;
+    background: url(${img.src}) center/cover;
+    height: 40%;
+    width: 60%;
+    margin-left: 1rem;
+    @media ${breakpoints.M}{
+      height: 80%;
+      width: 40%;
+    }
  `
+)
+
+const Header = styled.h2(
+  ({ theme: {typography} }) => css`
+  font-size: ${typography.fontSize.body};
+  margin-left: 0.4rem;
+  @media ${breakpoints.S}{
+   font-size: ${typography.fontSize.heading3};
+    }
+  `
 )
 
 function HomepageSection() {
@@ -22,7 +38,7 @@ function HomepageSection() {
   return (
     <HomepageSectionWrapper>
         <div>
-            <h2> Find your perfect home</h2>
+            <Header> Find your perfect home</Header>
             {
               count? <Button onClick={()=>router.push('/map')}> Check Homes Near You</Button>: <Button onClick={()=>router.push('/signin')}>Sign Up Today</Button>
             }

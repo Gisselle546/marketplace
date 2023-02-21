@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styled, {css} from 'styled-components'
-import { Inter } from '@next/font/google'
+import { breakpoints } from '@/styles/breakpoints';
 import {PageTemplate} from '@/templates/PageTemplate';
 import img from '../assets/images/homepage.jpg';
 import Button from '@/components/Button/Button';
@@ -44,7 +44,13 @@ const AddressInput = styled.input`
 `
 const HomepageBadgecontainer = styled.div`
  display:flex;
- justify-content: center;
+ flex-direction: column;
+ align-items: center;
+ justify-content: space-evenly;
+ @media ${breakpoints.M}{
+  flex-direction: row;
+  justify-content: center;
+}
 `
 
 export default function Home() {
