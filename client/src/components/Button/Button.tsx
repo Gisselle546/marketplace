@@ -5,12 +5,14 @@ type ButtonProps={
     children:any
     large?:any
     onClick?: () => void
+    type?: any
+    disabled?: any;
   
 }
 
 function Button({children, ...props}:ButtonProps) {
   return (
-    <ButtonWrapper type="submit" {...props}>
+    <ButtonWrapper  {...props}>
         {children}
     </ButtonWrapper>
   )

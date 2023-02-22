@@ -13,7 +13,7 @@ export const SignUpWrapper = styled.div(
     border-radius: 7px;
    
 
-    ${breakpoints.M}{
+    @media ${breakpoints.M}{
         height: 60vh;
         width: 30vw;
 

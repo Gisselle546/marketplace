@@ -97,8 +97,7 @@ function Modal(props: Props) {
     } = { ...props };
     const ref = useRef(null);
     const data = dummy_data[4]
-    console.log(data);
-
+   
 
   return (
     <Model show={show}>

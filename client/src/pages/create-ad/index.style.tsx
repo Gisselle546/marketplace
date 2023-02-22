@@ -5,10 +5,11 @@ export const CreateWrapper = styled.div(
     background: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    height: 60vh;
+    justify-content: flex-start;
+    align-items: center;
+    height: 68vh;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 7px;
-    width: 30vw;
+    width: 40vw;
     `
 )

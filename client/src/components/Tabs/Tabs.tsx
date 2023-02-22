@@ -1,5 +1,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
+import { dummy_data } from '@/dummydata/data';
+import { BiBuilding, BiCalendarEvent } from "react-icons/bi";
 
 const TabsContainer = styled.div`
 height: 40rem;
@@ -7,6 +9,7 @@ margin-top: 1rem;
 border-radius: 5%; 
 display: flex; 
 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+flex-direction: column;
 `;
 
 const TabsHeader = styled.div(
@@ -26,6 +29,7 @@ color: ${color.buttonPrimary}
 
 const TabInfo = styled.ul`
 list-style-type: none;
+
 `
 const Item = styled.p`
 letter-spacing: 8px;
@@ -33,7 +37,8 @@ letter-spacing: 8px;
 
 
 
-
+const data = dummy_data[1];
+console.log(data);
 
 function Tabs() {
   return (
@@ -42,7 +47,8 @@ function Tabs() {
           <Item>Overview</Item>
         </TabsHeader>
         <TabInfo>
-
+         <p style={{textTransform:'capitalize'}}> <BiBuilding/> {data.description.sub_type}</p>
+         <p> <BiCalendarEvent/> Built in {data.description.year_built}</p>
         </TabInfo>
 
     </TabsContainer>

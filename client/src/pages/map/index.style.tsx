@@ -26,7 +26,6 @@ export const Description = styled.div(
 export const Map = styled.div(
     ({ theme: {color} }) => css`
  
-        
          display: none;
          @media ${breakpoints.S} {
            display: block;
