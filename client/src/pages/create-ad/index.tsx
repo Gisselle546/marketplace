@@ -6,6 +6,7 @@ import Button from '@/components/Button/Button';
 import axios from 'axios';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
+import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 
 //import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 
@@ -66,16 +67,11 @@ function CreateAd() {
 
     const formik = useFormik({
         initialValues: {
-         address: '',
+          address: {formatted_address:''},
           url: url,
           bedrooms: 1,
-          bath:1
+          bath:1,
         },
-        validationSchema: Yup.object({
-            
-            address: Yup.string()
-                         .required('address is required')
-        }),
         onSubmit: values => {
         console.log(values)
         },
@@ -117,7 +113,30 @@ function CreateAd() {
                         <InputWrapper type="file" name="url"onChange={handleOnChange} />
                         <Button type={"button"} onClick={uploadImage}> Upload </Button>
                     </FileWrapper>
-                    <InputWrapper type="text" name="address"placeholder="Enter Address" style={{alignItems:"flex-end"}} value={formik.values.address} onChange={formik.handleChange}required/>
+                    <GooglePlacesAutocomplete
+                        apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}
+                        
+                        selectProps={{
+                        placeholder: "Enter address, or zipcode..",
+                        onChange: async ({ value }:any) => {
+                            
+                            const data = await geocodeByAddress(value.description);
+                            formik.values.address = data[0];
+                            console.log(formik.values.address)
+                            
+                        },
+                        styles: {
+                            input: (provided: any) => ({
+                            ...provided,
+                            color: '4px',
+                            minWidth:'16rem',
+                            outline:'none',
+                            height: '2.2rem',
+                            
+                            }),
+                        },
+                        }}
+                    />
                     <div style={{display:'flex'}}>
                         <p> Enter number of beds: </p>
                         <InputWrapper type="number" name="bedrooms" min="1" value={formik.values.bedrooms} onChange={formik.handleChange}required/>
@@ -127,8 +146,7 @@ function CreateAd() {
                         <InputWrapper type="number" name="bath" min="1" value={formik.values.bath} onChange={formik.handleChange}required/>
                     </div>
                    
-            
-                    <Button disabled={false} type={"submit"} >Submit</Button>
+                    <Button disabled={formik.values.address && formik.values.url===" "} type={"submit"} >Submit</Button>
                   
                 </FormWrapper>
             </CreateWrapper>
