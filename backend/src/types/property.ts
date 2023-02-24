@@ -3,18 +3,19 @@ import { Document } from 'mongoose';
 import { IUser } from './user';
 
 export interface IProperty extends Document{
-    photos: Array<String>
+    photos?: Array<String>
     price: number;
     address: string;
     bedrooms: number;
-    landsize: string;
-    carpark: number;
-    description: string;
+    bath: number;
+    landsize?: string;
+    carpark?: number;
+    formatted_address: string;
+    description?: string;
     views: number;
-    title: string;
     type: string;
     action: string;
     sold: boolean;
-    postedBy: IUser;
-    location: ILocation;
+    postedBy?: IUser;
+    location?: ILocation;
 }

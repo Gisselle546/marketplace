@@ -1,4 +1,3 @@
-
 import { ILocation } from "../types/location";
 import { IProperty } from "../types/property";
 import { model, Schema } from 'mongoose';
@@ -8,35 +7,36 @@ import { locationSchema } from "./location";
 const propertySchema: Schema = new Schema({
     photos: {
         type: Array<String>,
-        required: true
     },
     price: {
         type: Number,
         required: true
     },
-    address: {
+    formatted_address: {
         type: String,
         required: true
+    },
+    google:{
+        type: {}
     },
     bedrooms:{
         type: Number,
         required: true
     },
-    landsize: {
+    
+    bath:{
         type: Number,
         required: true
     },
+    landsize: {
+        type: Number,
+    },
     description: {
         type: String,
-        required: true
     },
     views: {
         type: Number,
         default: 0,
-      },
-    title: {
-        type: String,
-        maxLength: 255,
       },
     
     type: {

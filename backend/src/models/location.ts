@@ -3,9 +3,16 @@ import { model, Schema } from 'mongoose';
 
 const locationSchema: Schema = new Schema(
     {
-        coords:{
-            type: Array<Number>,
-            required: true
+        coords: {
+            location:{
+               
+                lat:{
+                    type: Number
+                }, 
+                lng: {
+                    type: Number
+                }
+            }
         }
     }
 

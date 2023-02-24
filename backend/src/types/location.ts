@@ -1,5 +1,12 @@
 import { Document } from "mongoose"
 
+
+
 export interface ILocation extends Document{
-    coords: Array<number>;
+    coords: {
+        location:{
+            lat: Number;
+            lng: Number;
+        }
+    };
 }

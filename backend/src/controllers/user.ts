@@ -10,16 +10,16 @@ import bcrypt from 'bcryptjs';
  * @param req usually if there's a request as to get params from the request
  * @param res sends the token 
  */
-const register = async (req: Request, res: Response): Promise<void>=>{
+const register = async (req: Request, res: Response) =>{
     try {
         const { email, password } = req.body
 
         if (!email || !password) {
-          throw new Error('please provide all values')
+          return res.status(403).send('please provide all values')
         }
         const userAlreadyExists = await User.findOne({ email })
         if (userAlreadyExists) {
-          throw new Error('Email already in use')
+          return res.status(403).send('Email already in use')
         }
         
         const user = await User.create({ email, password})
@@ -35,25 +35,25 @@ const register = async (req: Request, res: Response): Promise<void>=>{
     }
 }
 
-const login = async (req: Request, res: Response): Promise<void>=>{
+const login = async (req: Request, res: Response) => {
   try{
     const { email, password } = req.body
-    console.log(req.body);
     
     if (!email || !password) {
       throw new Error('please provide all values')
     }
 
     const user = await User.findOne({ email })
-    console.log(user);
+    
     if (!user) {
-      throw new Error('No user found')
+      return res.status(403).send('Please Sign Up, User not found')
     }
     
     const isMatch = await bcrypt.compareSync(password, user.password)
    
     if(!isMatch){
-      throw new Error('Password do not match')
+
+      return res.status(403).send('Password do not match')
     }
     
     const token: any = jwt.sign({
@@ -62,20 +62,21 @@ const login = async (req: Request, res: Response): Promise<void>=>{
      res.status(200).json({accesstoken:token});
    
   } catch(error){
-    throw error
+    return res.status(403).send('User is not found')
   }
 }
 
 const verify_token = (req: any, res:any, next:any) => {
     const token =
-      req.body.token || req.query.token || req.headers["x-access-token"];
-  
+      req.body.token || req.query.token || req.headers["authorization"].split(" ")[1]
+
+
+
     if (!token) {
       return res.status(403).send("A token is required for authentication");
     }
     try {
-      const decoded = jwt.verify(token,  "");
-      console.log(decoded)
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!);
       req.user = decoded;
     } catch (err) {
       return res.status(401).send("Invalid Token");
