@@ -42,13 +42,11 @@ export const LinkText = styled.a`
 `;
 
 function Signin() {
-  const count = useAppSelector(selectValue);
-  const error = useAppSelector(errorValue);
   
-
+  const error = useAppSelector(errorValue);
   const dispatch = useAppDispatch()
   const router = useRouter();  
-
+  console.log(error);
 
   const formik = useFormik({
         initialValues: {
@@ -64,7 +62,7 @@ function Signin() {
         }),
         onSubmit: async values => {
         dispatch(signinuser(values));
-      
+        if (error!==null) return router.push('/map');
         }});
       
   return (

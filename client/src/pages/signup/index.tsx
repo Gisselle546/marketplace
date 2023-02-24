@@ -43,6 +43,7 @@ function SignUp() {
   const dispatch = useAppDispatch();
   const router = useRouter();  
   const error = useAppSelector(errorValue);
+  console.log(error);
  
      const formik = useFormik({
         initialValues: {
@@ -58,7 +59,8 @@ function SignUp() {
         }),
         onSubmit: values => {
         dispatch(signupuser(values));
-        
+        if (error!==null) return router.push('/map');
+          
         },
       });
   return (
