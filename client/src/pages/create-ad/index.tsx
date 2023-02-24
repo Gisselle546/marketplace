@@ -7,8 +7,9 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
-
-//import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+import { useAppDispatch } from '@/redux/hooks';
+import { create_add } from '@/redux/reducer/ad';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 
 
 const Content = styled.div`
@@ -64,16 +65,19 @@ function CreateAd() {
 
     const [image, setImage] = useState(" ");
     const [url, setUrl] = useState(" ");
-
+    const dispatch = useAppDispatch()
     const formik = useFormik({
         initialValues: {
-          address: {formatted_address:''},
+          address: {formatted_address:'', geometry: {}},
           url: url,
           bedrooms: 1,
           bath:1,
+          price:1
         },
         onSubmit: values => {
-        console.log(values)
+            
+            const data = {photos: url, formatted_address:values.address.formatted_address, coords: values.address.geometry, ...values}
+            dispatch(create_add(data));
         },
       });
 
@@ -100,9 +104,9 @@ function CreateAd() {
     
    }
 
-   console.log(url)
+  
   return (
-   
+ <ProtectedRoute>
     <PageTemplate>
         <Content>
             <CreateWrapper>
@@ -137,6 +141,10 @@ function CreateAd() {
                         },
                         }}
                     />
+                     <div style={{display:'flex'}}>
+                        <p> Enter price of home: </p>
+                       <InputWrapper  type="number" name="price" min="1" value={formik.values.price} onChange={formik.handleChange}required/>
+                    </div>
                     <div style={{display:'flex'}}>
                         <p> Enter number of beds: </p>
                         <InputWrapper type="number" name="bedrooms" min="1" value={formik.values.bedrooms} onChange={formik.handleChange}required/>
@@ -152,7 +160,7 @@ function CreateAd() {
             </CreateWrapper>
         </Content>
     </PageTemplate>
-   
+    </ProtectedRoute>
   )
 }
 

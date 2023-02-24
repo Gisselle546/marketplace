@@ -7,7 +7,8 @@ import { HeaderSign, SignInWrapper, FormWrapper } from './index.style'
 import React from 'react'
 import Button from '@/components/Button/Button';
 import { signinuser } from '@/redux/reducer/register';
-import { useAppDispatch } from '@/redux/hooks';
+import { selectValue, errorValue } from '@/redux/reducer/register';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useRouter } from 'next/router';
 
 
@@ -41,9 +42,14 @@ export const LinkText = styled.a`
 `;
 
 function Signin() {
+  const count = useAppSelector(selectValue);
+  const error = useAppSelector(errorValue);
+  
+
   const dispatch = useAppDispatch()
   const router = useRouter();  
-  
+
+
   const formik = useFormik({
         initialValues: {
           email: '',
@@ -56,12 +62,11 @@ function Signin() {
             password: Yup.string()
                          .required('Password is required')
         }),
-        onSubmit: values => {
+        onSubmit: async values => {
         dispatch(signinuser(values));
-        router.push('/map');
-        },
-      });
-
+      
+        }});
+      
   return (
     <>
     <Head>
@@ -75,9 +80,12 @@ function Signin() {
          <SignInWrapper>
             <HeaderSign>Sign In</HeaderSign>
             <FormWrapper onSubmit={formik.handleSubmit}>
+           
             <InputWrapper type="email" name="email"placeholder="Enter Email Address" value={formik.values.email} onChange={formik.handleChange}required/>
             <InputWrapper type="password" name="password"placeholder="Enter Password" value={formik.values.password} onChange={formik.handleChange}required/>
+            {error&& <div style={{color:"#AA1803", fontWeight: "bold"}}>{error.response.data}</div>}
             <Button>Sign In</Button>
+            
             <LinkText href="/signup">Register Instead&rarr;</LinkText>
             </FormWrapper>
             
@@ -85,11 +93,11 @@ function Signin() {
           
         </Content>
         
-        
     </PageTemplate>
-
+  
     </>
   )
 }
 
 export default Signin 
+

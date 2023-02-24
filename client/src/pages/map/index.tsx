@@ -17,7 +17,7 @@ function Mappy() {
 
   return (
     <>
- 
+   
     <PageTemplate type="map">
       <Section/>
       <MapWrapper>
@@ -29,7 +29,7 @@ function Mappy() {
           </Map>
       </MapWrapper> 
     </PageTemplate>
-    <Modal show={true}/>
+    <Modal show={false}/>
   
   
 

@@ -6,13 +6,13 @@ import {PageTemplate} from '@/templates/PageTemplate';
 import img from '../assets/images/homepage.jpg';
 import Button from '@/components/Button/Button';
 import HomepageBadge from '@/components/HomepageBadge/HomepageBadge';
-import HomepageSection from '@/components/HomepageSection/HomepageSection';
 import buylogo from '../assets/images/buy.png';
 import rental from '../assets/images/rental.png';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 import { useAppDispatch } from '@/redux/hooks';
 import { addlocation } from '@/redux/reducer/location';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
 
 const Content = styled.div`
@@ -57,6 +57,11 @@ export default function Home() {
   const dispatch = useAppDispatch();
   const router = useRouter(); 
 
+  const HomepageSection = dynamic(() => import("../components/HomepageSection/HomepageSection"), {
+    ssr: false
+  });
+
+
   return (
     <>
       <Head>
@@ -78,6 +83,7 @@ export default function Home() {
                     const data = await geocodeByAddress(value.description);
                     console.log(data);
                     let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
+                    console.log(dataDrive);
                     dispatch(addlocation(dataDrive))
                     router.push('/map')
                   },

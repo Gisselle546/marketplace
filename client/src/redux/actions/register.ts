@@ -1,11 +1,8 @@
-import axios from 'axios';
+import customFetch from '../../utils/axios';
 
 export async function register(data:any){
-    const response = await axios.post('http://localhost:8080/api/v1/register', data)
-    return response.data;
+    const response = await customFetch.post('/register', data)
+    return response;
 }
 
-export async function login(data:any){
-    const response = await axios.post('http://localhost:8080/api/v1/login', data)
-    return response.data;
-}
+

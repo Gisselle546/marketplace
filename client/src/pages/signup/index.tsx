@@ -7,9 +7,9 @@ import {useFormik} from 'formik';
 import Head from 'next/head';
 import styled, {css} from 'styled-components';
 import { signupuser } from '@/redux/reducer/register';
-import { useAppDispatch } from  '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from  '../../redux/hooks';
 import { useRouter } from 'next/router';
-
+import {errorValue} from '@/redux/reducer/register';
 const Content = styled.div`
     display:flex;
     background: linear-gradient(to top right,rgba(0,0,0, 0),rgba(28,44,91, 100)) center right/cover;
@@ -42,6 +42,7 @@ export const LinkText = styled.a`
 function SignUp() {
   const dispatch = useAppDispatch();
   const router = useRouter();  
+  const error = useAppSelector(errorValue);
  
      const formik = useFormik({
         initialValues: {
@@ -57,7 +58,7 @@ function SignUp() {
         }),
         onSubmit: values => {
         dispatch(signupuser(values));
-        router.push('/map');
+        
         },
       });
   return (
@@ -75,6 +76,7 @@ function SignUp() {
                 <FormWrapper onSubmit={formik.handleSubmit}>
                 <InputWrapper type="email" name="email"placeholder="Enter Email Address" value={formik.values.email} onChange={formik.handleChange}required/>
                     <InputWrapper type="password" name="password"placeholder="Enter Password" value={formik.values.password} onChange={formik.handleChange}required/>
+                    {error&& <div style={{color:"#AA1803", fontWeight: "bold"}}>{error.response.data}</div>}
                     <Button>Sign Up</Button>
                     <LinkText href="/signin">Login Instead&rarr;</LinkText>
                 </FormWrapper>
