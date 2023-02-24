@@ -46,8 +46,6 @@ function Signin() {
   const error = useAppSelector(errorValue);
   const dispatch = useAppDispatch()
   const router = useRouter();  
-
-
   data? router.push('/map'): null
 
   const formik = useFormik({
@@ -64,7 +62,7 @@ function Signin() {
         }),
         onSubmit: async values => {
         dispatch(signinuser(values));
-        data? router.push('/map'): null
+       
          
         },
       

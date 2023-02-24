@@ -8,7 +8,7 @@ const customFetch = axios.create({
 customFetch.interceptors.request.use((config:any) => {
     const user = getStorageValue("token");
     if (user) {
-        config.headers['Authorization'] = `Bearer ${user.accesstoken}`;
+        config.headers['Authorization'] = `Bearer ${user}`;
       }
     
     return config;
