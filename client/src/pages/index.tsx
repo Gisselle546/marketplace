@@ -9,8 +9,9 @@ import HomepageBadge from '@/components/HomepageBadge/HomepageBadge';
 import buylogo from '../assets/images/buy.png';
 import rental from '../assets/images/rental.png';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
-import { useAppDispatch } from '@/redux/hooks';
-import { addlocation } from '@/redux/reducer/location';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { locationValue, geoValue } from '@/redux/reducer/location';
+import { getRealEstateData } from '@/redux/reducer/location';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
@@ -56,11 +57,9 @@ const HomepageBadgecontainer = styled.div`
 export default function Home() {
   const dispatch = useAppDispatch();
   const router = useRouter(); 
-
   const HomepageSection = dynamic(() => import("../components/HomepageSection/HomepageSection"), {
     ssr: false
   });
-
 
   return (
     <>
@@ -77,15 +76,19 @@ export default function Home() {
              <GooglePlacesAutocomplete
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}
                 selectProps={{
-                  placeholder: "Enter address, or zipcode..",
+                  placeholder: "Enter city, or zipcode..",
                   onChange: async ({ value }:any) => {
                     
                     const data = await geocodeByAddress(value.description);
-                    console.log(data);
                     let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
-                    console.log(dataDrive);
-                    dispatch(addlocation(dataDrive))
+                    
+                    let datawoef = {state_code: '', city: '', dataDrive}
+
+                    value.terms.length>4? (datawoef.state_code = value.terms[3].value, datawoef.city= value.terms[2].value ) :(datawoef.state_code = value.terms[1].value, datawoef.city= value.terms[0].value )
+                     
+                    await dispatch(getRealEstateData(datawoef))
                     router.push('/map')
+                   
                   },
                   styles: {
                     input: (provided: any) => ({

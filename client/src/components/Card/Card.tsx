@@ -20,11 +20,11 @@ function Card({card}:Props) {
   return (
     <>
     <CardWrapper>
-        <Container img={card.primary_photo.href}>
+        <Container img={card?.primary_photo?.href}>
         </Container>
         <Bottom>
         
-            <Heading> ${card.list_price.toLocaleString("en-US")}</Heading>
+            <Heading> ${card?.list_price.toLocaleString("en-US")}</Heading>
             <SubHeading> {card.description.beds} bd | {card.description.baths} ba | {card.description.sqft} sqft</SubHeading>
             <SubHeading> {card.location.address.line}</SubHeading>
        

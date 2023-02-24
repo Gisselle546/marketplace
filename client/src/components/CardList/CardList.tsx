@@ -1,20 +1,27 @@
 import React from 'react';
 import styled, {css} from 'styled-components'
 import Card from '../Card/Card';
-import { dummy_data } from '@/dummydata/data';
+import { useAppSelector } from '@/redux/hooks';
+import { locationValue } from '@/redux/reducer/location';
+
+
+
 const CardListWrapper = styled.div`
     
 `;
 
-const list = dummy_data.map((card:any, i:any)=>{
-  return <Card key={i}card={card}/>
-})
 
 function CardList() {
+
+const data = useAppSelector(locationValue);
   return (
     <>
     <CardListWrapper>
-      {list}
+      {
+        data.map((card:any, i:any)=>{
+          return <Card key={i}card={card}/>
+        })
+      }
     </CardListWrapper>
 </>
   )
