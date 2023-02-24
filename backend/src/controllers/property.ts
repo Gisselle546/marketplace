@@ -27,7 +27,7 @@ const createAd = async(req: any, res: Response) =>{
     //         }
     //    });
 
-       //const newLocation: ILocation = await location.save();
+    //   const newLocation: ILocation = await location.save();
 
        
 
