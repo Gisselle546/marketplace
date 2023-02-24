@@ -5,7 +5,7 @@ import {PageTemplate} from '@/templates/PageTemplate';
 import CardList from '@/components/CardList/CardList';
 import Section  from './components/Section/Section';
 import Modal from '@/components/Modal/Modal';
-//import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 
 
 
@@ -17,7 +17,7 @@ function Mappy() {
 
   return (
     <>
-   
+   <ProtectedRoute>
     <PageTemplate type="map">
       <Section/>
       <MapWrapper>
@@ -29,6 +29,7 @@ function Mappy() {
           </Map>
       </MapWrapper> 
     </PageTemplate>
+    </ProtectedRoute>
     <Modal show={false}/>
   
   

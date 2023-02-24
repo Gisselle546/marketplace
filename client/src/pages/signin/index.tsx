@@ -4,10 +4,10 @@ import {useFormik} from 'formik';
 import Head from 'next/head'
 import styled, {css} from 'styled-components'
 import { HeaderSign, SignInWrapper, FormWrapper } from './index.style'
-import React from 'react'
+import React, { useState} from 'react'
 import Button from '@/components/Button/Button';
 import { signinuser } from '@/redux/reducer/register';
-import { selectValue, errorValue } from '@/redux/reducer/register';
+import { errorValue, selectValue } from '@/redux/reducer/register';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useRouter } from 'next/router';
 
@@ -42,11 +42,13 @@ export const LinkText = styled.a`
 `;
 
 function Signin() {
-  
+  const data = useAppSelector(selectValue);
   const error = useAppSelector(errorValue);
   const dispatch = useAppDispatch()
   const router = useRouter();  
-  console.log(error);
+
+
+  data? router.push('/map'): null
 
   const formik = useFormik({
         initialValues: {
@@ -62,8 +64,13 @@ function Signin() {
         }),
         onSubmit: async values => {
         dispatch(signinuser(values));
-        if (error!==null) return router.push('/map');
-        }});
+        data? router.push('/map'): null
+         
+        },
+      
+      });
+
+      
       
   return (
     <>

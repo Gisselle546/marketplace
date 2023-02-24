@@ -6,7 +6,7 @@ import { useAppSelector } from '@/redux/hooks';
 function ProtectedRoute({children}:any) {
     const router = useRouter();  
     const data = useAppSelector(selectValue);
-    console.log(data, 'from protected route' );
+   
  
     React.useEffect(()=>{
         if(!data){

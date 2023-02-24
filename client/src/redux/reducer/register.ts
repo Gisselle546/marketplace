@@ -50,6 +50,7 @@ export const logout = () =>{
 }
 
 export const authSlice = createSlice({
+  
     name: 'auth',
     initialState,
     reducers:{
@@ -59,7 +60,7 @@ export const authSlice = createSlice({
         builder
           .addCase(signupuser.pending, (state) => {
             state.status = 'loading'
-
+           
           })
           .addCase(signupuser.fulfilled, (state, action) => {
             state.status = 'idle',
@@ -74,13 +75,14 @@ export const authSlice = createSlice({
          
           .addCase(signinuser.pending, (state) => {
             state.status = 'loading'
-            state.error = null
+           
 
           })
           .addCase(signinuser.fulfilled, (state, action) => {
             state.status = 'idle',
             state.token = action.payload
             state.error = null
+           
           })
           .addCase(signinuser.rejected, (state, action) => {
             
