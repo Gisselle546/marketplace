@@ -7,7 +7,7 @@ import { IUser } from '../types/user';
 import { User } from '../models/user';
 
 
-const createAd = async(req: Request, res: Response): Promise<void> =>{
+const createAd = async(req: any, res: Response) =>{
     try{
         const body = req.body as Pick<IProperty, 'photos' | 'price' | 'formatted_address'|'bedrooms'| 'bath'|'views' |'action'| 'sold' >&{
             coords: Pick<ILocation, 'coords'>& {location: Pick<{lat:number, lng: number}, 'lat' | 'lng'>} 
@@ -15,7 +15,7 @@ const createAd = async(req: Request, res: Response): Promise<void> =>{
 
        
           
-       console.log(req);
+       console.log(req.user);
        res.status(200).json(body);
           
     //    const location: ILocation = new Location({
@@ -38,9 +38,16 @@ const createAd = async(req: Request, res: Response): Promise<void> =>{
     //     bedrooms: body.bedrooms,
     //     bath: body.bath,
     //     location: location,
-    //     postedBy: body.user  
+    //     postedBy: req.user  
        
     //    })
+
+
+   // const newproperty: IProperty = await property.save();
+
+    //res
+   //.status(200)
+   //.json({ message: "Property added", propery: newproperty})
 
 
          
