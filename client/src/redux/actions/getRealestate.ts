@@ -12,3 +12,4 @@ export async function getRealestate(params: any){
    
     return response;
 }
+

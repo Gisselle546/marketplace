@@ -5,10 +5,13 @@ import {PageTemplate} from '@/templates/PageTemplate';
 import Section  from './components/Section/Section';
 import Modal from '@/components/Modal/Modal';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
-
+import { useAppSelector } from '@/redux/hooks';
+import { detailsValue } from '@/redux/reducer/location';
 
 
 function Mappy() {
+  const data = useAppSelector(detailsValue);
+  
   const MapWithNoSSR = dynamic(() => import("../../components/Map/Map"), {
     ssr: false
   });
@@ -16,7 +19,7 @@ function Mappy() {
   const NoSSRCardList = dynamic(() => import("../../components/CardList/CardList"), {
     ssr: false
   });
-
+  
 
   return (
     <>
@@ -33,7 +36,7 @@ function Mappy() {
       </MapWrapper> 
     </PageTemplate>
     </ProtectedRoute>
-    <Modal show={false}/>
+    <Modal show={data  === null ? false : true}/>
   
   
 

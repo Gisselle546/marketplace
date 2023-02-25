@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; 
 import 'leaflet-defaulticon-compatibility';
-import { useAppSelector } from '@/redux/hooks';
-import { locationValue, geoValue } from '@/redux/reducer/location';
+import { useAppSelector, useAppDispatch } from '@/redux/hooks';
+import { locationValue, geoValue, getDetailsData } from '@/redux/reducer/location';
+
+
 
 
 
@@ -19,7 +21,7 @@ const Container = styled("div")<{img: any }>`
 function Map() {
   const {lat, lng} = useAppSelector(geoValue);
   const data = useAppSelector(locationValue);
-  
+  const dispatch = useAppDispatch();
   
     function SetViewOnClick({ coords }: any) {
       const map = useMap();
@@ -28,19 +30,26 @@ function Map() {
       return null;
     }
 
+    
+
     const flat = data.flatMap((card:any) => !card.location.address.coordinate ? [] : card);
     
     const list = flat.map((card:any, i:any)=>{
       
       const {lat, lon}=card.location.address.coordinate
+
+      const handleClick = () =>{
+
+        dispatch(getDetailsData(card.property_id))
+       }
       
       return <>
           <Marker position={[lat, lon]}>
               <Popup>
               ${card?.list_price.toLocaleString("en-US")}
-              <div style={{padding:'0.3rem', cursor:'pointer'}}>
+              <div onClick= {handleClick} style={{padding:'0.3rem', cursor:'pointer'}}>
               <Container img={card?.primary_photo?.href}></Container>
-              {card.location.address.line}
+                {card.location.address.line}
               </div>
               </Popup>
           </Marker>

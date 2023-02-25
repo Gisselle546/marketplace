@@ -9,11 +9,12 @@ import HomepageBadge from '@/components/HomepageBadge/HomepageBadge';
 import buylogo from '../assets/images/buy.png';
 import rental from '../assets/images/rental.png';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { locationValue, geoValue } from '@/redux/reducer/location';
+import { useAppDispatch } from '@/redux/hooks';
 import { getRealEstateData } from '@/redux/reducer/location';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { useAppSelector  } from '@/redux/hooks';
+import { detailsValue, getDetailsData } from '@/redux/reducer/location';
 
 
 const Content = styled.div`
@@ -56,6 +57,7 @@ const HomepageBadgecontainer = styled.div`
 
 export default function Home() {
   const dispatch = useAppDispatch();
+  const data = useAppSelector( detailsValue);
   const router = useRouter(); 
   const HomepageSection = dynamic(() => import("../components/HomepageSection/HomepageSection"), {
     ssr: false

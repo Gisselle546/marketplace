@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components'
 import React from 'react'
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 import tear from '../../../../assets/images/tear.png';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { locationValue, addlocation } from '@/redux/reducer/location';
+import { useAppDispatch } from '@/redux/hooks';
+import { getRealEstateData } from '@/redux/reducer/location';
 
 const Container = styled.div(
     ({ theme: { color } }) => css`
@@ -44,10 +44,15 @@ function Section() {
                 selectProps={{
                   placeholder: "Enter address, or zipcode..",
                   onChange: async ({ value }:any) => {
-                    
                     const data = await geocodeByAddress(value.description);
                     let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
-                    dispatch(addlocation(dataDrive))
+                    
+                    let datawoef = {state_code: '', city: '', dataDrive}
+
+                    value.terms.length>4? (datawoef.state_code = value.terms[3].value, datawoef.city= value.terms[2].value ) :(datawoef.state_code = value.terms[1].value, datawoef.city= value.terms[0].value )
+                     
+                    await dispatch(getRealEstateData(datawoef))
+                   
                   },
                   styles: {
                     input: (provided: any) => ({

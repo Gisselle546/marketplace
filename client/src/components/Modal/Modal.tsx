@@ -4,6 +4,8 @@ import { dummy_data } from "@/dummydata/data";
 import { GiTrafficLightsGreen, GiTrafficLightsRed } from 'react-icons/gi';
 import Button from "../Button/Button";
 import Tabs from "../Tabs/Tabs";
+import { useAppSelector  } from '@/redux/hooks';
+import { detailsValue, getDetailsData } from '@/redux/reducer/location';
 
 const Model = styled("div")<{show: any}>`
     z-index: 9999;
@@ -41,6 +43,7 @@ flex-direction: column;
 height: 100%;
 width: 100%; 
 justify-content:space-around;
+
 
 `;
 
@@ -92,37 +95,46 @@ type Props ={
 
 function Modal(props: Props) {
     const {
-        show, // boolean - visible/invisible
-
+        show
     } = { ...props };
     const ref = useRef(null);
-    const data = dummy_data[4]
+    const data = useAppSelector(detailsValue)
    
-
+    if(!data){
+        return <div>...</div>
+    }
+    console.log(data)
   return (
     <Model show={show}>
     <Container ref={ref}>
        <Left> 
-            {data.photos.map(df=>{
+{/*             
+            {    
+                data?.photos.map((df:any)=>{
+                    console.log(df);
                 return <>
+                    
                     <ImageContainer img={df.href}/>
                     </>
-            })}
+                })
+            } */}
        </Left>
        <Right>
-          <div style={{height: '15rem', padding:'1rem', flexDirection:'column', justifyContent:'space-evenly'}}>
+         {/* <div style={{height: '15rem', padding:'1rem', flexDirection:'column', justifyContent:'space-evenly'}}>
           <div style={{display:'flex', alignItems:'center'}}>
-            <Heading> ${data.list_price.toLocaleString("en-US")}</Heading><SubHeading> {data.description.beds} bd | {data.description.baths} ba | {data.description.sqft} sqft</SubHeading>
+            <Heading> ${data.price_history[0].price?.toLocaleString("en-US")}</Heading><SubHeading> {data.listings[0].beds} bd | {data.listings[0].baths_full} ba | {data.listings[0].sqft} sqft</SubHeading>
           </div>
-            <SubHeading> {data.location.address.line}, {data.location.address.city}, {data.location.address.state_code} {data.location.address.postal_code}</SubHeading>
-            {data.status ==='for_sale' ?
+            <SubHeading> {data.address.line}, {data.address.city}, {data.address.state_code} {data.address.postal_code}</SubHeading>
+            {data.client_display_flags.presentation_status ==='for_sale' ?
                 <SubHeading>
                    <GiTrafficLightsGreen  style={{backgroundColor:'green', borderRadius:'50%', marginTop:'5px'}}/> For Sale
                 </SubHeading>:<SubHeading><GiTrafficLightsRed style={{backgroundColor:'red', borderRadius:'50%', marginTop:'5px'}}/>Off Market</SubHeading>
             }
             </div>
+            
             <ButtonContainer><Button>Request a Tour</Button>  <Button>Contact Agent</Button></ButtonContainer>
-           <Tabs/>
+           <Tabs/> */}
+           x
        </Right>
        
     </Container>

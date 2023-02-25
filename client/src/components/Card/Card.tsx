@@ -1,7 +1,8 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 import { CardWrapper, Heading, Bottom, SubHeading } from './Card.style'
-
+import { useAppDispatch } from '@/redux/hooks';
+import { getDetailsData} from '@/redux/reducer/location';
 
 type Props ={
   card:any
@@ -16,10 +17,16 @@ const Container = styled("div")<{img: any }>`
 `
 
 function Card({card}:Props) {
+  const dispatch = useAppDispatch();
+
+ const handleClick = () =>{
+
+  dispatch(getDetailsData(card.property_id))
+ }
 
   return (
     <>
-    <CardWrapper>
+    <CardWrapper onClick={handleClick}>
         <Container img={card?.primary_photo?.href}>
         </Container>
         <Bottom>

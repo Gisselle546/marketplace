@@ -2,10 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { AppState } from "../store";
 import { getStorageLocal, setStorageLocal } from "../hooks/useSessionStorage";
 import { getRealestate } from "../actions/getRealestate";
+import { getDetails } from "../actions/getDetails";
 
 
 export interface LocationState{
-    location: [] | any
+    location: {} | any
+    details: {} | any
     geo: { lat: number, lng: number} | any
     status: 'idle' | 'loading' | 'failed',
     error?: null | any
@@ -13,6 +15,7 @@ export interface LocationState{
 
 const initialState: LocationState = {
     location: getStorageLocal('data') || [],
+    details: null,
     status: 'idle',
     geo: getStorageLocal('location') || {lat: 40.8054, lng: -74.0241},
     error: null
@@ -38,6 +41,18 @@ export const getRealEstateData = createAsyncThunk(
     }
 )
 
+export const getDetailsData = createAsyncThunk(
+    '../action/getDetails',
+    async(data: any, {rejectWithValue}) => {
+        try{
+            const response = await getDetails(data)
+            console.log(response.data.data.property_detail);
+            return response.data.data.property_detail;
+        }catch(error){
+            rejectWithValue(error)
+        }
+    }
+)
 
 
 export const locationSlice = createSlice({
@@ -52,7 +67,7 @@ export const locationSlice = createSlice({
           })
           .addCase(getRealEstateData.fulfilled, (state, action:any) => {
             
-            state.status = 'idle',
+            state.status = 'idle'
             state.location = action.payload
             state.geo = getStorageLocal('location'),
             state.error = null
@@ -62,6 +77,19 @@ export const locationSlice = createSlice({
             
             state.error = action.payload
           })
+          
+          .addCase(getDetailsData.pending, (state)=>{
+            state.status = 'loading'
+          })
+          .addCase(getDetailsData.fulfilled, (state, action)=>{
+            state.status = 'idle'
+            state.details =  action.payload
+            state.error = null
+          })
+          .addCase(getDetailsData.rejected, (state, action)=>{
+            state.status = 'failed'
+            state.error =  action.payload
+          })
     }
 })
 
@@ -69,7 +97,7 @@ export const locationSlice = createSlice({
 
 export const locationValue = (state: AppState) => state.location.location
 export const geoValue = (state: AppState) => state.location.geo
-console.log(locationValue, 'location');
-console.log(geoValue, 'geo')
+export const detailsValue = (state: AppState) => state.location.details
+
 
 export default locationSlice.reducer
