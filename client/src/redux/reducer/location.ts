@@ -46,7 +46,6 @@ export const getDetailsData = createAsyncThunk(
     async(data: any, {rejectWithValue}) => {
         try{
             const response = await getDetails(data)
-            console.log(response.data.data.property_detail);
             return response.data.data.property_detail;
         }catch(error){
             rejectWithValue(error)
@@ -55,10 +54,17 @@ export const getDetailsData = createAsyncThunk(
 )
 
 
+
+
 export const locationSlice = createSlice({
     name: 'location', 
     initialState,
-    reducers:{},
+    reducers:{
+       nullDetail: (state)=>{
+        state.details = null;
+        console.log(state.details)
+       }
+    },
     extraReducers: (builder) =>{
         builder
         .addCase(getRealEstateData.pending, (state) => {
@@ -93,7 +99,7 @@ export const locationSlice = createSlice({
     }
 })
 
-
+export const { nullDetail } = locationSlice.actions
 
 export const locationValue = (state: AppState) => state.location.location
 export const geoValue = (state: AppState) => state.location.geo

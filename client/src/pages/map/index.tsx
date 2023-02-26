@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import dynamic from "next/dynamic";
 import { MapWrapper, Map, Description } from './index.style';
 import {PageTemplate} from '@/templates/PageTemplate';
