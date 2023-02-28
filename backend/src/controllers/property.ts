@@ -3,8 +3,6 @@ import { Location } from '../models/location';
 import { Property } from '../models/property';
 import { Response, Request } from 'express';
 import { ILocation } from '../types/location';
-import { IUser } from '../types/user';
-import { User } from '../models/user';
 
 
 const createAd = async(req: any, res: Response) =>{
@@ -18,36 +16,36 @@ const createAd = async(req: any, res: Response) =>{
        console.log(req.user);
        res.status(200).json(body);
           
-    //    const location: ILocation = new Location({
-    //         coords:{
-    //             location:{
-    //                 lat: body.coords.location.lat,
-    //                 lng: body.coords.location.lng
-    //             }
-    //         }
-    //    });
+       const location: ILocation = new Location({
+            coords:{
+                location:{
+                    lat: body.coords.location.lat,
+                    lng: body.coords.location.lng
+                }
+            }
+       });
 
-    //   const newLocation: ILocation = await location.save();
+      const newLocation: ILocation = await location.save();
 
        
 
-    //    const property: IProperty = new Property({
-    //     photos: body.photos,
-    //     price: body.price,
-    //     formatted_address: body.formatted_address,
-    //     bedrooms: body.bedrooms,
-    //     bath: body.bath,
-    //     location: location,
-    //     postedBy: req.user  
+       const property: IProperty = new Property({
+        photos: body.photos,
+        price: body.price,
+        formatted_address: body.formatted_address,
+        bedrooms: body.bedrooms,
+        bath: body.bath,
+        location: location,
+        postedBy: req.user  
        
-    //    })
+       })
 
 
-   // const newproperty: IProperty = await property.save();
+   const newproperty: IProperty = await property.save();
 
-    //res
-   //.status(200)
-   //.json({ message: "Property added", propery: newproperty})
+    res
+   .status(200)
+   .json({ message: "Property added", propery: newproperty})
 
 
          
@@ -57,5 +55,15 @@ const createAd = async(req: any, res: Response) =>{
 
 }
 
+const getAds = async(req: any, res: Response)=>{
+    try{
+        const property: IProperty[] = await Property.find().populate('location');
+        res.status(200).json(property)
+    }catch(error){
+        res.status(401).send(error)
+    }
+}
 
-export {createAd}
+
+
+export {createAd, getAds}
