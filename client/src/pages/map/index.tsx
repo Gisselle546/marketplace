@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from "next/dynamic";
 import { MapWrapper, Map, Description } from './index.style';
 import {PageTemplate} from '@/templates/PageTemplate';
-import Section  from './components/Section/Section';
+import Section  from '../../components/Section/Section';
 import Modal from '@/components/Modal/Modal';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import { useAppSelector } from '@/redux/hooks';

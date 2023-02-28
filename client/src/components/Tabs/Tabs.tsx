@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, {css} from 'styled-components'
-import { dummy_data } from '@/dummydata/data';
-import { BiBuilding, BiCalendarEvent } from "react-icons/bi";
+import { BiBuilding, BiCalendarEvent, BiBath, BiBed } from "react-icons/bi";
+import { useAppSelector } from '@/redux/hooks';
+import { detailsValue } from '@/redux/reducer/location';
 
 const TabsContainer = styled.div`
 height: 40rem;
@@ -18,9 +19,9 @@ display: flex;
 height: 5rem;
 width: 100%;
 align-items: flex-end;
-justify-content: center;
+justify-content: space-around;
 border-bottom: 1px solid ${color.buttonSecondary};
-font-size: ${typography.fontSize.heading4};
+font-size: ${typography.fontSize.body};
 font-weight: ${typography.fontWeight.bold};
 color: ${color.buttonPrimary}
 
@@ -33,24 +34,42 @@ list-style-type: none;
 `
 const Item = styled.p`
 letter-spacing: 8px;
+cursor:pointer;
 `
 
 
 
-const data = dummy_data[1];
-console.log(data);
+
 
 function Tabs() {
+  const data = useAppSelector(detailsValue)
+  const [NavLinks, setNav] = useState({
+    OverView: false,
+    home_details: false
+  })
+
+  const handleClicky = () =>{
+    setNav((prevState)=>({
+      ...prevState,
+      OverView: !NavLinks.OverView
+    
+    }))
+  }
+
   return (
     <TabsContainer>
         <TabsHeader>
-          <Item>Overview</Item>
+          <Item onClick={handleClicky}>Overview</Item>
+          <Item onClick={handleClicky}>Facts</Item>
         </TabsHeader>
-        <TabInfo>
-         <p style={{textTransform:'capitalize'}}> <BiBuilding/> {data.description.sub_type}</p>
-         <p> <BiCalendarEvent/> Built in {data.description.year_built}</p>
+      {  NavLinks.OverView &&<TabInfo>
+         <p style={{textTransform:'capitalize'}}> <BiBuilding/> {data.display_property_type}</p>
+         <p> <BiCalendarEvent/> Built in {data.listings[0].year_built}</p> 
+         <p> <BiBed/> {data.listings[0].beds} beds</p>
+         <p> <BiBath/> {data.listings[0].baths_full} baths</p>
         </TabInfo>
-
+      
+      }
     </TabsContainer>
   )
 }

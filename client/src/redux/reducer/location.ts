@@ -15,7 +15,10 @@ export interface LocationState{
 
 const initialState: LocationState = {
     location: getStorageLocal('data') || [],
-    details: null,
+    //////
+    //to be changed back to just null instead of getStorageLocal('details') || null
+   ///////
+    details: getStorageLocal('details') || null,
     status: 'idle',
     geo: getStorageLocal('location') || {lat: 40.8054, lng: -74.0241},
     error: null
@@ -46,6 +49,10 @@ export const getDetailsData = createAsyncThunk(
     async(data: any, {rejectWithValue}) => {
         try{
             const response = await getDetails(data)
+            //////////
+            // To be removed later after modal testing
+            /////////
+            setStorageLocal('details', response.data.data.property_detail)
             return response.data.data.property_detail;
         }catch(error){
             rejectWithValue(error)

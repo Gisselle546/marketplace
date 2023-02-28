@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import React from 'react'
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
-import tear from '../../../../assets/images/tear.png';
+import tear from '../../assets/images/tear.png';
 import { useAppDispatch } from '@/redux/hooks';
 import { getRealEstateData } from '@/redux/reducer/location';
 
