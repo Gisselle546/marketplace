@@ -10,11 +10,11 @@ import buylogo from '../assets/images/buy.png';
 import rental from '../assets/images/rental.png';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 import { useAppDispatch } from '@/redux/hooks';
-import { getRealEstateData } from '@/redux/reducer/location';
+import { getRealEstateData, paramsValue, geoValue } from '@/redux/reducer/location';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useAppSelector  } from '@/redux/hooks';
-import { detailsValue, getDetailsData } from '@/redux/reducer/location';
+import { detailsValue } from '@/redux/reducer/location';
 
 
 const Content = styled.div`
@@ -57,11 +57,21 @@ const HomepageBadgecontainer = styled.div`
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const data = useAppSelector( detailsValue);
+  const parmy = useAppSelector(paramsValue)
+  const geo = useAppSelector(geoValue)
   const router = useRouter(); 
   const HomepageSection = dynamic(() => import("../components/HomepageSection/HomepageSection"), {
     ssr: false
   });
+
+  console.log(geo)
+
+
+ const handleClicky = async (type: string) => {
+  console.log('clicky')
+  //await dispatch(getRealEstateData({type: type, data: {state_code: 'NY', city: 'New York City', dataDrive: geo}}))
+  router.push('/map')
+ }
 
   return (
     <>
@@ -84,11 +94,11 @@ export default function Home() {
                     const data = await geocodeByAddress(value.description);
                     let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
                     
-                    let datawoef = {state_code: '', city: '', dataDrive}
+                    let datawoef:any = {state_code: '', city: '', dataDrive}
 
                     value.terms.length>4? (datawoef.state_code = value.terms[3].value, datawoef.city= value.terms[2].value ) :(datawoef.state_code = value.terms[1].value, datawoef.city= value.terms[0].value )
-                     
-                    await dispatch(getRealEstateData(datawoef))
+            
+                    await dispatch(getRealEstateData({type: 'sale', data: datawoef}))
                     router.push('/map')
                    
                   },
@@ -108,8 +118,8 @@ export default function Home() {
           <HomepageSection/>
           <Spacing/>
           <HomepageBadgecontainer>
-            <HomepageBadge logo={`${buylogo.src}`} title="Buy Home" description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ' buttondesc= "Find a Home"/>
-            <HomepageBadge logo={`${rental.src}`} title="Rent Home" description='Ac turpis egestas integer eget. Est lorem ipsum dolor sit. Convallis aenean et tortor at risus viverra. Ut tellus elementum sagittis vitae. Diam maecenas ultricies mi eget mauris.'buttondesc= "Find a Rental"/>
+            <HomepageBadge logo={`${buylogo.src}`} title="Buy Home" description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ' buttondesc= "Find a Home" Click={()=>handleClicky('sale')}/>
+            <HomepageBadge logo={`${rental.src}`} title="Rent Home" description='Ac turpis egestas integer eget. Est lorem ipsum dolor sit. Convallis aenean et tortor at risus viverra. Ut tellus elementum sagittis vitae. Diam maecenas ultricies mi eget mauris.'buttondesc= "Find a Rental" Click={()=>handleClicky('rent')}/>
           </HomepageBadgecontainer>
           <Spacing/>
         </PageTemplate>

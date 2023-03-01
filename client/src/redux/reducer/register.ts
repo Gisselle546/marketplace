@@ -94,6 +94,7 @@ export const authSlice = createSlice({
 
 export const selectValue = (state: AppState) => state.auth.token
 export const errorValue = (state: AppState) => state.auth.error
+export const loadingValue = (state: AppState) => state.auth.status
 
 
 

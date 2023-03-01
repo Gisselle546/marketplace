@@ -7,9 +7,13 @@ import { HeaderSign, SignInWrapper, FormWrapper } from './index.style'
 import React, { useState} from 'react'
 import Button from '@/components/Button/Button';
 import { signinuser } from '@/redux/reducer/register';
-import { errorValue, selectValue } from '@/redux/reducer/register';
+import { errorValue, selectValue,loadingValue} from '@/redux/reducer/register';
+import {paramsValue} from  '@/redux/reducer/location'
+import {geoValue, getRealEstateData} from '@/redux/reducer/location'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useRouter } from 'next/router';
+import { Spinner } from '@/components/Spinner/Spinner';
+
 
 
 const Content = styled.div`
@@ -43,9 +47,13 @@ export const LinkText = styled.a`
 
 function Signin() {
   const data = useAppSelector(selectValue);
+  const params = useAppSelector(paramsValue);
+  const geo = useAppSelector(geoValue);
   const error = useAppSelector(errorValue);
+  const loading = useAppSelector(loadingValue)
   const dispatch = useAppDispatch()
   const router = useRouter();  
+  console.log(data);
   data? router.push('/map'): null
 
   const formik = useFormik({
@@ -61,8 +69,8 @@ function Signin() {
                          .required('Password is required')
         }),
         onSubmit: async values => {
-        dispatch(signinuser(values));
-       
+         dispatch(signinuser(values));
+         await dispatch(getRealEstateData({type: 'sale', data: {...params, geo}}))
          
         },
       
@@ -79,15 +87,17 @@ function Signin() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <PageTemplate>
+      
         <Content>
          <SignInWrapper>
+          
             <HeaderSign>Sign In</HeaderSign>
             <FormWrapper onSubmit={formik.handleSubmit}>
            
             <InputWrapper type="email" name="email"placeholder="Enter Email Address" value={formik.values.email} onChange={formik.handleChange}required/>
             <InputWrapper type="password" name="password"placeholder="Enter Password" value={formik.values.password} onChange={formik.handleChange}required/>
             {error&& <div style={{color:"#AA1803", fontWeight: "bold"}}>{error.response.data}</div>}
-            <Button>Sign In</Button>
+          {  <Button disabled={loading==='loading'}>Sign In   { loading==='loading'? <Spinner/> : null }</Button>}
             
             <LinkText href="/signup">Register Instead&rarr;</LinkText>
             </FormWrapper>

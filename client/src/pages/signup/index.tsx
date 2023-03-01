@@ -9,7 +9,8 @@ import styled, {css} from 'styled-components';
 import { signupuser } from '@/redux/reducer/register';
 import { useAppDispatch, useAppSelector } from  '../../redux/hooks';
 import { useRouter } from 'next/router';
-import { errorValue, selectValue} from '@/redux/reducer/register';
+import { errorValue, selectValue, loadingValue} from '@/redux/reducer/register';
+import { Spinner } from '@/components/Spinner/Spinner';
 const Content = styled.div`
     display:flex;
     background: linear-gradient(to top right,rgba(0,0,0, 0),rgba(28,44,91, 100)) center right/cover;
@@ -42,6 +43,7 @@ export const LinkText = styled.a`
 function SignUp() {
   const dispatch = useAppDispatch();
   const router = useRouter();  
+  const loading = useAppSelector(loadingValue)
   const data = useAppSelector(selectValue);
   const error = useAppSelector(errorValue);
   data? router.push('/map'): null
@@ -79,7 +81,7 @@ function SignUp() {
                 <InputWrapper type="email" name="email"placeholder="Enter Email Address" value={formik.values.email} onChange={formik.handleChange}required/>
                     <InputWrapper type="password" name="password"placeholder="Enter Password" value={formik.values.password} onChange={formik.handleChange}required/>
                     {error&& <div style={{color:"#AA1803", fontWeight: "bold"}}>{error.response.data}</div>}
-                    <Button>Sign Up</Button>
+                    <Button  disabled={loading==='loading'}>Sign Up { loading==='loading'? <Spinner/> : null }</Button>
                     <LinkText href="/signin">Login Instead&rarr;</LinkText>
                 </FormWrapper>
             </SignUpWrapper>

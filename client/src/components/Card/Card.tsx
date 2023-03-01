@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components'
 import { CardWrapper, Heading, Bottom, SubHeading } from './Card.style'
 import { useAppDispatch } from '@/redux/hooks';
 import { getDetailsData} from '@/redux/reducer/location';
+import imageplace from '../../assets/images/placeholderimg.png'
 
 type Props ={
   card:any
@@ -27,11 +28,11 @@ function Card({card}:Props) {
   return (
     <>
     <CardWrapper onClick={handleClick}>
-        <Container img={card?.primary_photo?.href}>
+        <Container img={card?.primary_photo===null ? imageplace.src : card?.primary_photo?.href}>
         </Container>
         <Bottom>
         
-            <Heading> ${card?.list_price.toLocaleString("en-US")}</Heading>
+            <Heading> ${card?.list_price?.toLocaleString("en-US")? card?.list_price?.toLocaleString("en-US") : card.list_price_min}</Heading>
             <SubHeading> {card.description.beds} bd | {card.description.baths} ba | {card.description.sqft} sqft</SubHeading>
             <SubHeading> {card.location.address.line}</SubHeading>
        

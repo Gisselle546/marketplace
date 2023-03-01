@@ -4,6 +4,7 @@ import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-
 import tear from '../../assets/images/tear.png';
 import { useAppDispatch } from '@/redux/hooks';
 import { getRealEstateData } from '@/redux/reducer/location';
+import DropDown from '../DropDown/DropDown';
 
 const Container = styled.div(
     ({ theme: { color } }) => css`
@@ -21,7 +22,7 @@ display: flex;
 justify-content: flex-start;
 align-items: center;
 width: 100%;
-padding: 1rem;
+padding: 1.2rem;
 
 
 
@@ -36,6 +37,21 @@ const Content_Data = styled.div`
 
 function Section() {
    const dispatch = useAppDispatch()
+   const attributes = [
+    {key: 0, label: ' For Sale'},
+    {key: 1, label: ' For Rent'}
+   ];
+
+   const price_attribute = [
+    {key: 0, label: ' For Sale'},
+    {key: 1, label: ' For Rent'}
+   ]
+
+   
+   const handleChoice = (e: any) =>{
+    console.log(e.target);
+   }
+
    return(
     <Container>
         <Content>
@@ -45,13 +61,13 @@ function Section() {
                   placeholder: "Enter address, or zipcode..",
                   onChange: async ({ value }:any) => {
                     const data = await geocodeByAddress(value.description);
-                    let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
+                    let geo = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
                     
-                    let datawoef = {state_code: '', city: '', dataDrive}
+                    let datawoef:any = {state_code: '', city: '', geo}
 
                     value.terms.length>4? (datawoef.state_code = value.terms[3].value, datawoef.city= value.terms[2].value ) :(datawoef.state_code = value.terms[1].value, datawoef.city= value.terms[0].value )
                      
-                    await dispatch(getRealEstateData(datawoef))
+                    await dispatch(getRealEstateData({type: 'sale', data: datawoef}))
                    
                   },
                   styles: {
@@ -64,7 +80,12 @@ function Section() {
                   },
                 }}
               />
-       
+              <div style={{display: 'flex', justifyContent:'space-around', width: '100%'}}>
+              <DropDown label='For Sale'>ho</DropDown>
+              <DropDown label='Price'>hoo</DropDown>
+              <DropDown label='Beds & Baths'> hoooo</DropDown>
+              </div>
+               
         </Content>
        <Content_Data/>    
     </Container>

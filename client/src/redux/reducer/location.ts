@@ -6,53 +6,62 @@ import { getDetails } from "../actions/getDetails";
 
 
 export interface LocationState{
-    location: {} | any
-    details: {} | any
-    geo: { lat: number, lng: number} | any
-    status: 'idle' | 'loading' | 'failed',
-    error?: null | any
+ params: {
+    type: string;
+    state_code: string;
+    city: string;
+ },
+ geo: { lat: number, lng: number} | any
+ status: 'idle' | 'loading' | 'failed',
+ error?: null | any
+ results: [] | any
+ singlelocation : [] | any  
 }
-
 const initialState: LocationState = {
-    location: getStorageLocal('data') || [],
+    params:{
+        type: 'sale',
+        state_code: 'NY',
+        city: 'New York City',
+    },
+    geo:  getStorageLocal('geo')||{lat: 40.730610, lng: -73.935242},
+    status: 'idle',
+    error: null,
     //////
     //to be changed back to just null instead of getStorageLocal('details') || null
    ///////
-    details: getStorageLocal('details') || null,
-    status: 'idle',
-    geo: getStorageLocal('location') || {lat: 40.8054, lng: -74.0241},
-    error: null
+    singlelocation: getStorageLocal('detail_location') || null,
+    results: getStorageLocal('home_results') || []
     
 }
 
 export const getRealEstateData = createAsyncThunk(
     '../action/getRealestate',
-    async(data: any, {rejectWithValue}) =>{
-       let params = { ...data.dataDrive};
-
-        try{
-          
-            const response = await getRealestate(data);
-            setStorageLocal('data', response.data.data.home_search.results)
-            setStorageLocal('location', params)
-            return response.data.data.home_search.results
+    async({ type, data }: { type: string, data: any },  {rejectWithValue}) =>{
+        setStorageLocal('geo', data.geo)
+        console.log(data);
+          try{
+            
+            const response = await getRealestate(data, type);
+            setStorageLocal('home_results', response.data.data.home_search.results)
+            return response.data.data.home_search.results;
            
         }catch(error){
             console.log(error)
             rejectWithValue(error)
-        }
+        } 
     }
 )
 
 export const getDetailsData = createAsyncThunk(
     '../action/getDetails',
     async(data: any, {rejectWithValue}) => {
+        console.log(data);
         try{
             const response = await getDetails(data)
             //////////
             // To be removed later after modal testing
             /////////
-            setStorageLocal('details', response.data.data.property_detail)
+            setStorageLocal('detail_location', response.data.data.property_detail)
             return response.data.data.property_detail;
         }catch(error){
             rejectWithValue(error)
@@ -68,8 +77,8 @@ export const locationSlice = createSlice({
     initialState,
     reducers:{
        nullDetail: (state)=>{
-        state.details = null;
-        console.log(state.details)
+        state.singlelocation= null;
+        
        }
     },
     extraReducers: (builder) =>{
@@ -79,10 +88,10 @@ export const locationSlice = createSlice({
            
           })
           .addCase(getRealEstateData.fulfilled, (state, action:any) => {
-            
+            console.log(state)
             state.status = 'idle'
-            state.location = action.payload
-            state.geo = getStorageLocal('location'),
+            state.geo = getStorageLocal('geo')
+            state.results = action.payload
             state.error = null
             
           })
@@ -96,7 +105,7 @@ export const locationSlice = createSlice({
           })
           .addCase(getDetailsData.fulfilled, (state, action)=>{
             state.status = 'idle'
-            state.details =  action.payload
+            state.singlelocation =  action.payload
             state.error = null
           })
           .addCase(getDetailsData.rejected, (state, action)=>{
@@ -108,9 +117,10 @@ export const locationSlice = createSlice({
 
 export const { nullDetail } = locationSlice.actions
 
-export const locationValue = (state: AppState) => state.location.location
+export const paramsValue = (state: AppState) => state.location.params
 export const geoValue = (state: AppState) => state.location.geo
-export const detailsValue = (state: AppState) => state.location.details
+export const detailsValue = (state: AppState) => state.location.singlelocation
+export const resultsValue = (state: AppState) => state.location.results
 
 
 export default locationSlice.reducer

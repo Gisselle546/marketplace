@@ -6,6 +6,7 @@ interface SpinnerProps {
   borderWidth?: string;
   borderColor?: string;
   duration?: number;
+  style?: any
 }
 
 const spinnerAnimation = keyframes`
@@ -19,6 +20,7 @@ from {
 
 const SpinnerBody = styled.div<SpinnerProps>`
   height: ${(p) => (p.height ? p.height : "4rem")};
+  margin-left: 1rem;
   width: ${(p) => (p.width ? p.width : "4rem")};
   border: ${(p) => (p.borderWidth ? p.borderWidth : "4px")} solid #d1d5db;
   border-top-color: ${(p) => (p.borderColor ? p.borderColor : "#3b82f6")};

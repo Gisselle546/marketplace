@@ -5,8 +5,8 @@ import "leaflet/dist/leaflet.css";
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; 
 import 'leaflet-defaulticon-compatibility';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
-import { locationValue, geoValue, getDetailsData } from '@/redux/reducer/location';
-
+import { resultsValue, geoValue, getDetailsData,getRealEstateData, paramsValue } from '@/redux/reducer/location';
+import imageplace from '../../assets/images/placeholderimg.png'
 
 
 
@@ -20,8 +20,13 @@ const Container = styled("div")<{img: any }>`
 
 function Map() {
   const {lat, lng} = useAppSelector(geoValue);
-  const data = useAppSelector(locationValue);
+
+  const params = useAppSelector(paramsValue);
+  const data = useAppSelector(resultsValue);
   const dispatch = useAppDispatch();
+  console.log(lat, 'geoValue!!!')
+
+
   
     function SetViewOnClick({ coords }: any) {
       const map = useMap();
@@ -46,9 +51,9 @@ function Map() {
       return <>
           <Marker position={[lat, lon]}>
               <Popup>
-              ${card?.list_price.toLocaleString("en-US")}
+               ${card?.list_price?.toLocaleString("en-US")? card?.list_price?.toLocaleString("en-US") : card.list_price_min} 
               <div onClick= {handleClick} style={{padding:'0.3rem', cursor:'pointer'}}>
-              <Container img={card?.primary_photo?.href}></Container>
+              <Container img={card?.primary_photo===null ? imageplace.src : card?.primary_photo?.href}></Container>
                 {card.location.address.line}
               </div>
               </Popup>

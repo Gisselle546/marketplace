@@ -44,7 +44,7 @@ cursor:pointer;
 function Tabs() {
   const data = useAppSelector(detailsValue)
   const [NavLinks, setNav] = useState({
-    OverView: false,
+    OverView: true,
     home_details: false
   })
 

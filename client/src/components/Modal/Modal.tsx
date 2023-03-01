@@ -143,7 +143,7 @@ function Modal(props: Props) {
     const handleerSubmit = ()=>{
 
         dispatch(nullDetail())
-        deleteStorageValue('details')
+        localStorage.removeItem('details')
     }
   
    
