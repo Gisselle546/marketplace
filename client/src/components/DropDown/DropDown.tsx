@@ -11,16 +11,7 @@ type Props ={
 
 function DropDown({children, label}: Props) {
  const [isOpen, setOpen] = useState(false)
-
-
-const attributes= [
-    {key: 0 , label: 'For Sale'},
-    {key: 1 , label: 'For Rent'}
-]
-
-const handleChoice = () =>{
-
-}
+ 
 
 const toggleDropDown = () => {
     //const { onChange } = this.props;
@@ -35,6 +26,8 @@ const toggleDropDown = () => {
    <Wrapper>
         <DropToggler
           onClick={toggleDropDown}
+          onMouseEnter={()=>setOpen(true)}
+         
           //ref={ref => (this.dropTogglerRef = ref)}
         >
           <Label>{label}</Label>
@@ -43,6 +36,7 @@ const toggleDropDown = () => {
         <DisplayArea>
           {isOpen && (
             <Inner 
+              onMouseLeave={()=>setOpen(!isOpen)}
              // ref={ref => (this.displayAreaRef = ref)}
             >
               {children}

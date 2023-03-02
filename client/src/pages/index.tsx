@@ -57,7 +57,7 @@ const HomepageBadgecontainer = styled.div`
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const parmy = useAppSelector(paramsValue)
+  const params = useAppSelector(paramsValue)
   const geo = useAppSelector(geoValue)
   const router = useRouter(); 
   const HomepageSection = dynamic(() => import("../components/HomepageSection/HomepageSection"), {
@@ -69,7 +69,7 @@ export default function Home() {
 
  const handleClicky = async (type: string) => {
   console.log('clicky')
-  //await dispatch(getRealEstateData({type: type, data: {state_code: 'NY', city: 'New York City', dataDrive: geo}}))
+  await dispatch(getRealEstateData({type: type, data: {...params, geo}}))
   router.push('/map')
  }
 

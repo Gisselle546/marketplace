@@ -42,6 +42,7 @@ export const getRealEstateData = createAsyncThunk(
           try{
             
             const response = await getRealestate(data, type);
+            console.log(response);
             setStorageLocal('home_results', response.data.data.home_search.results)
             return response.data.data.home_search.results;
            
