@@ -7,24 +7,10 @@ export const Wrapper = styled.div(
     display: inline-flex;
     position: relative;
     flex-direction: column;
+    transition: all 250ms ease;
 `
 )
 
-export const HeaderContainer = styled.div(
-    ({ theme: {color} }) => css`
-    display: flex
-    align-items: center
-    justify-content: space-between
-    position: relative
-    border: 1px solid rgb(223, 223, 223)
-    border-radius: 3px
-    background-color: white
-    line-height: 38px
-    cursor: default
-
-
-    `
-)
 
 
 export const DropToggler = styled.div`

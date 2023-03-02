@@ -5,6 +5,7 @@ import tear from '../../assets/images/tear.png';
 import { useAppDispatch } from '@/redux/hooks';
 import { getRealEstateData } from '@/redux/reducer/location';
 import DropDown from '../DropDown/DropDown';
+import DropDownItems from '../DropDownItems/DropDownItems';
 
 const Container = styled.div(
     ({ theme: { color } }) => css`
@@ -81,9 +82,9 @@ function Section() {
                 }}
               />
               <div style={{display: 'flex', justifyContent:'space-around', width: '100%'}}>
-              <DropDown label='For Sale'>ho</DropDown>
-              <DropDown label='Price'>hoo</DropDown>
-              <DropDown label='Beds & Baths'> hoooo</DropDown>
+              <DropDown label='For Sale'><DropDownItems type="rentsale"/></DropDown>
+              <DropDown label='Price'><DropDownItems type="price"/></DropDown>
+              <DropDown label='Beds & Baths'> <DropDownItems type="bedsbath"/></DropDown>
               </div>
                
         </Content>

@@ -14,11 +14,7 @@ function DropDown({children, label}: Props) {
  
 
 const toggleDropDown = () => {
-    //const { onChange } = this.props;
-
     setOpen(!isOpen)
-
-   // onChange && onChange(!isOpen);
   };
 
   return (
@@ -27,8 +23,6 @@ const toggleDropDown = () => {
         <DropToggler
           onClick={toggleDropDown}
           onMouseEnter={()=>setOpen(true)}
-         
-          //ref={ref => (this.dropTogglerRef = ref)}
         >
           <Label>{label}</Label>
           <Arrow>{isOpen ?  <BiDownArrow size={20} style = {{ verticalAlign: 'middle' }}/> : <BiUpArrow size={20} style = {{ verticalAlign: 'middle' }}/> }</Arrow>
@@ -37,7 +31,6 @@ const toggleDropDown = () => {
           {isOpen && (
             <Inner 
               onMouseLeave={()=>setOpen(!isOpen)}
-             // ref={ref => (this.displayAreaRef = ref)}
             >
               {children}
             </Inner>
