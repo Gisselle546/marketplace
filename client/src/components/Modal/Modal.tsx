@@ -1,14 +1,13 @@
 import React, {useRef} from "react";
 import styled,{css} from "styled-components";
-import { dummy_data } from "@/dummydata/data";
 import { GiTrafficLightsGreen, GiTrafficLightsRed } from 'react-icons/gi';
 import Button from "../Button/Button";
 import Tabs from "../Tabs/Tabs";
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { detailsValue, nullDetail } from '@/redux/reducer/location';
 import { ReactPhotoCollage } from "react-photo-collage";
-/// to be removed later after completed modal
-import { deleteStorageValue } from "@/redux/hooks/useSessionStorage";
+import { InnerMainHeadingContainer, MainHeadingContainer, PriceHeader } from "./Modal.style";
+
 const Model = styled("div")<{show: any}>`
     display: ${({show}) => (show ? 'block' : 'none')};
     position: fixed;
@@ -143,12 +142,12 @@ function Modal(props: Props) {
     const handleerSubmit = ()=>{
 
         dispatch(nullDetail())
-        localStorage.removeItem('details')
+        localStorage.removeItem('detail_location')
     }
   
    
    // let arr = [...data?.photos(5)].map((item, index) => console.log(item));
-   console.log(data.mortgage.estimate.monthly_payment);
+ console.log(data);
   return (
     <Model show={show}>
     <Container ref={ref}>
@@ -163,27 +162,56 @@ function Modal(props: Props) {
             }
        </Left>
        <Right>
-        <div style={{display:'flex', justifyContent: 'space-between'}}> 
-          <div style={{height: '15rem', padding:'1rem', flexDirection:'column', justifyContent:'space-evenly'}}>
-          <div style={{display:'flex', alignItems:'center'}}>
-            <Heading> ${data.price_history.at(-1).price?.toLocaleString("en-US")}</Heading><SubHeading> {data.listings[0].beds} bd | {data.listings[0].baths_full} ba | {data.listings[0].sqft} sqft</SubHeading>
-            
-          </div>
-            <SubHeading> {data.address.line}, {data.address.city}, {data.address.state_code} {data.address.postal_code}</SubHeading>
-            {data.client_display_flags.presentation_status ==='for_sale' ?
-                <SubHeading>
-                   <GiTrafficLightsGreen  style={{backgroundColor:'green', borderRadius:'50%', marginTop:'5px'}}/> For Sale
-                </SubHeading>:<SubHeading><GiTrafficLightsRed style={{backgroundColor:'red', borderRadius:'50%', marginTop:'5px'}}/>Off Market</SubHeading>
-            }
-            <SmallHeading>Est. payment/mo: <Num style={{marginLeft: '0.5rem'}}>{data.mortgage.estimate.monthly_payment.toLocaleString("en-US")}</Num></SmallHeading>
-            </div>
-            <div>
-                <CloseContainer onClick={handleerSubmit}>X</CloseContainer>
-            </div>
-            </div>
-            <ButtonContainer><Button>Request a Tour</Button>  <Button>Contact Agent</Button></ButtonContainer>
-           <Tabs/> 
-           
+        {
+            data.prop_status!=='for_rent'?
+        (
+            <>
+                <MainHeadingContainer> 
+                <InnerMainHeadingContainer>
+                <PriceHeader>
+                <Heading> ${data?.price_history.at(-1).price?.toLocaleString("en-US")}</Heading><SubHeading> {data?.listings[0].beds} bd | {data?.listings[0].baths_full} ba | {data?.listings[0].sqft} sqft</SubHeading> 
+                    
+                </PriceHeader>
+                    <SubHeading> {data.address.line}, {data.address.city}, {data.address.state_code} {data.address.postal_code}</SubHeading>
+                    {data.client_display_flags.presentation_status ==='for_sale' ?
+                        <SubHeading>
+                        <GiTrafficLightsGreen  style={{backgroundColor:'green', borderRadius:'50%', marginTop:'5px'}}/> For Sale
+                        </SubHeading>:<SubHeading><GiTrafficLightsRed style={{backgroundColor:'red', borderRadius:'50%', marginTop:'5px'}}/>Off Market</SubHeading>
+                    }
+                    <SmallHeading>Est. payment/mo: <Num style={{marginLeft: '0.5rem'}}>{data.mortgage.estimate.monthly_payment.toLocaleString("en-US")}</Num></SmallHeading> 
+                    </InnerMainHeadingContainer>
+                    <div>
+                        <CloseContainer onClick={handleerSubmit}>X</CloseContainer>
+                    </div>
+                    </MainHeadingContainer>
+                    <ButtonContainer><Button>Request a Tour</Button>  <Button>Contact Agent</Button></ButtonContainer>
+                <Tabs/> 
+           </>
+            )
+           : (
+           <>
+            <MainHeadingContainer>
+                <InnerMainHeadingContainer>
+                    <PriceHeader>
+                    <Heading> ${data?.price?.toLocaleString("en-US")}</Heading>/mo<SubHeading> {data?.beds} bd | {data?.baths_full} ba | {data?.sqft} sqft</SubHeading> 
+                    </PriceHeader>
+                    <SubHeading> {data.address.line}, {data.address.city}, {data.address.state_code} {data.address.postal_code}</SubHeading>
+                    {
+                    data.prop_status==='for_rent'?
+                    <SubHeading>
+                         <GiTrafficLightsGreen  style={{backgroundColor:'dodgerblue', borderRadius:'50%', marginTop:'5px'}}/> For Rent
+                    </SubHeading>:<SubHeading><GiTrafficLightsRed style={{backgroundColor:'red', borderRadius:'50%', marginTop:'5px'}}/>Off Market</SubHeading>
+                    }
+                </InnerMainHeadingContainer>
+                <div>
+                        <CloseContainer onClick={handleerSubmit}>X</CloseContainer>
+                </div>
+                </MainHeadingContainer>
+                <ButtonContainer><Button>Request a Tour</Button></ButtonContainer>
+                 <Tabs/>  
+           </>
+           )
+        }
        </Right>
        
     </Container>

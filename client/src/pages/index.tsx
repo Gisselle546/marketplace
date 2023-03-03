@@ -10,11 +10,11 @@ import buylogo from '../assets/images/buy.png';
 import rental from '../assets/images/rental.png';
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 import { useAppDispatch } from '@/redux/hooks';
-import { getRealEstateData, paramsValue, geoValue } from '@/redux/reducer/location';
+import { getRealEstateData, paramsValue} from '@/redux/reducer/location';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useAppSelector  } from '@/redux/hooks';
-import { detailsValue } from '@/redux/reducer/location';
+
 
 
 const Content = styled.div`
@@ -58,17 +58,15 @@ const HomepageBadgecontainer = styled.div`
 export default function Home() {
   const dispatch = useAppDispatch();
   const params = useAppSelector(paramsValue)
-  const geo = useAppSelector(geoValue)
   const router = useRouter(); 
   const HomepageSection = dynamic(() => import("../components/HomepageSection/HomepageSection"), {
     ssr: false
   });
 
-  console.log(geo)
 
 
  const handleClicky = async (type: string) => {
-  console.log('clicky')
+  const geo = {lat: 40.730610, lng: -73.935242}
   await dispatch(getRealEstateData({type: type, data: {...params, geo}}))
   router.push('/map')
  }

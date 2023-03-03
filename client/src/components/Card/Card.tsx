@@ -33,7 +33,7 @@ function Card({card}:Props) {
         <Bottom>
         
             <Heading> ${card?.list_price?.toLocaleString("en-US")? card?.list_price?.toLocaleString("en-US") : card.list_price_min}</Heading>
-            <SubHeading> {card.description.beds} bd | {card.description.baths} ba | {card.description.sqft} sqft</SubHeading>
+            <SubHeading> {card.description.beds? card.description.beds : card.description.beds_max} bd | {card.description.baths ? card.description.baths: card.description.baths_max} ba | {card.description.sqft ?card.description.sqft: card.description.sqft_min } sqft</SubHeading>
             <SubHeading> {card.location.address.line}</SubHeading>
        
         </Bottom>

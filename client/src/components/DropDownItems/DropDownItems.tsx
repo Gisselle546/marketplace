@@ -39,7 +39,7 @@ function DropDownItems({type}:DropDownItemsProps) {
                     <Heading>Price Range</Heading>
                  </RangeHeader>
                  <RangeContainer>
-                    <Select type='Min'/>
+                    <Select type= 'Min'/>
                     <Select type= 'Max'/>
                  </RangeContainer>
                 </Container>

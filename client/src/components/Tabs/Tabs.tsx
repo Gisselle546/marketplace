@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components'
-import { BiBuilding, BiCalendarEvent, BiBath, BiBed } from "react-icons/bi";
+import { BiBuilding, BiCalendarEvent, BiBath, BiBed, BiErrorAlt } from "react-icons/bi";
 import { useAppSelector } from '@/redux/hooks';
 import { detailsValue } from '@/redux/reducer/location';
+import { GiCommercialAirplane, GiModernCity } from 'react-icons/gi';
 
 const TabsContainer = styled.div`
 height: 40rem;
@@ -45,7 +46,7 @@ function Tabs() {
   const data = useAppSelector(detailsValue)
   const [NavLinks, setNav] = useState({
     OverView: true,
-    home_details: false
+   
   })
 
   const handleClicky = () =>{
@@ -59,14 +60,38 @@ function Tabs() {
   return (
     <TabsContainer>
         <TabsHeader>
-          <Item onClick={handleClicky}>Overview</Item>
-          <Item onClick={handleClicky}>Facts</Item>
+          <Item>Overview</Item>
+      
         </TabsHeader>
+
       {  NavLinks.OverView &&<TabInfo>
-         <p style={{textTransform:'capitalize'}}> <BiBuilding/> {data.display_property_type}</p>
-         <p> <BiCalendarEvent/> Built in {data.listings[0].year_built}</p> 
-         <p> <BiBed/> {data.listings[0].beds} beds</p>
-         <p> <BiBath/> {data.listings[0].baths_full} baths</p>
+        {
+          data.prop_status!=='for_rent'?
+          (
+            <>
+              <p style={{textTransform:'capitalize'}}> <BiBuilding/> {data.display_property_type}</p>
+              <p> <BiCalendarEvent/> Built in {data.listings[0].year_built}</p> 
+              <p> <BiBed/> {data.listings[0].beds} beds</p>
+              <p> <BiBath/> {data.listings[0].baths_full} baths</p>
+            </>
+          )
+         :
+         (
+          <>
+             <p style={{textTransform:'capitalize'}}> <BiBuilding/> {data.prop_type}</p>
+             <p> <BiBed/> {data?.beds} beds</p>
+            <p> <BiBath/> {data?.baths_full} baths</p>
+            {
+              data.pet_policy==='no_policy'?<p> <BiErrorAlt/> No Pets allowed</p> : data.permissions.cats && data.permissions.dogs && <p> Cats and dogs allowed</p>
+            }
+            <p>Noise Level: </p>
+            <TabInfo>
+             <p><GiCommercialAirplane/> {data?.noise?.airport_text}</p>
+             <p><GiModernCity/> {data?.noise?.local_text}</p>
+            </TabInfo>
+          </>
+         )
+        }
         </TabInfo>
       
       }

@@ -106,5 +106,6 @@ export const RangeContainer = styled.div`
     justify-content: space-evenly;
     padding: 1rem;
     align-items: center;
+    height: 10rem;
 
 `;
