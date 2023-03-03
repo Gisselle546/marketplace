@@ -100,3 +100,11 @@ export const SmallButton = styled.button(
     border-radius: 5px;
  `   
 )
+
+export const RangeContainer = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
+    align-items: center;
+
+`;

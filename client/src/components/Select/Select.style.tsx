@@ -6,8 +6,9 @@ export const DropdownContainer = styled.div`
 
 export const DropdownHeader = styled.div`
   padding: 10px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
+  background-color: #FFFAFA;
+  border: 1px solid #1E90FF;
+  border-radius: 4px;
   min-width:100px;
   cursor: pointer;
   display: flex;
@@ -17,14 +18,15 @@ export const DropdownHeader = styled.div`
 export const DropdownList = styled.ul`
   position: absolute;
   top: 100%;
-  left: 0;
+  left: 2px;
   right: 0;
   margin: 0;
   padding: 0;
   list-style: none;
+  border-radius: 5px;
   min-width:100px;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
+  background-color: #FFFAFA;
+  border: 1px solid #1E90FF;
   border-top: none;
   z-index: 1;
 `;

@@ -10,6 +10,12 @@ export interface LocationState{
     type: string;
     state_code: string;
     city: string;
+    price_min?: any;
+    price_max?: any;
+    beds_min?:  any;
+    beds_max?:  any;
+    baths_min?: any;
+    baths_max?: any;
  },
  geo: { lat: number, lng: number} | any
  status: 'idle' | 'loading' | 'failed',
