@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Select from '../Select/Select'
 import { RentSaleContainer, Radio, RadioInput, RadioLabel, Container,RangeHeader, Heading, SmallButton, ButtonContainer } from './DropDownItems.style'
 
 type DropDownItemsProps = {
@@ -37,6 +38,10 @@ function DropDownItems({type}:DropDownItemsProps) {
                  <RangeHeader>
                     <Heading>Price Range</Heading>
                  </RangeHeader>
+                 <div style={{display: 'flex', justifyContent:'space-evenly', padding: '1rem'}}>
+                    <Select/>
+                    <Select/>
+                 </div>
                 </Container>
             )
         case 'bedsbath':
@@ -45,18 +50,18 @@ function DropDownItems({type}:DropDownItemsProps) {
                  <>
                     <Heading style={{textAlign:'center'}}>Beds & Baths</Heading>
                  </>
-                 <RangeHeader>
+                
                     <Heading>Beds</Heading>
-                 </RangeHeader>
+                 
                  <ButtonContainer>
                     <SmallButton>1</SmallButton>
                     <SmallButton>2</SmallButton>
                     <SmallButton>3</SmallButton>
                     <SmallButton>4+</SmallButton>
                  </ButtonContainer>
-                 <RangeHeader>
+                 
                     <Heading>Baths</Heading>
-                 </RangeHeader>
+                
                  <ButtonContainer>
                     <SmallButton>1</SmallButton>
                     <SmallButton>2</SmallButton>
