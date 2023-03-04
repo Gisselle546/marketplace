@@ -90,9 +90,9 @@ export default function Home() {
                   onChange: async ({ value }:any) => {
                     
                     const data = await geocodeByAddress(value.description);
-                    let dataDrive = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
+                    let geo = { lat: data[0].geometry.location.lat(), lng: data[0].geometry.location.lng()} 
                     
-                    let datawoef:any = {state_code: '', city: '', dataDrive}
+                    let datawoef:any = {state_code: '', city: '', geo}
 
                     value.terms.length>4? (datawoef.state_code = value.terms[3].value, datawoef.city= value.terms[2].value ) :(datawoef.state_code = value.terms[1].value, datawoef.city= value.terms[0].value )
             

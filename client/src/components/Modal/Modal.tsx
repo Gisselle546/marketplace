@@ -4,9 +4,10 @@ import { GiTrafficLightsGreen, GiTrafficLightsRed } from 'react-icons/gi';
 import Button from "../Button/Button";
 import Tabs from "../Tabs/Tabs";
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
-import { detailsValue, nullDetail } from '@/redux/reducer/location';
+import { detailsValue, nullDetail, statusValue } from '@/redux/reducer/location';
 import { ReactPhotoCollage } from "react-photo-collage";
 import { InnerMainHeadingContainer, MainHeadingContainer, PriceHeader } from "./Modal.style";
+import { Spinner } from "../Spinner/Spinner";
 
 const Model = styled("div")<{show: any}>`
     display: ${({show}) => (show ? 'block' : 'none')};
@@ -122,10 +123,11 @@ function Modal(props: Props) {
     } = { ...props };
     const ref = useRef(null);
     const data = useAppSelector(detailsValue)
+    const loading  = useAppSelector(statusValue)
     const dispatch = useAppDispatch();
 
-    if(!data){
-        return <div>....</div>
+    if(!data || loading==='loading'){
+        return <Spinner/>
     }
     
     const setting = {
@@ -170,7 +172,7 @@ function Modal(props: Props) {
                 <MainHeadingContainer> 
                 <InnerMainHeadingContainer>
                 <PriceHeader>
-                <Heading> ${data?.price_history.at(-1).price?.toLocaleString("en-US")}</Heading><SubHeading> {data?.listings[0].beds} bd | {data?.listings[0].baths_full} ba | {data?.listings[0].sqft} sqft</SubHeading> 
+                <Heading> ${data?.price_history.at(-1).price?.toLocaleString("en-US")? data?.price_history.at(-1).price?.toLocaleString("en-US") : data.mortgage.estimate.total_payment}</Heading><SubHeading> {data?.listings[0].beds} bd | {data?.listings[0].baths_full} ba | {data?.listings[0].sqft} sqft</SubHeading> 
                     
                 </PriceHeader>
                     <SubHeading> {data.address.line}, {data.address.city}, {data.address.state_code} {data.address.postal_code}</SubHeading>

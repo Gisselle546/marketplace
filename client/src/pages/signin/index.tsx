@@ -53,7 +53,6 @@ function Signin() {
   const loading = useAppSelector(loadingValue)
   const dispatch = useAppDispatch()
   const router = useRouter();  
-  console.log(data);
   data? router.push('/map'): null
 
   const formik = useFormik({

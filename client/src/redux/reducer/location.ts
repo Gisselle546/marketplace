@@ -127,6 +127,7 @@ export const paramsValue = (state: AppState) => state.location.params
 export const geoValue = (state: AppState) => state.location.geo
 export const detailsValue = (state: AppState) => state.location.singlelocation
 export const resultsValue = (state: AppState) => state.location.results
+export const statusValue = (state: AppState) => state.location.status
 
 
 export default locationSlice.reducer
