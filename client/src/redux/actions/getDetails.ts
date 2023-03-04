@@ -7,5 +7,6 @@ export async function getDetails(params: any){
       
       };
       const response = await customFetchRealEstate.get('/property-detail', options)
+     
       return response;
 }

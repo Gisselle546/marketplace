@@ -6,11 +6,13 @@ import Section  from '../../components/Section/Section';
 import Modal from '@/components/Modal/Modal';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import { useAppSelector } from '@/redux/hooks';
-import { detailsValue } from '@/redux/reducer/location';
+import { detailsValue, paramsValue } from '@/redux/reducer/location';
 
 
 function Mappy() {
   const data = useAppSelector(detailsValue);
+  const params = useAppSelector(paramsValue);
+  console.log(params);
   
   const MapWithNoSSR = dynamic(() => import("../../components/Map/Map"), {
     ssr: false
@@ -20,7 +22,7 @@ function Mappy() {
     ssr: false
   });
   
-
+console.log(data);
   return (
     <>
    <ProtectedRoute>

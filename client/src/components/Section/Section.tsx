@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components'
 import React from 'react'
 import GooglePlacesAutocomplete, { geocodeByAddress } from 'react-google-places-autocomplete';
 import tear from '../../assets/images/tear.png';
-import { useAppDispatch } from '@/redux/hooks';
-import { getRealEstateData } from '@/redux/reducer/location';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { getRealEstateData, paramsValue } from '@/redux/reducer/location';
 import DropDown from '../DropDown/DropDown';
 import DropDownItems from '../DropDownItems/DropDownItems';
 
@@ -38,21 +38,8 @@ const Content_Data = styled.div`
 
 function Section() {
    const dispatch = useAppDispatch()
-   const attributes = [
-    {key: 0, label: ' For Sale'},
-    {key: 1, label: ' For Rent'}
-   ];
-
-   const price_attribute = [
-    {key: 0, label: ' For Sale'},
-    {key: 1, label: ' For Rent'}
-   ]
-
-   
-   const handleChoice = (e: any) =>{
-    console.log(e.target);
-   }
-
+   const params = useAppSelector(paramsValue);
+ 
    return(
     <Container>
         <Content>
@@ -82,7 +69,7 @@ function Section() {
                 }}
               />
               <div style={{display: 'flex', justifyContent:'space-around', width: '100%'}}>
-              <DropDown label='For Sale'><DropDownItems type="rentsale"/></DropDown>
+              <DropDown label={params.type==='rent'? 'For Rent' : 'For Sale'}><DropDownItems type="rentsale"/></DropDown>
               <DropDown label='Price'><DropDownItems type="price"/></DropDown>
               <DropDown label='Beds & Baths'> <DropDownItems type="bedsbath"/></DropDown>
               </div>

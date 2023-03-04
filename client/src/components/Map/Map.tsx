@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; 
 import 'leaflet-defaulticon-compatibility';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
-import { resultsValue, geoValue, getDetailsData,getRealEstateData, paramsValue } from '@/redux/reducer/location';
+import { resultsValue, geoValue, getDetailsData, paramsValue } from '@/redux/reducer/location';
 import imageplace from '../../assets/images/placeholderimg.png'
 
 
@@ -21,7 +21,6 @@ const Container = styled("div")<{img: any }>`
 function Map() {
   const {lat, lng} = useAppSelector(geoValue);
 
-  const params = useAppSelector(paramsValue);
   const data = useAppSelector(resultsValue);
   const dispatch = useAppDispatch();
   console.log(lat, 'geoValue!!!')

@@ -130,9 +130,10 @@ function Modal(props: Props) {
     
     const setting = {
         width: "96%",
-        height: ['400px', '400px'],
+        height: ['100%'],
         
         layout: [1, 4, 2],
+        rowHeight:[700, 200, 700],
         photos: data?.photos?.map((data:any)=>{
             return{ source: data.href}
         }),

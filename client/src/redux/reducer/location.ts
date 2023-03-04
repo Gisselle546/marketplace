@@ -24,11 +24,7 @@ export interface LocationState{
  singlelocation : [] | any  
 }
 const initialState: LocationState = {
-    params:{
-        type: 'sale',
-        state_code: 'NY',
-        city: 'New York City',
-    },
+    params: getStorageLocal('params') ||{  type: 'sale', state_code: 'NY', city: 'New York City' },
     geo:  getStorageLocal('geo')||{lat: 40.730610, lng: -73.935242},
     status: 'idle',
     error: null,
@@ -44,16 +40,15 @@ export const getRealEstateData = createAsyncThunk(
     '../action/getRealestate',
     async({ type, data }: { type: string, data: any },  {rejectWithValue}) =>{
         setStorageLocal('geo', data.geo)
-        console.log(data);
           try{
             
             const response = await getRealestate(data, type);
-            console.log(response);
             setStorageLocal('home_results', response.data.data.home_search.results)
-            return response.data.data.home_search.results;
+            setStorageLocal('params', {...data, type})
+
+            return{ results: response.data.data.home_search.results, params: {...data, type}}
            
         }catch(error){
-            console.log(error)
             rejectWithValue(error)
         } 
     }
@@ -86,20 +81,24 @@ export const locationSlice = createSlice({
        nullDetail: (state)=>{
         state.singlelocation= null;
         
-       }
+       },
+      
     },
     extraReducers: (builder) =>{
         builder
         .addCase(getRealEstateData.pending, (state) => {
+           
             state.status = 'loading'
            
           })
           .addCase(getRealEstateData.fulfilled, (state, action:any) => {
-            console.log(state)
+            
             state.status = 'idle'
             state.geo = getStorageLocal('geo')
-            state.results = action.payload
+            state.results = action.payload.results
+            state.params = action.payload.params
             state.error = null
+            
             
           })
           .addCase(getRealEstateData.rejected, (state, action) => {
@@ -112,7 +111,7 @@ export const locationSlice = createSlice({
           })
           .addCase(getDetailsData.fulfilled, (state, action)=>{
             state.status = 'idle'
-            state.singlelocation =  action.payload
+            state.singlelocation = action.payload
             state.error = null
           })
           .addCase(getDetailsData.rejected, (state, action)=>{
