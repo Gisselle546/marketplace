@@ -18,7 +18,9 @@ const data = useAppSelector(resultsValue);
 const loading = useAppSelector(statusValue)
 console.log(data);
 
-if(loading==='loading'){
+console.log(window.innerWidth)
+
+if(loading==='loading' && window.innerHeight>500){
   return <Spinner/>
 }
   

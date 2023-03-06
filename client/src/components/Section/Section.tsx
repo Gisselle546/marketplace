@@ -6,13 +6,20 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { getRealEstateData, paramsValue } from '@/redux/reducer/location';
 import DropDown from '../DropDown/DropDown';
 import DropDownItems from '../DropDownItems/DropDownItems';
+import { breakpoints } from '@/styles/breakpoints';
 
 const Container = styled.div(
     ({ theme: { color } }) => css`
-    height: 6vh;
+    height: 30vh;
     display: flex;
     flex-direction: column;
     background-color: #fff;
+
+    @media ${breakpoints.M}{
+      height: 6vh;
+      
+    
+    }
 
     `
 )
@@ -20,11 +27,36 @@ const Container = styled.div(
 
 const Content = styled.div`
 display: flex;
-justify-content: flex-start;
-align-items: center;
+justify-content: space-around;
 width: 100%;
 padding: 1.2rem;
+flex-direction: column;
+height: 40rem;
 
+@media ${breakpoints.M}{
+ 
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+}
+
+`;
+
+const Buttons = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+
+@media ${breakpoints.M}{
+ 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+
+
+}
 
 
 `;
@@ -68,11 +100,11 @@ function Section() {
                   },
                 }}
               />
-              <div style={{display: 'flex', justifyContent:'space-around', width: '100%'}}>
+              <Buttons>
               <DropDown label={params.type==='rent'? 'For Rent' : 'For Sale'}><DropDownItems type="rentsale"/></DropDown>
               <DropDown label='Price'><DropDownItems type="price"/></DropDown>
               <DropDown label='Beds & Baths'> <DropDownItems type="bedsbath"/></DropDown>
-              </div>
+              </Buttons>
                
         </Content>
        <Content_Data/>    

@@ -8,6 +8,7 @@ import { detailsValue, nullDetail, statusValue } from '@/redux/reducer/location'
 import { ReactPhotoCollage } from "react-photo-collage";
 import { InnerMainHeadingContainer, MainHeadingContainer, PriceHeader } from "./Modal.style";
 import { Spinner } from "../Spinner/Spinner";
+import { breakpoints } from "@/styles/breakpoints";
 
 const Model = styled("div")<{show: any}>`
     display: ${({show}) => (show ? 'block' : 'none')};
@@ -18,6 +19,10 @@ const Model = styled("div")<{show: any}>`
     width:100vw;
     background: rgba(0,0,0,0.5);
     z-index: 999;
+    @media ${breakpoints.M} {
+           
+        width: 25%;
+      }
 `;
 
 // Rendered popup - a positional demo confirmation box
@@ -34,20 +39,23 @@ const Container = styled.div(
     padding: 0.75rem;
     color: rgba(0,0,139, 0.9);  
     background: ${color.badgeBackground}
-   
+
+  
     
 `
 )
 ;
 
 const Left = styled("div")`
-display: flex; 
-flex-direction: column; 
-height: 100%;
-width: 100%; 
-justify-content:space-around;
-
-
+display: none;
+@media ${breakpoints.M} {
+    display: flex; 
+    flex-direction: column; 
+    height: 100%;
+    width: 100%; 
+    justify-content:space-around;
+    
+  }
 
 `;
 
@@ -64,15 +72,26 @@ height: 100%;
 
 export const Heading = styled.div(
     ({ theme: {color, typography} }) => css`
-     font-size: ${typography.fontSize.heading1};
-     margin-left:1rem;
+     font-size: ${typography.fontSize.heading4};
+     margin-left:0.3rem
+     @media ${breakpoints.M} {
+           
+        font-size: ${typography.fontSize.heading1};
+        margin-left:1rem;
+      }
     `)
 
 export const SubHeading = styled.div(
         ({ theme: {color, typography} }) => css`
-         font-size: ${typography.fontSize.heading3};
-         padding: 0.2rem;
-         margin-left:1rem;
+         font-size: ${typography.fontSize.body};
+         padding: 0.1rem;
+         margin-left:0.3rem;
+         @media ${breakpoints.M} {
+           
+            font-size: ${typography.fontSize.heading3};
+            padding: 0.2rem;
+            margin-left:1rem;
+          }
         `)
 
 export const SmallHeading = styled.div(
@@ -98,11 +117,20 @@ const ButtonContainer = styled.div`
 
 const CloseContainer = styled.span(
     ({ theme: {color, typography} }) => css`
-    font-size: ${typography.fontSize.heading2};
+    font-size: ${typography.fontSize.heading4};
     font-weight: ${typography.fontWeight.bold};
     color: ${color.buttonSecondary};
     cursor: pointer;
-    margin-right: 1rem;
+    margin-right: 0.7rem;
+
+    @media ${breakpoints.M} {
+           
+        font-size: ${typography.fontSize.heading2};
+        font-weight: ${typography.fontWeight.bold};
+        color: ${color.buttonSecondary};
+        cursor: pointer;
+        margin-right: 1rem;
+      }
    
 `)
 
@@ -127,9 +155,13 @@ function Modal(props: Props) {
     const dispatch = useAppDispatch();
     const [clicked, setClicked] = useState(false)
 
-    if(!data || loading==='loading'){
-        return <Spinner/>
+    if(!data ){
+        return null;
     }
+    if(loading==='loading' && window.innerHeight>500){
+        return <Spinner/>
+      }
+        
     
     const setting = {
         width: "96%",
