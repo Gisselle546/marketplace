@@ -84,7 +84,7 @@ function SignUp() {
                 <InputWrapper type="email" name="email"placeholder="Enter Email Address" value={formik.values.email} onChange={formik.handleChange}required/>
                     <InputWrapper type="password" name="password"placeholder="Enter Password" value={formik.values.password} onChange={formik.handleChange}required/>
                     {error&& <div style={{color:"#AA1803", fontWeight: "bold"}}>{error.response.data}</div>}
-                    <Button  disabled={loading==='loading'}>Sign Up { loading==='loading'? <Spinner/> : null }</Button>
+                    <Button  disabled={loading==='loading'}>Sign Up { loading==='loading'? <Spinner left='40%' top='20'/>  : null }</Button>
                     <LinkText href="/signin">Login Instead&rarr;</LinkText>
                 </FormWrapper>
             </SignUpWrapper>
