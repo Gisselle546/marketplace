@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { register, login} from '../controllers/user';
-import { createAd } from '../controllers/property';
+import { register, login, getMe} from '../controllers/user';
+
 import { verify_token } from '../controllers/user';
 
 const router: Router = Router()
@@ -8,8 +8,9 @@ const router: Router = Router()
 // Auth
 router.post("/register", register)
 router.post("/login", login)
+router.get('/profile', verify_token, getMe)
 
 // Ad
-router.post("/createad", verify_token, createAd)
+
 
 export default router

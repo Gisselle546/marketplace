@@ -31,7 +31,7 @@ const userSchema: Schema = new Schema(
           maxlength: 20,
           trim: true,
         },
-      
+     
     } 
 )
 
