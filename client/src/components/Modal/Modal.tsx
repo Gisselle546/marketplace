@@ -19,10 +19,7 @@ const Model = styled("div")<{show: any}>`
     width:100vw;
     background: rgba(0,0,0,0.5);
     z-index: 999;
-    @media ${breakpoints.M} {
-           
-        width: 25%;
-      }
+    
 `;
 
 // Rendered popup - a positional demo confirmation box
@@ -73,7 +70,7 @@ height: 100%;
 export const Heading = styled.div(
     ({ theme: {color, typography} }) => css`
      font-size: ${typography.fontSize.heading4};
-     margin-left:0.3rem
+     margin-left:0.3rem;
      @media ${breakpoints.M} {
            
         font-size: ${typography.fontSize.heading1};
