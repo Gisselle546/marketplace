@@ -1,6 +1,6 @@
 import React from 'react';
 import dynamic from "next/dynamic";
-import { MapWrapper, Map, Description } from './index.style';
+import { MapWrapper, Map, Description } from '../../styles/map/index.style';
 import {PageTemplate} from '@/templates/PageTemplate';
 import Section  from '../../components/Section/Section';
 import Modal from '@/components/Modal/Modal';

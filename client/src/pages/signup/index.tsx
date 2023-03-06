@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageTemplate } from '@/templates/PageTemplate';
-import { SignUpWrapper, HeaderSign, FormWrapper } from './index.style';
+import { SignUpWrapper, HeaderSign, FormWrapper } from '../../styles/signup/index.style';
 import  Button from '@/components/Button/Button';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';

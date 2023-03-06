@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import Head from 'next/head'
 import styled, {css} from 'styled-components'
-import { HeaderSign, SignInWrapper, FormWrapper } from './index.style'
+import { HeaderSign, SignInWrapper, FormWrapper } from '../../styles/signin/index.style'
 import React, { useState} from 'react'
 import Button from '@/components/Button/Button';
 import { signinuser } from '@/redux/reducer/register';
