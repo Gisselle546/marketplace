@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from  '../../redux/hooks';
 import { useRouter } from 'next/router';
 import { errorValue, selectValue, loadingValue} from '@/redux/reducer/register';
 import { Spinner } from '@/components/Spinner/Spinner';
+import { geoValue, getRealEstateData, paramsValue } from '@/redux/reducer/location';
 const Content = styled.div`
     display:flex;
     background: linear-gradient(to top right,rgba(0,0,0, 0),rgba(28,44,91, 100)) center right/cover;
@@ -43,7 +44,9 @@ export const LinkText = styled.a`
 function SignUp() {
   const dispatch = useAppDispatch();
   const router = useRouter();  
-  const loading = useAppSelector(loadingValue)
+  const loading = useAppSelector(loadingValue);
+  const params = useAppSelector(paramsValue);
+  const geo = useAppSelector(geoValue);
   const data = useAppSelector(selectValue);
   const error = useAppSelector(errorValue);
   data? router.push('/map'): null
@@ -60,9 +63,9 @@ function SignUp() {
             password: Yup.string()
                          .required('Password is required')
         }),
-        onSubmit: values => {
+        onSubmit: async values => {
         dispatch(signupuser(values));
-     
+        await dispatch(getRealEstateData({type: 'sale', data: {...params, geo}}))
         },
       });
   return (

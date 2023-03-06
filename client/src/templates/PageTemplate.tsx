@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components';
-import Footer from '@/components/Footer/Footer';
 import dynamic from 'next/dynamic';
 
 type PageTemplateProps = {
@@ -15,6 +14,10 @@ min-height: calc(100vh - 200px);
 const Header = dynamic(() => import("@/components/Header/Header"), {
   ssr: false
 });
+
+const Footer = dynamic(()=>import("@/components/Footer/Footer"),{
+  ssr: false
+})
 
 export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>{
   

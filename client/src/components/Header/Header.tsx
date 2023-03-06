@@ -43,7 +43,7 @@ function Header() {
       <NavItems>
         <LinkText href="/">Home</LinkText>
         {
-          count? <>  <LinkText href="/" onClick={()=>{dispatch(logout)}}>Log Out</LinkText> <Button onClick={()=>router.push('/create-ad')}> Create Ad</Button> </>:  <LinkText href="/signin">Sign In</LinkText>
+          count? <>  <LinkText href="/" onClick={()=>{dispatch(logout)}}>Log Out</LinkText>  </>:  <LinkText href="/signin">Sign In</LinkText>
         }
         
       </NavItems> 

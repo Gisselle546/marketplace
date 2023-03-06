@@ -43,7 +43,7 @@ function HomepageSection() {
              
              <div>
              <Header> Find your perfect home</Header> 
-              {count?<><Button onClick={()=>router.push('/map')}> Check Homes Near You</Button> </>:  <><Button onClick={()=>router.push('/signin')}>Sign Up Today</Button></>}
+              {count?<><Button onClick={()=>router.push('/map')}> Check Homes Near You</Button> </>:  <><Button onClick={()=>router.push('/signup')}>Sign Up Today</Button></>}
               </div>
               
         

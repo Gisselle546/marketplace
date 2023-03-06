@@ -3,6 +3,9 @@ import styled, {css} from 'styled-components'
 import { FooterContainer, LogoContainer, NavItems, CopyRight } from './Footer.style'
 import Image from 'next/image';
 import logo from '../../assets/images/logo.png';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { geoValue, getRealEstateData, paramsValue} from '@/redux/reducer/location';
+import { useRouter } from 'next/router';
 
 export const LinkText = styled.a`
  text-decoration: none;
@@ -14,6 +17,17 @@ margin-bottom: 4.5rem;
 `
 
 function Footer() {
+  const dispatch = useAppDispatch();
+  const params = useAppSelector(paramsValue)
+  const geo =  useAppSelector(geoValue)
+  const router = useRouter(); 
+
+  const handleClicky:any = async (type: string) => {
+   
+    await dispatch(getRealEstateData({type: type, data: {...params, geo}}))
+    router.push('/map')
+   }
+
   return (
     <FooterContainer>
       
@@ -33,8 +47,8 @@ function Footer() {
 
         <div>
           <h3>Contact Us</h3>
-          <p>Buy a Home</p>
-          <p>Rent a Home</p>
+          <p style={{cursor:'pointer'}} onClick={()=>handleClicky('sale')}>Buy a Home</p>
+          <p style={{cursor:'pointer'}} onClick={()=>handleClicky('rent')}>Rent a Home</p>
           
         </div>
         

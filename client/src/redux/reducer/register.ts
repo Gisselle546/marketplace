@@ -3,6 +3,7 @@ import type { AppState } from "../store";
 
 import { register } from "../actions/register";
 import { login } from "../actions/login";
+import { getme } from "../actions/getMe";
 import { getStorageValue, setStorageValue, deleteStorageValue } from "../hooks/useSessionStorage";
 
 export interface AuthState  {
@@ -43,6 +44,19 @@ export const signinuser = createAsyncThunk(
       }
           
     }
+)
+
+export const getuser = createAsyncThunk(
+  '../actions/getMe',
+  async() =>{
+    try{
+      const response = await getme();
+      console.log(response);
+      return response.data
+    }catch(error){
+      return error;
+    }
+  }
 )
 
 export const logout = () =>{
