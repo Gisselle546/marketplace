@@ -42,7 +42,7 @@ cursor:pointer;
 
 
 
-function Tabs() {
+function Tabs({agentstate}:any) {
   const data = useAppSelector(detailsValue)
   const [NavLinks, setNav] = useState({
     OverView: true,
@@ -53,10 +53,10 @@ function Tabs() {
     setNav((prevState)=>({
       ...prevState,
       OverView: !NavLinks.OverView
-    
     }))
   }
 
+  console.log(data, 'agent')
   return (
     <TabsContainer>
         <TabsHeader>
@@ -92,6 +92,13 @@ function Tabs() {
           </>
          )
         }
+        </TabInfo>
+      }
+      {
+        agentstate&&<TabInfo>
+         <p> {data.agent.office_name}</p>
+         <p> {data.agent.name}</p>
+         <p>{data.agent.email} </p>
         </TabInfo>
       
       }

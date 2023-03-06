@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import styled,{css} from "styled-components";
 import { GiTrafficLightsGreen, GiTrafficLightsRed } from 'react-icons/gi';
 import Button from "../Button/Button";
@@ -125,6 +125,7 @@ function Modal(props: Props) {
     const data = useAppSelector(detailsValue)
     const loading  = useAppSelector(statusValue)
     const dispatch = useAppDispatch();
+    const [clicked, setClicked] = useState(false)
 
     if(!data || loading==='loading'){
         return <Spinner/>
@@ -150,7 +151,7 @@ function Modal(props: Props) {
   
    
    // let arr = [...data?.photos(5)].map((item, index) => console.log(item));
- console.log(data);
+
   return (
     <Model show={show}>
     <Container ref={ref}>
@@ -187,8 +188,8 @@ function Modal(props: Props) {
                         <CloseContainer onClick={handleerSubmit}>X</CloseContainer>
                     </div>
                     </MainHeadingContainer>
-                    <ButtonContainer><Button>Request a Tour</Button>  <Button>Contact Agent</Button></ButtonContainer>
-                <Tabs/> 
+                    <ButtonContainer><Button disabled={true}>Request a Tour</Button>  <Button onClick={()=> setClicked(!clicked)}>Contact Agent</Button></ButtonContainer>
+                <Tabs agentstate={clicked}/> 
            </>
             )
            : (
@@ -210,7 +211,7 @@ function Modal(props: Props) {
                         <CloseContainer onClick={handleerSubmit}>X</CloseContainer>
                 </div>
                 </MainHeadingContainer>
-                <ButtonContainer><Button>Request a Tour</Button></ButtonContainer>
+                <ButtonContainer><Button disabled={true}>Request a Tour</Button></ButtonContainer>
                  <Tabs/>  
            </>
            )
