@@ -1,40 +1,38 @@
-import styled, {css} from 'styled-components';
-import { breakpoints } from '@/styles/breakpoints';
+import styled, { css } from "styled-components";
+import { breakpoints } from "@/styles/breakpoints";
 
 export const SignInWrapper = styled.div(
-    ({ theme: {color} }) => css`
+  ({ theme: { color } }) => css`
     background: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    height: 60vh;
-    width: 85%;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 7px;
-   
-    @media ${breakpoints.M}{
-        height: 60vh;
-        width: 30vw;
+    align-items: center;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
 
+    @media ${breakpoints.M} {
+      padding: 3rem 2.5rem;
     }
-    `
-)
-
+  `,
+);
 
 export const HeaderSign = styled.h2`
-font-size:1.4rem;
-margin-top:1.4rem;
-text-align:center;
-letter-spacing: 2px;
-
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem;
+  text-align: center;
+  font-weight: 800;
+  color: #1a1a2e;
+  letter-spacing: -0.02em;
 `;
 
 export const FormWrapper = styled.form`
-display: flex;
-flex-direction: column;
-width: 100%; 
-align-items: center;
-justify-content: space-around;
-height:40vh;
-
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 `;

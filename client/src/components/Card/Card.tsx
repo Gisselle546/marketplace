@@ -1,45 +1,67 @@
-import React from 'react'
-import styled, {css} from 'styled-components'
-import { CardWrapper, Heading, Bottom, SubHeading } from './Card.style'
-import { useAppDispatch } from '@/redux/hooks';
-import { getDetailsData} from '@/redux/reducer/location';
-import imageplace from '../../assets/images/placeholderimg.png'
+import React from "react";
+import {
+  CardWrapper,
+  ImageContainer,
+  Heading,
+  Bottom,
+  SubHeading,
+  DetailRow,
+  Badge,
+  PhotoCount,
+} from "./Card.style";
+import { useAppDispatch } from "@/redux/hooks";
+import { setDetail } from "@/redux/reducer/location";
+import imageplace from "../../assets/images/placeholderimg.png";
+import { BiCamera } from "react-icons/bi";
 
-type Props ={
-  card:any
-}
+type Props = {
+  card: any;
+};
 
-
-
-const Container = styled("div")<{img: any }>`
- background: url(${(props: any) => props.img}) center/cover;
- height: 100%;
- width: 100%;
-`
-
-function Card({card}:Props) {
+function Card({ card }: Props) {
   const dispatch = useAppDispatch();
 
- const handleClick = () =>{
+  const handleClick = () => {
+    dispatch(setDetail(card));
+  };
 
-  dispatch(getDetailsData(card.property_id))
- }
+  const imgSrc = card?.primary_photo?.href || imageplace.src;
+  const price =
+    card?.list_price?.toLocaleString("en-US") ||
+    card?.list_price_min?.toLocaleString("en-US") ||
+    "—";
+  const beds = card?.description?.beds ?? card?.description?.beds_max ?? "—";
+  const baths = card?.description?.baths ?? card?.description?.baths_max ?? "—";
+  const sqft = card?.description?.sqft ?? card?.description?.sqft_min ?? "—";
+  const photoCount = card?.photos?.length ?? 0;
 
   return (
-    <>
     <CardWrapper onClick={handleClick}>
-        <Container img={card?.primary_photo===null ? imageplace.src : card?.primary_photo?.href}>
-        </Container>
-        <Bottom>
-        
-            <Heading> ${card?.list_price?.toLocaleString("en-US")? card?.list_price?.toLocaleString("en-US") : card.list_price_min}</Heading>
-            <SubHeading> {card.description.beds? card.description.beds : card.description.beds_max} bd | {card.description.baths ? card.description.baths: card.description.baths_max} ba | {card.description.sqft ?card.description.sqft: card.description.sqft_min } sqft</SubHeading>
-            <SubHeading> {card.location.address.line}</SubHeading>
-       
-        </Bottom>
+      <ImageContainer>
+        <img
+          src={imgSrc}
+          alt={card?.location?.address?.line || "Property"}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+        <Badge>{card?.status === "for_rent" ? "Rent" : "Sale"}</Badge>
+        {photoCount > 1 && (
+          <PhotoCount>
+            <BiCamera /> {photoCount}
+          </PhotoCount>
+        )}
+      </ImageContainer>
+      <Bottom>
+        <Heading>${price}</Heading>
+        <DetailRow>
+          {beds} bd &middot; {baths} ba &middot;{" "}
+          {typeof sqft === "number" ? sqft.toLocaleString() : sqft} sqft
+        </DetailRow>
+        <SubHeading>
+          {card?.location?.address?.line}, {card?.location?.address?.city}
+        </SubHeading>
+      </Bottom>
     </CardWrapper>
-    </>
-  )
+  );
 }
 
-export default Card
+export default Card;

@@ -1,42 +1,42 @@
-import React from 'react'
-import styled from 'styled-components';
-import dynamic from 'next/dynamic';
+import React from "react";
+import styled from "styled-components";
+import dynamic from "next/dynamic";
 
 type PageTemplateProps = {
-    type?: 'default' | 'map' | 'basic',
-    children: any
-}
+  type?: "default" | "map" | "basic";
+  children: any;
+};
 
 const Container = styled.div`
-min-height: calc(100vh - 200px);
-
-`
+  min-height: calc(100vh - 200px);
+  overflow-x: hidden;
+`;
 const Header = dynamic(() => import("@/components/Header/Header"), {
-  ssr: false
+  ssr: false,
 });
 
-const Footer = dynamic(()=>import("@/components/Footer/Footer"),{
-  ssr: false
-})
+const Footer = dynamic(() => import("@/components/Footer/Footer"), {
+  ssr: false,
+});
 
-export const PageTemplate = ({type = 'default', children}: PageTemplateProps) =>{
-  
-
-  switch(type){
-    case 'map':
-        return(
-            <>
-             <Header/>
-             <Container>{children}</Container>
-            </>
-        )
+export const PageTemplate = ({
+  type = "default",
+  children,
+}: PageTemplateProps) => {
+  switch (type) {
+    case "map":
+      return (
+        <>
+          <Header />
+          <Container>{children}</Container>
+        </>
+      );
   }
-  return(
+  return (
     <>
-     <Header/>
-        <Container>{children}</Container>
-     <Footer/>
+      <Header />
+      <Container>{children}</Container>
+      <Footer />
     </>
-  )
-}
-
+  );
+};

@@ -1,15 +1,49 @@
-import axios from 'axios';
+const BASE_URL = process.env.NEXT_PUBLIC_REAL_ESTATE || "";
 
-const customFetchRealEstate = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_REAL_ESTATE
-  });
+async function customFetchRealEstate(
+  endpoint: string,
+  options: { params?: Record<string, any> } = {},
+) {
+  const headers: Record<string, string> = {
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPIKEY || "",
+    "X-RapidAPI-Host": process.env.NEXT_PUBLIC_RAPIDAPIHOST || "",
+  };
 
-  customFetchRealEstate.interceptors.request.use((config:any) => {
-   
-        config.headers['X-RapidAPI-Key'] = process.env.NEXT_PUBLIC_RAPIDAPIKEY
-        config.headers['X-RapidAPI-Host'] = process.env.NEXT_PUBLIC_RAPIDAPIHOST
-    
-    return config;
-  });
+  const base = BASE_URL.replace(/\/+$/, "");
+  const url = new URL(`${base}${endpoint}`);
+  if (options.params) {
+    Object.entries(options.params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        url.searchParams.append(key, String(value));
+      }
+    });
+  }
 
-export default customFetchRealEstate
+  const response = await fetch(url.toString(), { headers });
+
+  if (!response.ok) {
+    const error: any = new Error("Request failed");
+    try {
+      error.response = { data: await response.json() };
+    } catch {
+      error.response = { data: response.statusText };
+    }
+    throw error;
+  }
+
+  const data = await response.json();
+  console.log(
+    "[realEstateFetch] response for",
+    endpoint,
+    ":",
+    JSON.stringify(data).slice(0, 500),
+  );
+  return { data };
+}
+
+customFetchRealEstate.get = (
+  endpoint: string,
+  options: { params?: Record<string, any> } = {},
+) => customFetchRealEstate(endpoint, options);
+
+export default customFetchRealEstate;

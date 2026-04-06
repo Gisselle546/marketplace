@@ -1,12 +1,8 @@
-import customFetchRealEstate from '../../utils/realestate';
+import customFetchRealEstate from "../../utils/realestate";
 
-export async function getDetails(params: any){
-    const options = {
-        method: 'GET',
-        params: {property_id: params}
-      
-      };
-      const response = await customFetchRealEstate.get('/property-detail', options)
-     
-      return response;
+export async function getDetails(params: any) {
+  const response = await customFetchRealEstate.get("/property-detail", {
+    params: { property_id: params },
+  });
+  return response;
 }

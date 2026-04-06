@@ -1,111 +1,124 @@
-import styled,{css} from 'styled-components'
-
-const color1 = '#f4f4f4';
-const color2 = '#3197EE';
-
+import styled, { css } from "styled-components";
 
 export const RentSaleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 15rem;
-  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.75rem;
+`;
 
-`
 export const Radio = styled.div`
-    margin: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
 
-`
+  &:hover {
+    background: #f4f3ff;
+  }
+`;
 
-export const RadioLabel = styled.label``
+export const RadioLabel = styled.label`
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  cursor: pointer;
+  user-select: none;
+`;
 
-export const RadioInput = styled.input.attrs(props => ({
+export const RadioInput = styled.input.attrs({ type: "radio" })`
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #d0d0d8;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s ease;
 
-  type: "radio"
-}))`
+  &:checked {
+    border-color: #6c63ff;
+  }
+
+  &:checked::after {
+    content: "";
     position: absolute;
-    opacity: 0;
-    & +${RadioLabel}{
-        &:before {
-            content: '';
-            background: ${color1};
-            border-radius: 100%;
-            border: 1px solid darken(${color1}, 25%);
-            display: inline-block;
-            width: 1.4em;
-            height: 1.4em;
-            position: relative;
-            top: -0.2em;
-            margin-right: 1em; 
-            vertical-align: top;
-            cursor: pointer;
-            text-align: center;
-            transition: all 250ms ease;
-           
-           
-          }
-    }
-    &:checked + ${RadioLabel} {
-        &:before {
-            background-color: ${color2};
-            box-shadow: inset 0 0 0 4px ${color1};
-        }
-      }
-    &:focus + ${RadioLabel}{
-        &:before {
-          outline: none;
-          border-color: ${color1};
-        }
-    }
-   
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6c63ff;
+    color: #1a1a2e;
+  }
 
+  &:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12);
+  }
 `;
 
 export const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+`;
 
-export const RangeHeader = styled.div(
-    ({ theme: {color} }) => css`
-    background-color: ${color.badgeBackground};
-    height: 2.2rem;
-    `
-)
+export const RangeHeader = styled.div`
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid #ebebf0;
+`;
 
-export const Heading = styled.h2(
-({ theme: {color} }) => css`
-    font-size: 1rem;
-    margin-left: 1rem;
-`)
+export const Heading = styled.h2`
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #52525e;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+`;
 
 export const ButtonContainer = styled.div`
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    padding:1rem;
-`
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.25rem 0 0.65rem;
+`;
 
 export const SmallButton = styled.button(
-    ({ theme: {color} }) => css`
-    background-color: ${color.buttonSecondary};
-    color: #fff;
-    padding: 1rem;
+  ({ theme: { color } }) => css`
+    background: #f4f3ff;
+    color: #6c63ff;
+    padding: 0.45rem 0.75rem;
     text-decoration: none;
-    min-width: 50px;
-    border: none;
-    margin-left:15px;
+    min-width: 40px;
+    border: 1px solid #e0dff5;
     cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    border-radius: 5px;
- `   
-)
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.78rem;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: #6c63ff;
+      color: #fff;
+      border-color: #6c63ff;
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  `,
+);
 
 export const RangeContainer = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    padding: 1rem;
-    align-items: center;
-    height: 10rem;
-
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  align-items: flex-start;
 `;

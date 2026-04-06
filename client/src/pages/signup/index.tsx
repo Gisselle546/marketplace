@@ -1,99 +1,186 @@
-import React from 'react';
-import { PageTemplate } from '@/templates/PageTemplate';
-import { SignUpWrapper, HeaderSign, FormWrapper } from '../../styles/signup/index.style';
-import  Button from '@/components/Button/Button';
-import * as Yup from 'yup';
-import {useFormik} from 'formik';
-import Head from 'next/head';
-import styled, {css} from 'styled-components';
-import { signupuser } from '@/redux/reducer/register';
-import { useAppDispatch, useAppSelector } from  '../../redux/hooks';
-import { useRouter } from 'next/router';
-import { errorValue, selectValue, loadingValue} from '@/redux/reducer/register';
-import { Spinner } from '@/components/Spinner/Spinner';
-import { geoValue, getRealEstateData, paramsValue } from '@/redux/reducer/location';
+import React from "react";
+import { PageTemplate } from "@/templates/PageTemplate";
+import {
+  SignUpWrapper,
+  HeaderSign,
+  FormWrapper,
+} from "../../styles/signup/index.style";
+import Button from "@/components/Button/Button";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import Head from "next/head";
+import styled, { css } from "styled-components";
+import { signupuser, clearError } from "@/redux/reducer/register";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useRouter } from "next/router";
+import {
+  errorValue,
+  selectValue,
+  loadingValue,
+} from "@/redux/reducer/register";
+import { Spinner } from "@/components/Spinner/Spinner";
+import { useEffect } from "react";
+import {
+  geoValue,
+  getRealEstateData,
+  geolocateUser,
+  paramsValue,
+} from "@/redux/reducer/location";
 const Content = styled.div`
-    display:flex;
-    background: linear-gradient(to top right,rgba(0,0,0, 0),rgba(28,44,91, 100)) center right/cover;
-    height: 100vh;
-    justify-content:center;
-    align-items:center;
-    width:100%;
+  display: flex;
+  background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #6c63ff 100%);
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
 `;
 
 const InputWrapper = styled.input(
-    ({ theme: {color} }) => css`
-  background-color: ${color.badgeBackground};
-  border-radius: 4px;
-  font-size: 1rem;
-  margin: 0.25rem;
-  min-width: 305px;
-  height: 3rem;
-  padding: 0.5rem;
-  border-style: none;
-  &:focus {
-    outline: none;
-    box-shadow: 0px 0px 2px #1d686e;
-`
-)
+  ({ theme: { color } }) => css`
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    width: 100%;
+    height: 3rem;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid transparent;
+    color: #1a1a2e;
+    &::placeholder {
+      color: #8e8e9a;
+    }
+    &:focus {
+      outline: none;
+      border-color: #6c63ff;
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12);
+      background-color: #fff;
+    }
+  `,
+);
 
 export const LinkText = styled.a`
- text-decoration: none;
+  text-decoration: none;
+  color: #6c63ff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 function SignUp() {
   const dispatch = useAppDispatch();
-  const router = useRouter();  
+  const router = useRouter();
   const loading = useAppSelector(loadingValue);
   const params = useAppSelector(paramsValue);
   const geo = useAppSelector(geoValue);
   const data = useAppSelector(selectValue);
   const error = useAppSelector(errorValue);
-  data? router.push('/map'): null
- 
-     const formik = useFormik({
-        initialValues: {
-          email: '',
-          password:''
-        },
-        validationSchema: Yup.object({
-            email: Yup.string()
-                      .email('Invalid email address')
-                      .required('Email is required'),
-            password: Yup.string()
-                         .required('Password is required')
-        }),
-        onSubmit: async values => {
-        dispatch(signupuser(values));
-        await dispatch(getRealEstateData({type: 'sale', data: {...params, geo}}))
-        },
-      });
+
+  useEffect(() => {
+    if (data) {
+      router.push("/map");
+    }
+  }, [data, router]);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      password: Yup.string().required("Password is required"),
+    }),
+    onSubmit: async (values) => {
+      dispatch(clearError());
+      const result = await dispatch(signupuser(values));
+      if (signupuser.fulfilled.match(result)) {
+        const geoResult = await dispatch(geolocateUser());
+        let searchParams = { ...params };
+        let searchGeo = geo;
+        if (geolocateUser.fulfilled.match(geoResult)) {
+          const { city, state_code, lat, lng } = geoResult.payload;
+          searchParams = { ...searchParams, city, state_code };
+          searchGeo = { lat, lng };
+        }
+        await dispatch(
+          getRealEstateData({ type: searchParams.type || "sale", data: { ...searchParams, geo: searchGeo } }),
+        );
+      }
+    },
+  });
   return (
     <>
-    <Head>
-      <title>Sign Up </title>
-      <meta name="description" content="Generated by create next app" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-    <PageTemplate>
+      <Head>
+        <title>Sign Up </title>
+        <meta name="description" content="Generated by create next app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <PageTemplate>
         <Content>
-            <SignUpWrapper>
-                <HeaderSign> Sign Up</HeaderSign>
-                <FormWrapper onSubmit={formik.handleSubmit}>
-                <InputWrapper type="email" name="email"placeholder="Enter Email Address" value={formik.values.email} onChange={formik.handleChange}required/>
-                    <InputWrapper type="password" name="password"placeholder="Enter Password" value={formik.values.password} onChange={formik.handleChange}required/>
-                    {error&& <div style={{color:"#AA1803", fontWeight: "bold"}}>{error.response.data}</div>}
-                    <Button  disabled={loading==='loading'}>Sign Up { loading==='loading'? <Spinner left='40%' top='20'/>  : null }</Button>
-                    <LinkText href="/signin">Login Instead&rarr;</LinkText>
-                </FormWrapper>
-            </SignUpWrapper>
+          <SignUpWrapper>
+            <HeaderSign>Create account</HeaderSign>
+            <p
+              style={{
+                color: "#8E8E9A",
+                fontSize: "0.9rem",
+                margin: 0,
+                textAlign: "center",
+              }}
+            >
+              Get started with your free account
+            </p>
+            <FormWrapper onSubmit={formik.handleSubmit}>
+              <InputWrapper
+                type="email"
+                name="email"
+                placeholder="Email address"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                required
+              />
+              <InputWrapper
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                required
+              />
+              {error && (
+                <div
+                  style={{
+                    color: "#E63946",
+                    fontWeight: 600,
+                    fontSize: "0.85rem",
+                    textAlign: "center",
+                    padding: "0.5rem",
+                    background: "#FFF0F0",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
+                >
+                  {typeof error === "string" ? error : "Something went wrong"}
+                </div>
+              )}
+              <Button disabled={loading === "loading"}>
+                Sign Up{" "}
+                {loading === "loading" ? <Spinner left="40%" top="20" /> : null}
+              </Button>
+              <LinkText href="/signin">
+                Already have an account? Log in &rarr;
+              </LinkText>
+            </FormWrapper>
+          </SignUpWrapper>
         </Content>
-    </PageTemplate>
-    
-    
+      </PageTemplate>
     </>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

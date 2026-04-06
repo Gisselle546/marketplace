@@ -1,70 +1,111 @@
-import React from 'react'
-import styled, {css} from 'styled-components'
-import { FooterContainer, LogoContainer, NavItems, CopyRight } from './Footer.style'
-import Image from 'next/image';
-import logo from '../../assets/images/logo.png';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { geoValue, getRealEstateData, paramsValue} from '@/redux/reducer/location';
-import { useRouter } from 'next/router';
-
-export const LinkText = styled.a`
- text-decoration: none;
- margin-right: 0.3rem;
-`;
-
-const Spacing = styled.div`
-margin-bottom: 4.5rem;
-`
+import React from "react";
+import {
+  FooterContainer,
+  FooterTop,
+  FooterBrand,
+  BrandDescription,
+  LogoContainer,
+  FooterColumns,
+  FooterColumn,
+  ColumnTitle,
+  FooterLink,
+  Divider,
+  FooterBottom,
+  CopyRight,
+  SocialLinks,
+  SocialIcon,
+} from "./Footer.style";
+import Image from "next/image";
+import logo from "../../assets/images/logo.png";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  geoValue,
+  getRealEstateData,
+  paramsValue,
+} from "@/redux/reducer/location";
+import { useRouter } from "next/router";
+import { RiInstagramLine, RiLinkedinFill, RiTwitterLine } from "react-icons/ri";
 
 function Footer() {
   const dispatch = useAppDispatch();
-  const params = useAppSelector(paramsValue)
-  const geo =  useAppSelector(geoValue)
-  const router = useRouter(); 
+  const params = useAppSelector(paramsValue);
+  const geo = useAppSelector(geoValue);
+  const router = useRouter();
 
-  const handleClicky:any = async (type: string) => {
-   
-    await dispatch(getRealEstateData({type: type, data: {...params, geo}}))
-    router.push('/map')
-   }
+  const handleClicky: any = async (type: string) => {
+    await dispatch(getRealEstateData({ type: type, data: { ...params, geo } }));
+    router.push("/map");
+  };
 
   return (
     <FooterContainer>
-      
-        
+      <FooterTop>
+        <FooterBrand>
           <LogoContainer>
             <Image
-            alt="logo"
-            src={logo}
-            width={80}
-            height={80}
-            style={{height:'99%'}}
-          />
-        </LogoContainer>
-        
-        
-      <NavItems>
+              alt="logo"
+              src={logo}
+              width={48}
+              height={48}
+              style={{ height: "auto" }}
+            />
+          </LogoContainer>
+          <BrandDescription>
+            Discover your dream home with our modern real estate platform. We
+            make finding, buying, and renting properties simple and seamless.
+          </BrandDescription>
+        </FooterBrand>
 
-        <div>
-          <h3>Contact Us</h3>
-          <p style={{cursor:'pointer'}} onClick={()=>handleClicky('sale')}>Buy a Home</p>
-          <p style={{cursor:'pointer'}} onClick={()=>handleClicky('rent')}>Rent a Home</p>
-          
-        </div>
-        
-        <div style={{marginLeft:'6rem'}}>
-        <h3>About Us</h3>
-        <p>The Brand</p>
-        <p>Our Mission</p>
-        </div>
-        
-       </NavItems>
-       <Spacing/>
-       <CopyRight>&copy; 2023 All Rights Reserved.</CopyRight>
-     
+        <FooterColumns>
+          <FooterColumn>
+            <ColumnTitle>Explore</ColumnTitle>
+            <FooterLink onClick={() => handleClicky("sale")}>
+              Buy a Home
+            </FooterLink>
+            <FooterLink onClick={() => handleClicky("rent")}>
+              Rent a Home
+            </FooterLink>
+            <FooterLink>Neighborhoods</FooterLink>
+            <FooterLink>Price Trends</FooterLink>
+          </FooterColumn>
 
+          <FooterColumn>
+            <ColumnTitle>Company</ColumnTitle>
+            <FooterLink>About Us</FooterLink>
+            <FooterLink>Our Mission</FooterLink>
+            <FooterLink>Careers</FooterLink>
+            <FooterLink>Contact</FooterLink>
+          </FooterColumn>
+
+          <FooterColumn>
+            <ColumnTitle>Support</ColumnTitle>
+            <FooterLink>Help Center</FooterLink>
+            <FooterLink>Privacy Policy</FooterLink>
+            <FooterLink>Terms of Service</FooterLink>
+          </FooterColumn>
+        </FooterColumns>
+      </FooterTop>
+
+      <Divider />
+
+      <FooterBottom>
+        <CopyRight>
+          &copy; {new Date().getFullYear()} Marketplace. All rights reserved.
+        </CopyRight>
+        <SocialLinks>
+          <SocialIcon aria-label="Twitter">
+            <RiTwitterLine size={18} />
+          </SocialIcon>
+          <SocialIcon aria-label="Instagram">
+            <RiInstagramLine size={18} />
+          </SocialIcon>
+          <SocialIcon aria-label="LinkedIn">
+            <RiLinkedinFill size={18} />
+          </SocialIcon>
+        </SocialLinks>
+      </FooterBottom>
     </FooterContainer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

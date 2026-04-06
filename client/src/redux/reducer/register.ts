@@ -4,112 +4,116 @@ import type { AppState } from "../store";
 import { register } from "../actions/register";
 import { login } from "../actions/login";
 import { getme } from "../actions/getMe";
-import { getStorageValue, setStorageValue, deleteStorageValue } from "../hooks/useSessionStorage";
+import {
+  getStorageValue,
+  setStorageValue,
+  deleteStorageValue,
+} from "../hooks/useSessionStorage";
 
-export interface AuthState  {
-    token: string | {}
-    status: 'idle' | 'loading' | 'failed',
-    error?: null | any
+export interface AuthState {
+  token: string | {};
+  status: "idle" | "loading" | "failed";
+  error?: null | any;
 }
 
 const initialState: AuthState = {
-    token: getStorageValue('token','') ||'',
-    status: 'idle',
-    error: null
-}
+  token: getStorageValue("token", "") || "",
+  status: "idle",
+  error: null,
+};
 
 export const signupuser = createAsyncThunk(
-    '../actions/register',
-    async (data:{email:string, password:string}, {rejectWithValue}) =>{
-      try{  
-        const response = await register(data);
-        setStorageValue('token', response.data.accesstoken);
-        return response.data.accesstoken;
-      }catch(error){
-        return rejectWithValue(error)
-      }
-    } 
-)
+  "../actions/register",
+  async (data: { email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await register(data);
+      console.log("[signupuser] response.data:", response.data);
+      setStorageValue("token", response.data.accesstoken);
+      return response.data.accesstoken;
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data ||
+        error?.message ||
+        "Something went wrong";
+      return rejectWithValue(message);
+    }
+  },
+);
 
 export const signinuser = createAsyncThunk(
-    '../actions/login',
-    async(data:{email: string, password: string}, { rejectWithValue })=>{
-      try{
-          const response = await login(data);
-          setStorageValue('token', response.data.accesstoken);
-          return response.data.accesstoken;
-      }catch(error){
-        
-        return rejectWithValue(error)
-      }
-          
+  "../actions/login",
+  async (data: { email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await login(data);
+      console.log("[signinuser] response.data:", response.data);
+      setStorageValue("token", response.data.accesstoken);
+      return response.data.accesstoken;
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data ||
+        error?.message ||
+        "Something went wrong";
+      return rejectWithValue(message);
     }
-)
+  },
+);
 
-export const getuser = createAsyncThunk(
-  '../actions/getMe',
-  async() =>{
-    try{
-      const response = await getme();
-      console.log(response);
-      return response.data
-    }catch(error){
-      return error;
-    }
+export const getuser = createAsyncThunk("../actions/getMe", async () => {
+  try {
+    const response = await getme();
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    return error;
   }
-)
+});
 
-export const logout = () =>{
-   deleteStorageValue('token')
-}
+export const logout = () => {
+  deleteStorageValue("token");
+};
 
 export const authSlice = createSlice({
-  
-    name: 'auth',
-    initialState,
-    reducers:{
-    
+  name: "auth",
+  initialState,
+  reducers: {
+    clearError: (state) => {
+      state.error = null;
     },
-    extraReducers: (builder) => {
-        builder
-          .addCase(signupuser.pending, (state) => {
-            state.status = 'loading'
-           
-          })
-          .addCase(signupuser.fulfilled, (state, action) => {
-            state.status = 'idle',
-            state.token = action.payload
-            state.error = null
-            
-          })
-          .addCase(signupuser.rejected, (state, action) => {
-            
-            state.error = action.payload
-          })
-         
-          .addCase(signinuser.pending, (state) => {
-            state.status = 'loading'
-           
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signupuser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signupuser.fulfilled, (state, action) => {
+        (state.status = "idle"), (state.token = action.payload);
+        state.error = null;
+      })
+      .addCase(signupuser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
 
-          })
-          .addCase(signinuser.fulfilled, (state, action) => {
-            state.status = 'idle',
-            state.token = action.payload
-            state.error = null
-           
-          })
-          .addCase(signinuser.rejected, (state, action) => {
-            
-            state.error = action.payload
-          })
-         
-      },
-})
+      .addCase(signinuser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signinuser.fulfilled, (state, action) => {
+        (state.status = "idle"), (state.token = action.payload);
+        state.error = null;
+      })
+      .addCase(signinuser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
+  },
+});
 
-export const selectValue = (state: AppState) => state.auth.token
-export const errorValue = (state: AppState) => state.auth.error
-export const loadingValue = (state: AppState) => state.auth.status
+export const { clearError } = authSlice.actions;
 
+export const selectValue = (state: AppState) => state.auth.token;
+export const errorValue = (state: AppState) => state.auth.error;
+export const loadingValue = (state: AppState) => state.auth.status;
 
-
-export default authSlice.reducer
+export default authSlice.reducer;

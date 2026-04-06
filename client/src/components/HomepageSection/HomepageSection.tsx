@@ -1,55 +1,56 @@
-import React from 'react'
-import { HomepageSectionWrapper } from './HomepageSection.style'
-import styled, {css} from 'styled-components'
-import img from '../../assets/images/Homepagesection.jpg';
-import Button from '../Button/Button';
-import { useAppSelector } from '@/redux/hooks';
-import { selectValue } from '@/redux/reducer/register';
-import { useRouter } from 'next/router'
-import { breakpoints } from '@/styles/breakpoints';
-
-const Backgroundimage = styled.div(
-    ({ theme: {color, borderRadius} }) => css`
-    background: url(${img.src}) center/cover;
-    height: 40%;
-    width: 60%;
-    margin-left: 1rem;
-    @media ${breakpoints.M}{
-      height: 80%;
-      width: 40%;
-    }
- `
-)
-
-const Header = styled.h2(
-  ({ theme: {typography} }) => css`
-  font-size: ${typography.fontSize.body};
-  margin-left: 0.4rem;
-  @media ${breakpoints.S}{
-   font-size: ${typography.fontSize.heading3};
-    }
-  `
-)
+import React from "react";
+import {
+  HomepageSectionWrapper,
+  SectionHeadline,
+  SectionTagline,
+  StatsRow,
+  StatItem,
+  StatNumber,
+  StatLabel,
+  CTAButton,
+} from "./HomepageSection.style";
+import { useAppSelector } from "@/redux/hooks";
+import { selectValue } from "@/redux/reducer/register";
+import { useRouter } from "next/router";
 
 function HomepageSection() {
   const count = useAppSelector(selectValue);
-  const router = useRouter()
-  
-  
+  const router = useRouter();
+
   return (
     <HomepageSectionWrapper>
-       
-             
-             
-             <div>
-             <Header> Find your perfect home</Header> 
-              {count?<><Button onClick={()=>router.push('/map')}> Check Homes Near You</Button> </>:  <><Button onClick={()=>router.push('/signup')}>Sign Up Today</Button></>}
-              </div>
-              
-        
-        <Backgroundimage/>
+      <SectionHeadline>
+        Trusted by thousands to find their perfect home
+      </SectionHeadline>
+      <SectionTagline>
+        We connect buyers, renters, and sellers with the tools they need to make
+        confident real estate decisions.
+      </SectionTagline>
+
+      <StatsRow>
+        <StatItem>
+          <StatNumber>12K+</StatNumber>
+          <StatLabel>Listings</StatLabel>
+        </StatItem>
+        <StatItem>
+          <StatNumber>8K+</StatNumber>
+          <StatLabel>Happy Clients</StatLabel>
+        </StatItem>
+        <StatItem>
+          <StatNumber>200+</StatNumber>
+          <StatLabel>Cities</StatLabel>
+        </StatItem>
+        <StatItem>
+          <StatNumber>98%</StatNumber>
+          <StatLabel>Satisfaction</StatLabel>
+        </StatItem>
+      </StatsRow>
+
+      <CTAButton onClick={() => router.push(count ? "/map" : "/signup")}>
+        {count ? "Explore Homes Near You" : "Get Started — It's Free"}
+      </CTAButton>
     </HomepageSectionWrapper>
-  )
+  );
 }
 
-export default HomepageSection
+export default HomepageSection;
