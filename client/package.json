@@ -39,6 +39,7 @@
     "@types/react-no-ssr": "^1.1.7"
   },
   "overrides": {
-    "node-fetch": "2.7.0"
+    "node-fetch": "2.7.0",
+    "postcss": "^8.5.3"
   }
 }
