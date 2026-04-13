@@ -32,12 +32,6 @@ async function customFetchRealEstate(
   }
 
   const data = await response.json();
-  console.log(
-    "[realEstateFetch] response for",
-    endpoint,
-    ":",
-    JSON.stringify(data).slice(0, 500),
-  );
   return { data };
 }
 

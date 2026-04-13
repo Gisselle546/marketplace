@@ -32,8 +32,6 @@ function CardList() {
   if (loading === "loading") {
     return <Spinner />;
   }
-  console.log("data in card list", data);
-
   return (
     <>
       <ResultCount>{data.length} results</ResultCount>

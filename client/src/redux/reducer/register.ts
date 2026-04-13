@@ -27,7 +27,6 @@ export const signupuser = createAsyncThunk(
   async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await register(data);
-      console.log("[signupuser] response.data:", response.data);
       setStorageValue("token", response.data.accesstoken);
       return response.data.accesstoken;
     } catch (error: any) {
@@ -46,7 +45,6 @@ export const signinuser = createAsyncThunk(
   async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await login(data);
-      console.log("[signinuser] response.data:", response.data);
       setStorageValue("token", response.data.accesstoken);
       return response.data.accesstoken;
     } catch (error: any) {
@@ -63,7 +61,6 @@ export const signinuser = createAsyncThunk(
 export const getuser = createAsyncThunk("../actions/getMe", async () => {
   try {
     const response = await getme();
-    console.log(response);
     return response.data;
   } catch (error) {
     return error;

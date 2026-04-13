@@ -2,9 +2,6 @@ import Head from "next/head";
 import styled, { css } from "styled-components";
 import { breakpoints } from "@/styles/breakpoints";
 import { PageTemplate } from "@/templates/PageTemplate";
-import GooglePlacesAutocomplete, {
-  geocodeByAddress,
-} from "react-google-places-autocomplete";
 import { useAppDispatch } from "@/redux/hooks";
 import {
   getRealEstateData,
@@ -76,14 +73,6 @@ const SearchWrapper = styled.div`
   gap: 0.25rem;
   width: 100%;
   max-width: 540px;
-
-  .css-b62m3t-container,
-  .css-13cymwt-control,
-  [class*="-container"],
-  [class*="-control"] {
-    width: 100% !important;
-    min-width: 0 !important;
-  }
 `;
 
 const SearchIconWrap = styled.div`
@@ -149,6 +138,38 @@ export default function Home() {
     { ssr: false },
   );
 
+  const PlacesAutocomplete = dynamic(
+    () => import("../components/PlacesAutocomplete/PlacesAutocomplete"),
+    { ssr: false },
+  );
+
+  const handlePlaceSelect = async (place: {
+    lat: number;
+    lng: number;
+    formattedAddress: string;
+    addressComponents: any[];
+  }) => {
+    const geo = { lat: place.lat, lng: place.lng };
+    let city = "";
+    let state_code = "";
+    for (const comp of place.addressComponents) {
+      const types: string[] = comp.types || [];
+      if (types.includes("locality")) {
+        city = comp.longText || comp.long_name || "";
+      }
+      if (types.includes("administrative_area_level_1")) {
+        state_code = comp.shortText || comp.short_name || "";
+      }
+    }
+    await dispatch(
+      getRealEstateData({
+        type: "sale",
+        data: { state_code, city, geo },
+      }),
+    );
+    router.push("/map");
+  };
+
   const handleClicky = async (type: string) => {
     let currentGeo = geo;
     if (!currentGeo || (!currentGeo.lat && !currentGeo.lng)) {
@@ -184,88 +205,11 @@ export default function Home() {
               <SearchIconWrap>
                 <BiSearch size={20} />
               </SearchIconWrap>
-              <GooglePlacesAutocomplete
+              <PlacesAutocomplete
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}
-                selectProps={{
-                  placeholder: "Search city, neighborhood, or zip...",
-                  noOptionsMessage: ({ inputValue }: any) =>
-                    inputValue ? "No results found" : null,
-                  openMenuOnClick: false,
-                  openMenuOnFocus: false,
-                  onChange: async ({ value }: any) => {
-                    const data = await geocodeByAddress(value.description);
-                    let geo = {
-                      lat: data[0].geometry.location.lat(),
-                      lng: data[0].geometry.location.lng(),
-                    };
-                    let datawoef: any = { state_code: "", city: "", geo };
-                    value.terms.length > 4
-                      ? ((datawoef.state_code = value.terms[3].value),
-                        (datawoef.city = value.terms[2].value))
-                      : ((datawoef.state_code = value.terms[1].value),
-                        (datawoef.city = value.terms[0].value));
-                    await dispatch(
-                      getRealEstateData({ type: "sale", data: datawoef }),
-                    );
-                    router.push("/map");
-                  },
-                  styles: {
-                    container: (provided: any) => ({
-                      ...provided,
-                      flex: 1,
-                      minWidth: 0,
-                    }),
-                    control: (provided: any) => ({
-                      ...provided,
-                      background: "transparent",
-                      border: "none",
-                      boxShadow: "none",
-                      minHeight: "42px",
-                    }),
-                    input: (provided: any) => ({
-                      ...provided,
-                      color: "#fff",
-                      fontSize: "0.95rem",
-                    }),
-                    placeholder: (provided: any) => ({
-                      ...provided,
-                      color: "rgba(255,255,255,0.45)",
-                      fontSize: "0.95rem",
-                      whiteSpace: "nowrap",
-                    }),
-                    singleValue: (provided: any) => ({
-                      ...provided,
-                      color: "#fff",
-                    }),
-                    menu: (provided: any) => ({
-                      ...provided,
-                      borderRadius: "12px",
-                      overflow: "hidden",
-                      boxShadow: "0 12px 40px rgba(0,0,0,0.18)",
-                      border: "1px solid #E8E8EE",
-                      marginTop: "8px",
-                    }),
-                    menuList: (provided: any) => ({
-                      ...provided,
-                      padding: "4px",
-                    }),
-                    option: (provided: any, state: any) => ({
-                      ...provided,
-                      background: state.isFocused ? "#F2F1FF" : "#fff",
-                      color: "#1A1A2E",
-                      fontSize: "0.9rem",
-                      borderRadius: "8px",
-                      padding: "10px 12px",
-                      cursor: "pointer",
-                    }),
-                    indicatorSeparator: () => ({ display: "none" }),
-                    dropdownIndicator: (provided: any) => ({
-                      ...provided,
-                      color: "rgba(255,255,255,0.4)",
-                      padding: "0 4px",
-                    }),
-                  },
-                }}
+                placeholder="Search city, neighborhood, or zip..."
+                onSelect={handlePlaceSelect}
+                variant="hero"
               />
             </SearchWrapper>
           </HeroSection>

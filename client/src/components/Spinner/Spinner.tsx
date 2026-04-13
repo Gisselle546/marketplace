@@ -6,8 +6,8 @@ interface SpinnerProps {
   borderWidth?: string;
   borderColor?: string;
   duration?: number;
-  top?: string;
-  left?: string;
+  $top?: string;
+  $left?: string;
   style?: any
 }
 
@@ -27,8 +27,8 @@ const SpinnerBody = styled.div<SpinnerProps>`
   border: ${(p) => (p.borderWidth ? p.borderWidth : "4px")} solid #d1d5db;
   border-top-color: ${(p) => (p.borderColor ? p.borderColor : "#3b82f6")};
   position: absolute;
-  top:  ${(p) => (p.top ? p.top : "50%")};
-  left: ${(p) => (p.left ? p.left : "50%")};
+  top:  ${(p) => (p.$top ? p.$top : "50%")};
+  left: ${(p) => (p.$left ? p.$left : "50%")};
   border-radius: 50%;
   animation: ${spinnerAnimation}
     ${(p) => (p.duration ? `${p.duration}ms` : "800ms")} linear infinite;

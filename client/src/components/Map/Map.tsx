@@ -1,17 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
-import "leaflet-defaulticon-compatibility";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { resultsValue, geoValue, setDetail } from "@/redux/reducer/location";
 import imageplace from "../../assets/images/placeholderimg.png";
+import markerIcon from "../../assets/images/marker-icon.png";
+import markerIcon2x from "../../assets/images/marker-icon-2x.png";
+import markerShadow from "../../assets/images/marker-shadow.png";
+
+// Fix Leaflet default icon paths (replaces leaflet-defaulticon-compatibility)
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon.src,
+  iconRetinaUrl: markerIcon2x.src,
+  shadowUrl: markerShadow.src,
+});
 
 const PopupCard = styled.div`
   width: 200px;
   cursor: pointer;
-  font-family: "Inter", -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
 `;
 
 const PopupImage = styled.div<{ img: string }>`
@@ -124,8 +136,8 @@ function Map() {
     <MapContainer
       center={[lat, lng]}
       zoom={11}
-      scrollWheelZoom={true}
-      zoomControl={true}
+      scrollWheelZoom={false}
+      zoomControl={false}
       style={{ height: "100%", width: "100%" }}
     >
       <TileLayer

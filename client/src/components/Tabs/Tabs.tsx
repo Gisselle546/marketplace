@@ -73,7 +73,6 @@ function Tabs({ agentstate }: any) {
     }));
   };
 
-  console.log(data, "agent");
   const desc = data?.description;
   const agent = data?.source?.agents?.[0];
 

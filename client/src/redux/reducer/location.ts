@@ -119,19 +119,6 @@ export const getRealEstateData = createAsyncThunk(
     setStorageLocal("geo", data.geo);
     try {
       const response = await getRealestate(data, type);
-      console.log("[getRealEstateData] full response:", Object.keys(response));
-      console.log(
-        "[getRealEstateData] response.data:",
-        response.data ? Object.keys(response.data) : "undefined",
-      );
-      console.log(
-        "[getRealEstateData] response.data.home_search?",
-        response.data?.home_search,
-      );
-      console.log(
-        "[getRealEstateData] response.data.data?.home_search?",
-        response.data?.data?.home_search,
-      );
 
       const apiData = response.data?.data ?? response.data;
       const results = apiData?.home_search?.results ?? [];
@@ -162,30 +149,11 @@ export const getRealEstateData = createAsyncThunk(
 export const getDetailsData = createAsyncThunk(
   "../action/getDetails",
   async (data: any, { rejectWithValue }) => {
-    console.log("[getDetailsData] requesting property_id:", data);
     try {
       const response = await getDetails(data);
-      console.log("[getDetailsData] full response:", Object.keys(response));
-      console.log(
-        "[getDetailsData] response.data:",
-        response.data ? Object.keys(response.data) : "undefined",
-      );
-      console.log(
-        "[getDetailsData] response.data.property_detail?",
-        !!response.data?.property_detail,
-      );
-      console.log(
-        "[getDetailsData] response.data.data?.property_detail?",
-        !!response.data?.data?.property_detail,
-      );
 
       const apiData = response.data?.data ?? response.data;
       const detail = apiData?.property_detail ?? apiData;
-
-      console.log(
-        "[getDetailsData] resolved detail:",
-        detail ? Object.keys(detail).slice(0, 10) : "null",
-      );
 
       setStorageLocal("detail_location", detail);
       return detail;

@@ -36,7 +36,6 @@ async function customFetch(endpoint: string, options: RequestInit = {}) {
   }
 
   const data = await response.json();
-  console.log('[customFetch] response for', endpoint, ':', data);
   return { data };
 }
 

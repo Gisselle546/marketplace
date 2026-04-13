@@ -7,8 +7,8 @@ export const GlobalStyle = createGlobalStyle(
     ${resetCSS}
     * {
       transition: all 200ms ease;
-      transition-property: background-color, color, border-color, box-shadow,
-        transform, opacity;
+      transition-property:
+        background-color, color, border-color, box-shadow, transform, opacity;
     }
     html {
       scroll-behavior: smooth;
@@ -16,7 +16,11 @@ export const GlobalStyle = createGlobalStyle(
     body {
       margin: 0;
       background: ${color.screenBackground};
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
         sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;

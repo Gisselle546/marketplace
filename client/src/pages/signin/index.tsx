@@ -174,10 +174,10 @@ function Signin() {
                 </div>
               )}
               {
-                <Button disabled={loading === "loading"}>
+                <Button type="submit" disabled={loading === "loading"}>
                   Sign In{" "}
                   {loading === "loading" ? (
-                    <Spinner left="40%" top="20" />
+                    <Spinner $left="40%" $top="20" />
                   ) : null}
                 </Button>
               }

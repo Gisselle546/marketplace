@@ -29,8 +29,6 @@ function DropDownItems({ type }: DropDownItemsProps) {
   const [selected, setSelected] = useState<string>(params.type);
   const geo = useAppSelector(geoValue);
 
-  console.log(params);
-
   const handleRadio = async (e: any) => {
     setSelected(e.target.value);
     await dispatch(
@@ -39,7 +37,6 @@ function DropDownItems({ type }: DropDownItemsProps) {
   };
 
   const handleClick = (option: any, type: any) => {
-    console.log(option.value, type);
     let pricemin;
     let pricemax;
 

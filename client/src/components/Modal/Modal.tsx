@@ -26,8 +26,8 @@ import {
   BiTime,
 } from "react-icons/bi";
 
-const Overlay = styled("div")<{ show: any }>`
-  display: ${({ show }) => (show ? "flex" : "none")};
+const Overlay = styled("div")<{ $show: any }>`
+  display: ${({ $show }) => ($show ? "flex" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -318,7 +318,7 @@ function Modal(props: Props) {
 
   if (loading === "loading") {
     return (
-      <Overlay show={show}>
+      <Overlay $show={show}>
         <Spinner />
       </Overlay>
     );
@@ -346,7 +346,7 @@ function Modal(props: Props) {
     : null;
 
   return (
-    <Overlay show={show}>
+    <Overlay $show={show}>
       <Container ref={ref}>
         <CloseButton onClick={handleClose}>
           <BiX size={22} />

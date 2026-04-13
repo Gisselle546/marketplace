@@ -171,9 +171,9 @@ function SignUp() {
                   {typeof error === "string" ? error : "Something went wrong"}
                 </div>
               )}
-              <Button disabled={loading === "loading"}>
+              <Button type="submit" disabled={loading === "loading"}>
                 Sign Up{" "}
-                {loading === "loading" ? <Spinner left="40%" top="20" /> : null}
+                {loading === "loading" ? <Spinner $left="40%" $top="20" /> : null}
               </Button>
               <LinkText href="/signin">
                 Already have an account? Log in &rarr;
