@@ -1,19 +1,17 @@
 ## Getting Started
 
-<img width="1792" alt="Screenshot 2023-03-06 at 1 27 14 PM" src="https://user-images.githubusercontent.com/25558018/223198637-25520773-d313-45c9-8bdc-807164a770e9.png">
-
-<img width="1791" alt="Screenshot 2023-03-06 at 11 20 13 AM" src="https://user-images.githubusercontent.com/25558018/223198715-8f178e10-f063-4303-9119-31b28483bd1c.png">
-
-<img width="1792" alt="Screenshot 2023-03-06 at 11 20 39 AM" src="https://user-images.githubusercontent.com/25558018/223198803-b41e8b53-9d8d-45b5-8244-ea25e2bdcc9e.png">
-
+<img width="1728" height="952" alt="Screenshot 2026-04-13 at 9 06 08 AM" src="https://github.com/user-attachments/assets/c87a6cc8-5dfa-4b68-8947-4bffc1e3ba4a" />
+<img width="1728" height="966" alt="Screenshot 2026-04-13 at 9 07 24 AM" src="https://github.com/user-attachments/assets/69ef835d-62ab-49ee-a3fb-7ac752f14b99" />
+<img width="1728" height="949" alt="Screenshot 2026-04-13 at 9 09 33 AM" src="https://github.com/user-attachments/assets/af9dbd9a-66ca-4fd7-8890-c8f35a7f40e2" />
 
 The app serves as a platform for users to search, compare, and evaluate properties that are available for sale or rent. To accomplish this, it leverages Styled Components and Next.js for the front-end development, and Node.js with Express for the back-end. The app's back-end also features a RESTful API, which facilitates smooth communication between the client and server.
 
 In addition, the app integrates Leaflet for the map property location, allowing users to visualize the location and surroundings of a property. The app also uses the Google Places API for property search
 
-
 ## Backend
+
 cd into backend and run - npm run dev
 
 ## client
-cd into client and run  - npm run dev
+
+cd into client and run - npm run dev
