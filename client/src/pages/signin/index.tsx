@@ -17,7 +17,11 @@ import {
   loadingValue,
 } from "@/redux/reducer/register";
 import { paramsValue } from "@/redux/reducer/location";
-import { geoValue, getRealEstateData, geolocateUser } from "@/redux/reducer/location";
+import {
+  geoValue,
+  getRealEstateData,
+  geolocateUser,
+} from "@/redux/reducer/location";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -105,7 +109,10 @@ function Signin() {
           searchGeo = { lat, lng };
         }
         await dispatch(
-          getRealEstateData({ type: searchParams.type || "sale", data: { ...searchParams, geo: searchGeo } }),
+          getRealEstateData({
+            type: searchParams.type || "sale",
+            data: { ...searchParams, geo: searchGeo },
+          }),
         );
       }
     },

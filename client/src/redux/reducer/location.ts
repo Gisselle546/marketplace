@@ -4,7 +4,6 @@ import { getStorageLocal, setStorageLocal } from "../hooks/useSessionStorage";
 import { getRealestate } from "../actions/getRealestate";
 import { getDetails } from "../actions/getDetails";
 
-// US state name → abbreviation mapping
 const STATE_ABBREVIATIONS: Record<string, string> = {
   alabama: "AL",
   alaska: "AK",
@@ -134,9 +133,6 @@ export const getRealEstateData = createAsyncThunk(
         response.data?.data?.home_search,
       );
 
-      // fetch wrapper returns { data: parsedJSON }
-      // If the API response itself has a "data" wrapper: response.data.data.home_search
-      // If it doesn't: response.data.home_search
       const apiData = response.data?.data ?? response.data;
       const results = apiData?.home_search?.results ?? [];
 
@@ -183,9 +179,6 @@ export const getDetailsData = createAsyncThunk(
         !!response.data?.data?.property_detail,
       );
 
-      // fetch wrapper returns { data: parsedJSON }
-      // If the API response itself has a "data" wrapper: response.data.data.property_detail
-      // If it doesn't: response.data.property_detail
       const apiData = response.data?.data ?? response.data;
       const detail = apiData?.property_detail ?? apiData;
 

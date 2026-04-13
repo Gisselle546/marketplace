@@ -108,7 +108,10 @@ function SignUp() {
           searchGeo = { lat, lng };
         }
         await dispatch(
-          getRealEstateData({ type: searchParams.type || "sale", data: { ...searchParams, geo: searchGeo } }),
+          getRealEstateData({
+            type: searchParams.type || "sale",
+            data: { ...searchParams, geo: searchGeo },
+          }),
         );
       }
     },

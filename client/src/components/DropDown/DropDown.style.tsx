@@ -22,7 +22,9 @@ export const DropToggler = styled.div`
   align-items: center;
   gap: 6px;
   white-space: nowrap;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
 
   &:hover {
     border-color: #6c63ff;
